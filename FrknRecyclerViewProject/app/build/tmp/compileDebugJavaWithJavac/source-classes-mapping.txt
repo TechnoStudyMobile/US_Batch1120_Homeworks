@@ -1,0 +1,2 @@
+com/example/frknrecyclerviewproject/BuildConfig.java
+ com.example.frknrecyclerviewproject.BuildConfig
