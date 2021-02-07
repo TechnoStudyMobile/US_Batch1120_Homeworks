@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         val KEY_PHOTO_BUNDLE = "key_position"
     }
 
-    lateinit var list: List<Photo>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,9 +43,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<Photo>>, t: Throwable) {
-                Toast.makeText(this@MainActivity, "HOUSTON WE HAVE A PROBLEM"
-                    , Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this@MainActivity,
+                    "HOUSTON WE HAVE A PROBLEM",
+                    Toast.LENGTH_SHORT
+                ) .show()
             }
         })
     }
@@ -55,9 +55,10 @@ class MainActivity : AppCompatActivity() {
         val adapter = PhotoAdapter(photos) {
 
             val result = Bundle()
+            //Key_PHOTO_BUNBLE is used as a RequestKey for bundles
+            // (MAin Activity and SinglePhotoActivity) that is why i used companion object
             result.putParcelable(KEY_PHOTO_BUNDLE, photos[it])
             val intent = Intent(this, SinglePhotoActivity::class.java)
-
             intent.putExtras(result)
             startActivity(intent)
         }

@@ -12,12 +12,12 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.photo_view_holder.view.*
 
 class PhotoAdapter(val list: List<Photo>, val whattoDoOnClicks: (Int) -> Unit) :
+
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.photo_view_holder, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.photo_view_holder,
+                parent, false)
         return PhotoViewHolder(view)
     }
 
@@ -25,7 +25,6 @@ class PhotoAdapter(val list: List<Photo>, val whattoDoOnClicks: (Int) -> Unit) :
         holder.textViewHolder.text = list[position].title
         Picasso.get().load(list.get(position).url).into(holder.imageViewHolder)
         holder.itemView.setOnClickListener { whattoDoOnClicks(position) }
-
     }
 
     override fun getItemCount(): Int {
@@ -35,6 +34,5 @@ class PhotoAdapter(val list: List<Photo>, val whattoDoOnClicks: (Int) -> Unit) :
     class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewHolder = itemView.findViewById<TextView>(R.id.text)
         val imageViewHolder = itemView.findViewById<ImageView>(R.id.image)
-
     }
 }
