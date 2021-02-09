@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Item in $adapterPosition is clicked", Toast.LENGTH_SHORT).show()
 
         }
-        recyclerview.layoutManager = LinearLayoutManager(this)
-        recyclerview.adapter = adapter
+        main_activity_recyclerView.layoutManager = LinearLayoutManager(this)
+        main_activity_recyclerView.adapter = adapter
     }
 }
 
