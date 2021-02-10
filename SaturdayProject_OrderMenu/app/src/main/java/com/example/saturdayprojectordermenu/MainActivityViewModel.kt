@@ -49,12 +49,10 @@ class MainActivityViewModel : ViewModel() {
     }
 
     fun decreaseCount(view: View): String {
-        return if (count > 0) {
+        if (count > 0) {
             count--
-            count.toString()
-        } else {
-            "0"
         }
+         return count.toString()
     }
 
 }
