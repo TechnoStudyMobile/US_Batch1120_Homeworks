@@ -13,7 +13,8 @@ class PhotoAdapter(var listPhoto: List<Photo>, var whatToDoOnClicks: (Int) -> Un
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.photo_view_holder, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.photo_view_holder, parent, false)
         return PhotoViewHolder(view)
     }
 
@@ -28,6 +29,8 @@ class PhotoAdapter(var listPhoto: List<Photo>, var whatToDoOnClicks: (Int) -> Un
 
     inner class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        init { itemView.setOnClickListener { whatToDoOnClicks(adapterPosition) } }
+        init {
+            itemView.setOnClickListener { whatToDoOnClicks(adapterPosition) }
+        }
     }
 }
