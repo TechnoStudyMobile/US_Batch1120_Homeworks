@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_order.*
@@ -45,15 +46,16 @@ class OrderActivity : AppCompatActivity() {
         }
 
         button_order.setOnClickListener {
-            text_view_reciept.text = orderViewModel.makeOrder(edit_text_name.text.toString())
+
+            showDialog()
         }
 
         checkbox_whipped_cream.setOnCheckedChangeListener { buttonView, isChecked ->
-            orderViewModel.chocolateChecked()
+            orderViewModel.isCreamLiveData.value = isChecked
         }
 
         checkbox_chocolate.setOnCheckedChangeListener { buttonView, isChecked ->
-            orderViewModel.whippedCreamChecked()
+            orderViewModel.isCholateLiveData.value=isChecked
         }
 
         orderViewModel.isCholateLiveData.observe(this, Observer { isChocolateChecked ->
@@ -84,5 +86,21 @@ class OrderActivity : AppCompatActivity() {
                 """.trimIndent()
 
         text_view_amount.text = orderViewModel.totalCountLiveData.value.toString()
+    }
+
+    fun showDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Are you sure you want to checkout?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialog, id ->
+                //text_view_reciept.text = orderViewModel.makeOrder(edit_text_name.text.toString())
+                text_view_reciept.text = "Thank you,you order is placed"
+            }
+            .setNegativeButton("No") { dialog, id ->
+                // Dismiss the dialog
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
     }
 }
