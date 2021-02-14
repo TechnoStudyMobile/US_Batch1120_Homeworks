@@ -171,11 +171,10 @@ class ForecastListFragment() : Fragment() {
         )
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     fun getDays(days: Int): String {
-        var formatter = DateTimeFormatter.ofPattern("EE MMM yy")
+        var formatter = DateTimeFormatter.ofPattern("EE, MMM yy")
         return LocalDateTime.now().plusDays(days.toLong()).format(formatter).toString()
     }
 

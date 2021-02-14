@@ -12,7 +12,6 @@ import com.example.a96_weatherapplication.R
 class WeatherAdapter(val forcastList: List<Forecast>) :
     RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
         val view =
             LayoutInflater.from(parent.context)
@@ -32,9 +31,7 @@ class WeatherAdapter(val forcastList: List<Forecast>) :
         return forcastList.size
     }
 
-
     class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         val imageViewHolder = itemView.findViewById<ImageView>(R.id.imageView_single_view)
         val textViewDayOfWeek =
             itemView.findViewById<TextView>(R.id.textView_single_view_day_of_week)

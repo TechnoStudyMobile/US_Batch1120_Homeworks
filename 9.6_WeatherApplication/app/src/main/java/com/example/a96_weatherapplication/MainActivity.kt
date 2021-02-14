@@ -15,10 +15,5 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.fragment_container, forecastListFragment)
         transaction.addToBackStack(null)
         transaction.commit()
-
-
-
-
-
     }
 }
