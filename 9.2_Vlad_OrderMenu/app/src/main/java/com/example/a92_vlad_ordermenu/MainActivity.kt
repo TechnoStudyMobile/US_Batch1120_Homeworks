@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var menuViewModel: MenuViewModel;
 
     @SuppressLint("SetTextI18n")
@@ -30,11 +31,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         checkbox_whipped_cream.setOnCheckedChangeListener { buttonView, isChecked ->
-            menuViewModel.chocolateChecked()
+            menuViewModel.whippedCreamChecked=isChecked
         }
 
         checkbox_chocolate.setOnCheckedChangeListener { buttonView, isChecked ->
-            menuViewModel.whippedCreamChecked()
+            menuViewModel.whippedCreamChecked=isChecked
         }
     }
 }

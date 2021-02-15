@@ -7,10 +7,9 @@ class MenuViewModel : ViewModel() {
     var costAddChocolate = 2.75
     var totalCost = 0.0
     var count: Int = 0
-    var whippedCreamChecked: Boolean = false
-    var costBasic: Double = 5.00
+    val costBasic: Double = 5.00
     var chocolateChecked: Boolean = false
-
+    var whippedCreamChecked: Boolean = false
 
     fun increaseQuantity(): String {
         count++
@@ -25,7 +24,6 @@ class MenuViewModel : ViewModel() {
     }
 
     fun makeOrder(): String {
-
         return if (count > 0) """
                     Add whipped cream? ${whippedCreamChecked}
                     Add chocolate? ${chocolateChecked}
@@ -45,13 +43,5 @@ class MenuViewModel : ViewModel() {
         }
         totalCost = count * costBasic + tempcream + tempchocolate
         return totalCost
-    }
-
-    fun chocolateChecked() {
-        chocolateChecked = true
-    }
-
-    fun whippedCreamChecked() {
-        whippedCreamChecked = true
     }
 }
