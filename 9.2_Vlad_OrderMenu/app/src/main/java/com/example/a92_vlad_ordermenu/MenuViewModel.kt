@@ -3,8 +3,8 @@ package com.example.a92_vlad_ordermenu
 import androidx.lifecycle.ViewModel
 
 class MenuViewModel : ViewModel() {
-    var costAddWhippedCream = 1.50
-    var costAddChocolate = 2.75
+    val costAddWhippedCream = 1.50
+    val costAddChocolate = 2.75
     var totalCost = 0.0
     var count: Int = 0
     val costBasic: Double = 5.00
