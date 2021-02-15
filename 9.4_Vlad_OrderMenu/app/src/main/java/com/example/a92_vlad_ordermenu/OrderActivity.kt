@@ -1,5 +1,4 @@
 package com.example.a92_vlad_ordermenu
-
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_order.*
-
 
 class OrderActivity : AppCompatActivity() {
 
@@ -27,15 +25,12 @@ class OrderActivity : AppCompatActivity() {
 
         edit_text_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-
                 orderViewModel.getName(edit_text_name.text.toString())
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
         button_plus.setOnClickListener {
             orderViewModel.increaseQuantity()
@@ -46,7 +41,6 @@ class OrderActivity : AppCompatActivity() {
         }
 
         button_order.setOnClickListener {
-
             showDialog()
         }
 
@@ -55,7 +49,7 @@ class OrderActivity : AppCompatActivity() {
         }
 
         checkbox_chocolate.setOnCheckedChangeListener { buttonView, isChecked ->
-            orderViewModel.isCholateLiveData.value=isChecked
+            orderViewModel.isCholateLiveData.value = isChecked
         }
 
         orderViewModel.isCholateLiveData.observe(this, Observer { isChocolateChecked ->
@@ -79,8 +73,8 @@ class OrderActivity : AppCompatActivity() {
     fun printDetails() {
         text_view_reciept.text = """
                     ${orderViewModel.nameLiveData.value}
-                    Add whipped cream? ${orderViewModel.isCholateLiveData.value}
-                    Add chocolate? ${orderViewModel.isCreamLiveData.value}
+                    Add whipped cream? ${orderViewModel.isCreamLiveData.value}
+                    Add chocolate? ${orderViewModel.isCholateLiveData.value}
                     Quantity: ${orderViewModel.totalCountLiveData.value}
                     Total is: $${orderViewModel.calculateTotal()}
                 """.trimIndent()
@@ -88,12 +82,12 @@ class OrderActivity : AppCompatActivity() {
         text_view_amount.text = orderViewModel.totalCountLiveData.value.toString()
     }
 
+    @SuppressLint("SetTextI18n")
     fun showDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Are you sure you want to checkout?")
             .setCancelable(false)
             .setPositiveButton("Yes") { dialog, id ->
-                //text_view_reciept.text = orderViewModel.makeOrder(edit_text_name.text.toString())
                 text_view_reciept.text = "Thank you,you order is placed"
             }
             .setNegativeButton("No") { dialog, id ->
