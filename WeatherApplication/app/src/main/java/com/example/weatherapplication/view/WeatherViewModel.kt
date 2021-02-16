@@ -14,9 +14,9 @@ class WeatherViewModel() : ViewModel() {
 
     private val _listOfItemsLiveData = MutableLiveData<Json4Kotlin_Base>()
 
-    lateinit var listOfItems :Json4Kotlin_Base
+    lateinit var listOfItems: Json4Kotlin_Base
 
-    val listOfItemsLiveData : LiveData<Json4Kotlin_Base>
+    val listOfItemsLiveData: LiveData<Json4Kotlin_Base>
         get() = _listOfItemsLiveData
 
     fun getData() {

@@ -5,8 +5,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-//    private const val BASE_URL = "https://jsonplaceholder.typicode.com"
-
     private const val BASE_URL = "https://api.weatherbit.io/v2.0/forecast/"
 
     var retrofit : Retrofit? = null
