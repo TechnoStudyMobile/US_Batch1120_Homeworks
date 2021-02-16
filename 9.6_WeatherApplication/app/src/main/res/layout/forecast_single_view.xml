@@ -11,7 +11,7 @@
         android:layout_height="40dp"
         android:layout_margin="8dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/forecast"
+        android:src="@drawable/a01d"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
