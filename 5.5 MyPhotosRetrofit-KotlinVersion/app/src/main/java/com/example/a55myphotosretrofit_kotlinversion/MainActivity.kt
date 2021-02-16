@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val getDataService = RetrofitClient.retrofit?.create(GetDataService::class.java)
         val callPhotos: Call<List<Photo>>? = getDataService?.getPhotos()
 
