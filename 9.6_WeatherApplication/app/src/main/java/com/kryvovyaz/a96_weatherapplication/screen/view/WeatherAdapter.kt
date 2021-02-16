@@ -1,23 +1,18 @@
 package com.kryvovyaz.a96_weatherapplication.screen.view
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.kryvovyaz.a96_weatherapplication.R
-import com.kryvovyaz.a96_weatherapplication.model.Json4Kotlin_Base
+import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
-import com.kryvovyaz.a96_weatherapplication.util.dateFormater.getImageId
+import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
-class WeatherAdapter(var forecast: Json4Kotlin_Base?,  var doOnClick: (Int) -> Unit) :
+class WeatherAdapter(var forecast: Forecast?, var doOnClick: (Int) -> Unit) :
     RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
@@ -45,8 +40,8 @@ class WeatherAdapter(var forecast: Json4Kotlin_Base?,  var doOnClick: (Int) -> U
                 setDate.datetime)
         }
         holder.itemView.textView_single_view_forecast.text = forecast?.data?.get(position)?.weather?.description
-        holder.itemView.textView_single_view_temp_high.text = (forecast?.data?.get(position)?.high_temp.toString() + "°")
-        holder.itemView.textView_single_view_temp_low.text = (forecast?.data?.get(position)?.low_temp.toString() + "°")
+        holder.itemView.textView_single_view_temp_high.text = (forecast?.data?.get(position)?.high_temp?.toInt().toString() + "°")
+        holder.itemView.textView_single_view_temp_low.text = (forecast?.data?.get(position)?.low_temp?.toInt().toString() + "°")
     }
 
     override fun getItemCount(): Int {
