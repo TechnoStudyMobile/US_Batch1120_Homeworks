@@ -13,8 +13,5 @@ data class Json4Kotlin_Base(
         @SerializedName("country_code") val country_code: String,
         @SerializedName("state_code") val state_code: String,
 
-
         val title: String
-
-
 )

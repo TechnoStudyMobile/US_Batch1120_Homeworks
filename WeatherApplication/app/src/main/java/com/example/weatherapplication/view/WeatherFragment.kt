@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapplication.R
+import kotlinx.android.synthetic.main.weather_fragment.*
 
 class WeatherFragment : Fragment() {
 
@@ -25,14 +27,19 @@ class WeatherFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
 
-
         viewModel.getData()
 
-        // not sure how to do this part?
         viewModel.listOfItemsLiveData.observe(viewLifecycleOwner, Observer {
-            viewModel.getRecyclerList()
+            getRecyclerList()
         })
 
     }
 
+    fun getRecyclerList() {
+        val adapter = FragmentAdapter(viewModel.listOfItems) {
+
+        }
+        recyclerView_fragment.layoutManager = LinearLayoutManager(context)
+        recyclerView_fragment.adapter = adapter
+    }
 }
