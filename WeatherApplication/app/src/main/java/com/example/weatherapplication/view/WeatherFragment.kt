@@ -35,10 +35,11 @@ class WeatherFragment : Fragment() {
 
     }
 
-    fun getRecyclerList() {
+    private fun getRecyclerList() {
         val adapter = FragmentAdapter(viewModel.listOfItems) {
 
         }
+
         recyclerView_fragment.layoutManager = LinearLayoutManager(context)
         recyclerView_fragment.adapter = adapter
     }
