@@ -30,17 +30,8 @@ class WeatherFragment : Fragment() {
         viewModel.getData()
 
         viewModel.listOfItemsLiveData.observe(viewLifecycleOwner, Observer {
-            getRecyclerList()
+            viewModel.getRecyclerList(this)
         })
 
-    }
-
-    private fun getRecyclerList() {
-        val adapter = FragmentAdapter(viewModel.listOfItems) {
-
-        }
-
-        recyclerView_fragment.layoutManager = LinearLayoutManager(context)
-        recyclerView_fragment.adapter = adapter
     }
 }

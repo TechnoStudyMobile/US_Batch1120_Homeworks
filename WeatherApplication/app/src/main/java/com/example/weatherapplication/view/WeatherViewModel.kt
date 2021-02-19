@@ -1,11 +1,14 @@
 package com.example.weatherapplication.view
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.example.weatherapplication.weatherData.Json4Kotlin_Base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapplication.network.GetDataService
 import com.example.weatherapplication.network.RetrofitClient
+import kotlinx.android.synthetic.main.weather_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +39,14 @@ class WeatherViewModel() : ViewModel() {
 
             }
         })
+    }
+
+    fun getRecyclerList(context: WeatherFragment) {
+        val adapter = FragmentAdapter(listOfItems) {
+
+        }
+        context.recyclerView_fragment.layoutManager = LinearLayoutManager(context.context)
+        context.recyclerView_fragment.adapter = adapter
     }
 
 }
