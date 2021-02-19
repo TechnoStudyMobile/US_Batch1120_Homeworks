@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Weather App</string>
+    <string name="weekdays">weekdays</string>
+    <string name="days_weather_forecast">days_weather_forecast</string>
+    <string name="_11">11°</string>
+    <string name="_33">33°</string>
+</resources>
