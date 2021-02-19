@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="#F0F8FF">
+
+    <ImageView
+        android:id="@+id/image_first_item"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/a01d"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_single_view_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <TextView
+        android:id="@+id/header_first_item"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="@string/today"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image_first_item" />
+
+    <TextView
+        android:id="@+id/forecast_first_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/forecast"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@id/image_first_item"
+        app:layout_constraintRight_toRightOf="@id/image_first_item"
+        app:layout_constraintTop_toBottomOf="@id/image_first_item" />
+
+    <TextView
+        android:id="@+id/tempHigh_first_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/h"
+        android:textSize="48sp"
+        app:layout_constraintRight_toLeftOf="@id/guideline_single_view_vertical"
+        app:layout_constraintTop_toBottomOf="@id/header_first_item" />
+
+    <TextView
+        android:id="@+id/tempLow_first_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/l"
+        android:textSize="48sp"
+        app:layout_constraintLeft_toRightOf="@id/tempHigh_first_item"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_first_item" />
+
+    <TextView
+        android:id="@+id/humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/humidity"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_single_view_vertical"
+        app:layout_constraintRight_toRightOf="@id/guideline_single_view_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/curent_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_temp"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_single_view_vertical"
+        app:layout_constraintRight_toRightOf="@id/guideline_single_view_vertical"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
