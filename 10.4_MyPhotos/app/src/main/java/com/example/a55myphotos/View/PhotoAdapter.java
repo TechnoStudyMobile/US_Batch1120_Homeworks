@@ -5,10 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.a55myphotos.R;
 import com.example.a55myphotos.model.Photo;
 import com.squareup.picasso.Picasso;
@@ -31,9 +29,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     @NonNull
     @Override
     public PhotoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_view_holder, parent, false);
-
         return new PhotoViewHolder(view);
     }
 
@@ -41,7 +37,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
         holder.textView.setText(list_photo.get(position).getTitle());
         Picasso.get().load(list_photo.get(position).getUrl()).into(holder.imageView);
-
     }
 
     @Override
@@ -49,13 +44,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         return list_photo.size();
     }
 
-
-
-
     public class PhotoViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
         public TextView textView;
-
         public PhotoViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image);

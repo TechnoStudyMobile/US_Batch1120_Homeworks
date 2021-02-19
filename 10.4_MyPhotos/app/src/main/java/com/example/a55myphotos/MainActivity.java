@@ -1,46 +1,76 @@
 package com.example.a55myphotos;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
+import com.example.a55myphotos.View.GetPosition;
+import com.example.a55myphotos.View.PhotoAdapter;
+import com.example.a55myphotos.View.SinglePhotoActivity;
 import com.example.a55myphotos.model.Photo;
 import com.example.a55myphotos.network.GetDataService;
 import com.example.a55myphotos.network.RetrofitClient;
-
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Serializable {
+    private RecyclerView recyclerView;
+    private GetDataService getDataService;
+    public List<Photo> photos = new ArrayList<>();
+    public static final String EXTRA_POSITION = "MainActivity.extra.holder.position";
+    public Call<List<Photo>> callPhotos;
+    protected Response<List<Photo>> response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        recyclerView = findViewById(R.id.recyclerview);
         GetDataService getDataService = RetrofitClient.getRetrofit().create(GetDataService.class);
-        Call<List<Photo>> callPhotos = getDataService.getPhotos();
+        callPhotos = getDataService.getPhotos();
+        retrofitCall();
+    }
 
-        callPhotos.enqueue(new Callback<List<Photo>>() {
+    public void createRecycler() {
+        PhotoAdapter adapter = new PhotoAdapter(photos);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.setGetPosition(new GetPosition() {
             @Override
-            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-                // We have a response
-                List<Photo> photos = response.body();
-                if (photos != null) {
-                    for (Photo photo: photos){
-                        Log.d("MyPhotos", "My Photos: " + photo.getTitle());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Photo>> call, Throwable t) {
-                // Something is wrong. it's failed.
+            public void onClick(int position) {
+                Intent intent = new Intent(getApplicationContext(), SinglePhotoActivity.class);
+                intent.putExtra("MyObject", photos.get(position));
+                startActivity(intent);
             }
         });
+    }
+
+    public void retrofitCall() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    response = callPhotos.execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                photos = response.body();
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        createRecycler();
+                    }
+                });
+                ;
+            }
+        }).start();
     }
 }
