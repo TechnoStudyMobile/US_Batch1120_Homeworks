@@ -1,6 +1,6 @@
 package com.example.weatherapplication.view
 
-import android.content.Context
+
 import androidx.lifecycle.LiveData
 import com.example.weatherapplication.weatherData.Json4Kotlin_Base
 import androidx.lifecycle.MutableLiveData
@@ -19,7 +19,7 @@ class WeatherViewModel() : ViewModel() {
 
     lateinit var listOfItems: Json4Kotlin_Base
 
-    val listOfItemsLiveData: LiveData<Json4Kotlin_Base>
+    val listOfItemsLiveData: LiveData<Json4Kotlin_Base?>
         get() = _listOfItemsLiveData
 
     fun getData() {

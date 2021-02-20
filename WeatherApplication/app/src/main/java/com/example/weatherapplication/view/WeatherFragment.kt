@@ -26,12 +26,11 @@ class WeatherFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
-
         viewModel.getData()
-
         viewModel.listOfItemsLiveData.observe(viewLifecycleOwner, Observer {
             viewModel.getRecyclerList(this)
         })
 
     }
+
 }
