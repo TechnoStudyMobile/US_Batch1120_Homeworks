@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Dzemal_Photos_MultiThreading"
