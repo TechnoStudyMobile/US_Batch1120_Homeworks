@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp"
     app:cardCornerRadius="8dp">
 
@@ -15,17 +16,18 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="16dp"
-            android:src="@drawable/image01"
+            tools:src="@drawable/image01"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="The Weather is"/>
 
         <TextView
             android:id="@+id/text_view_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:text="Tomorrow"
+            tools:text="Tomorrow"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/image_view_cloud"
@@ -36,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:text="Scattered Clouds"
+            tools:text="Scattered Clouds"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/image_view_cloud"
             app:layout_constraintTop_toBottomOf="@id/text_view_day" />
@@ -46,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:text="15°"
+            tools:text="15°"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:text="15°"
+            tools:text="15°"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_view_temperature"

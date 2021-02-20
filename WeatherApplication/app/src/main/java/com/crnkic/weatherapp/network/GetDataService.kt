@@ -1,11 +1,22 @@
-package com.crnkic.weatherapplication.network
+package com.crnkic.weatherapp.network
 
-import com.crnkic.weatherapplication.weatherData.Json4Kotlin_Base
+import com.crnkic.weatherapp.ForecastResponse.Json4Kotlin_Base
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface GetDataService {
-    @GET("daily?city=Harrisburg&country=United%20States&state=Pennsylvania&key=69c331eb3c2c440382c93901d4be55bd")
-    fun getWeatherData(): Call<Json4Kotlin_Base>
+//    @GET("daily?days=14&postal_code=17055&country=US&key=69c331eb3c2c440382c93901d4be55bd")
+//    fun getWeatherData(): Call<Json4Kotlin_Base>
+
+
+    @GET("daily")
+    fun getWeatherData(
+            @Query("days") days:String,
+            @Query("postal_code") postal_code:String,
+            @Query("country") country:String,
+            @Query("key") key:String,
+    ): Call<Json4Kotlin_Base>
+
 
 }

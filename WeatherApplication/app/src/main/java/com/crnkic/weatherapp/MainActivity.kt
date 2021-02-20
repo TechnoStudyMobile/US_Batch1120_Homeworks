@@ -1,8 +1,8 @@
-package com.crnkic.weatherapplication
+package com.crnkic.weatherapp
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
-import com.crnkic.weatherapplication.view.WeatherFragment
+import com.crnkic.weatherapp.view.WeatherFragment
 
 class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,7 +12,6 @@ class MainActivity : FragmentActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, WeatherFragment::class.java, null)
-                .setReorderingAllowed(false)
                 .commit()
         }
     }

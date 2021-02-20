@@ -1,9 +1,9 @@
 package com.crnkic.weatherapp.data.weatherData
 
-import com.crnkic.weatherapp.weatherData.Weather
+import com.crnkic.weatherapp.ForecastResponse.Weather
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class Forecast(
 		val moonrise_ts: Int,
         val wind_cdir: String,
         @SerializedName("rh") val rh: Int,

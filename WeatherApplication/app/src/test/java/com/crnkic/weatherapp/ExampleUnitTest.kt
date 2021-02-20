@@ -1,4 +1,4 @@
-package com.crnkic.weatherapplication
+package com.crnkic.weatherapp
 
 import org.junit.Test
 

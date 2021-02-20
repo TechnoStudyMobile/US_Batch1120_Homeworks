@@ -1,4 +1,4 @@
-package com.crnkic.weatherapplication.network
+package com.crnkic.weatherapp.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,6 +1,6 @@
-package com.crnkic.weatherapplication.util
+package com.crnkic.weatherapp.util
 
-import com.crnkic.weatherapplication.R
+import com.crnkic.weatherapp.R
 
 object DrawableUtil {
     inline fun <reified T: Class<R.drawable>> T.getImageId(resourceName: String?): Int {
