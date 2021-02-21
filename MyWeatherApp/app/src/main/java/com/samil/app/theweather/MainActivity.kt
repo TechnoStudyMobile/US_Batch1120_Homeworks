@@ -9,6 +9,11 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//   if (savedInstanceState == null){
+//        supportFragmentManager.beginTransaction()
+//        .replace(R.id.fragment_container_weather_forecast, WeatherForecastFragment())
+//        .commit()
+//}
         val weatherForecastFragment =
             WeatherForecastFragment()
         val manager = supportFragmentManager
