@@ -5,17 +5,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    val BASE_URL = "https://api.weatherbit.io/v2.0/forecast/"
-    var instance: Retrofit? = null
+    private const val BASE_URL = "https://api.weatherbit.io/v2.0/forecast/"
+    var retrofit: Retrofit? = null
         get() {
             if (field == null) {
-                Log.d("MyApp", "Retrofit is  null, new instance created")
                 field = Retrofit.Builder().baseUrl(BASE_URL)
-                    .addConverterFactory(
-                        GsonConverterFactory
-                            .create()
-                    ).build()
-            } else Log.d("MyApp", "Retrofit is not null")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            }
             return field
         }
+        private set
 }

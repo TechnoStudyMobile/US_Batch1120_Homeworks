@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.screen.view.WeatherAdapter
 import kotlinx.android.synthetic.main.fragment_forecast.*
@@ -22,18 +23,18 @@ class ForecastListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_forecast, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view:View,savedInstanceState: Bundle?) {
+        super.onViewCreated(view,savedInstanceState)
         viewModel = ViewModelProvider(this).get(ForecastViewModel::class.java)
-        viewModel.getData()
-        viewModel.listOfItemsLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.fetchForecastInfo()
+        viewModel.forecastLiveData.observe(viewLifecycleOwner, Observer {
             getRecyclerList()
         })
     }
 
     private fun getRecyclerList() {
-        val adapter = WeatherAdapter(viewModel.listOfItemsLiveData.value) { }
-        weather_recycler.layoutManager = LinearLayoutManager(context)
-        weather_recycler.adapter = adapter
+        val adapter = viewModel.forecastLiveData.value?.let { WeatherAdapter(it) { } }
+        weather_recycler_view.layoutManager = LinearLayoutManager(context)
+        weather_recycler_view.adapter = adapter
     }
 }

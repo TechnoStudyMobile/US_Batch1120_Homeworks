@@ -14,8 +14,8 @@ import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
 import kotlinx.android.synthetic.main.first_item_in_fragment_forecast.view.*
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
 
-class WeatherAdapter(var forecast: Forecast?, var doOnClick: (Int) -> Unit) :
-    RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
+class WeatherAdapter(private val forecastList: Forecast, var doOnClick: (Int) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val firstItem = 0
     private val otherItems = 1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
@@ -23,6 +23,7 @@ class WeatherAdapter(var forecast: Forecast?, var doOnClick: (Int) -> Unit) :
         when (viewType) {
             0 -> view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.first_item_in_fragment_forecast, parent, false)
+
             else -> view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.forecast_single_view, parent, false)
         }
@@ -31,46 +32,51 @@ class WeatherAdapter(var forecast: Forecast?, var doOnClick: (Int) -> Unit) :
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (holder.itemViewType) {
             0 -> {
-                holder.itemView.image_first_item.setImageResource(
-                    R.drawable::class.java.getImageId(
-                        forecast?.data?.get(position)?.weather?.icon
+                holder.itemView.run {
+                    image_first_item.setImageResource(
+                        R.drawable::class.java.getImageId(
+                            forecastList.data.get(position).weather.icon
+                        )
                     )
-                )
-                holder.itemView.forecast_first_item.text =
-                    forecast?.data?.get(position)?.weather?.description
-                holder.itemView.tempHigh_first_item.text =
-                    (forecast?.data?.get(position)?.high_temp?.toInt().toString() + "°")
-                holder.itemView.tempLow_first_item.text =
-                    (forecast?.data?.get(position)?.low_temp?.toInt().toString() + "°")
-                holder.itemView.curent_temp.text = "Current " +
-                        (forecast?.data?.get(position)?.temp?.toInt().toString() + "°")
-                holder.itemView.humidity.text =
-                    "Humidity " + forecast?.data?.get(position)?.humidityAverage.toString() + "%"
+                    forecast_first_item.text =
+                        forecastList.data.get(position).weather.description
+                    tempHigh_first_item.text =
+                        (forecastList.data.get(position).high_temp.toInt().toString() + "°")
+                    tempLow_first_item.text =
+                        (forecastList.data.get(position).low_temp.toInt().toString() + "°")
+                    curent_temp.text = "Current " +
+                            (forecastList.data.get(position).temp.toInt().toString() + "°")
+                    humidity.text =
+                        "Humidity " + forecastList.data.get(position).humidityAverage.toString() + "%"
+                }
             }
             else -> {
-                holder.itemView.imageView_single_view.setImageResource(
-                    R.drawable::class.java.getImageId(
-                        forecast?.data?.get(position)?.weather?.icon
-                    )
-                )
-                holder.itemView.textView_single_view_day_of_week.text =
-                    forecast?.data?.get(position)?.let { setDate ->
-                        formatDate(
-                            setDate.datetime
+                holder.itemView.run {
+                    this.icon_image_view.setImageResource(
+                        R.drawable::class.java.getImageId(
+                            forecastList.data.get(position).weather.icon
                         )
-                    }
-                holder.itemView.textView_single_view_forecast.text =
-                    forecast?.data?.get(position)?.weather?.description
-                holder.itemView.textView_single_view_temp_high.text =
-                    (forecast?.data?.get(position)?.high_temp?.toInt().toString() + "°")
-                holder.itemView.textView_single_view_temp_low.text =
-                    (forecast?.data?.get(position)?.low_temp?.toInt().toString() + "°")
+                    )
+                    day_of_week_text_view.text =
+                        forecastList.data.get(position).let { setDate ->
+                            formatDate(
+                                setDate.datetime
+                            )
+                        }
+                    textView_single_view_forecast.text =
+                        forecastList.data.get(position).weather.description
+                    textView_single_view_temp_high.text =
+                        (forecastList.data.get(position).high_temp.toInt().toString() + "°")
+                    textView_single_view_temp_low.text =
+                        (forecastList.data.get(position).low_temp.toInt().toString() + "°")
+                }
             }
         }
+
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -80,12 +86,8 @@ class WeatherAdapter(var forecast: Forecast?, var doOnClick: (Int) -> Unit) :
     }
 
     override fun getItemCount(): Int {
-        return forecast?.data?.size!!
+        return forecastList.data.size
     }
 
-    inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.setOnClickListener { doOnClick(adapterPosition) }
-        }
-    }
+    class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

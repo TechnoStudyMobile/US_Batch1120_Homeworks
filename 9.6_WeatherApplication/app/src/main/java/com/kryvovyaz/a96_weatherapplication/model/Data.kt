@@ -1,7 +1,10 @@
 package com.kryvovyaz.a96_weatherapplication.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Data(
     val moonrise_ts: Int,
     @SerializedName("wind_cdir") val abdreviatedWindDirection: String,
@@ -41,4 +44,4 @@ data class Data(
     val min_temp: Double,
     val clouds_mid: Int,
     val clouds_low: Int
-)
+):Parcelable
