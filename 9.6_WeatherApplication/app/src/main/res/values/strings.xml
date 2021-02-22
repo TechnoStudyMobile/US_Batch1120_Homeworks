@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">9,6_WeatherApplication</string>
+    <string name="day_of_week">Day of Week</string>
+    <string name="forecast">Forecast</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Zero">0</string>
+    <string name="_0">0°</string>
+</resources>
