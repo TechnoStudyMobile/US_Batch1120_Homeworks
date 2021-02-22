@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.55MyPhotos">
+        <activity android:name=".View.SinglePhotoActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,4 +20,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
