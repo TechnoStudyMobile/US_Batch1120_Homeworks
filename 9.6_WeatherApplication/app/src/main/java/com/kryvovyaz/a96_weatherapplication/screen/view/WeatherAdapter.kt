@@ -11,10 +11,10 @@ import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
-import kotlinx.android.synthetic.main.first_item_in_fragment_forecast.view.*
+import kotlinx.android.synthetic.main.today_forecast_item_list.view.*
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
 
-class WeatherAdapter(private val forecastList: Forecast, var doOnClick: (Int) -> Unit) :
+class WeatherAdapter(private val forecastList: Forecast) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val firstItem = 0
     private val otherItems = 1
@@ -22,7 +22,7 @@ class WeatherAdapter(private val forecastList: Forecast, var doOnClick: (Int) ->
         val view: View
         when (viewType) {
             0 -> view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.first_item_in_fragment_forecast, parent, false)
+                .inflate(R.layout.today_forecast_item_list, parent, false)
 
             else -> view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.forecast_single_view, parent, false)
@@ -37,20 +37,20 @@ class WeatherAdapter(private val forecastList: Forecast, var doOnClick: (Int) ->
         when (holder.itemViewType) {
             0 -> {
                 holder.itemView.run {
-                    image_first_item.setImageResource(
+                    image_today.setImageResource(
                         R.drawable::class.java.getImageId(
                             forecastList.data.get(position).weather.icon
                         )
                     )
-                    forecast_first_item.text =
+                    forecast_today.text =
                         forecastList.data.get(position).weather.description
-                    tempHigh_first_item.text =
+                    tempHigh_today.text =
                         (forecastList.data.get(position).high_temp.toInt().toString() + "°")
-                    tempLow_first_item.text =
+                    tempLow_today.text =
                         (forecastList.data.get(position).low_temp.toInt().toString() + "°")
-                    curent_temp.text = "Current " +
+                    curent_temp_today.text = "Current " +
                             (forecastList.data.get(position).temp.toInt().toString() + "°")
-                    humidity.text =
+                    humidity_today.text =
                         "Humidity " + forecastList.data.get(position).humidityAverage.toString() + "%"
                 }
             }
@@ -69,7 +69,7 @@ class WeatherAdapter(private val forecastList: Forecast, var doOnClick: (Int) ->
                         }
                     textView_single_view_forecast.text =
                         forecastList.data.get(position).weather.description
-                    textView_single_view_temp_high.text =
+                    temp_high_text_view.text =
                         (forecastList.data.get(position).high_temp.toInt().toString() + "°")
                     textView_single_view_temp_low.text =
                         (forecastList.data.get(position).low_temp.toInt().toString() + "°")

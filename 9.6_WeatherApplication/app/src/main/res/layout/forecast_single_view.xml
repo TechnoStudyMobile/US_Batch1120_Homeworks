@@ -55,7 +55,7 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <TextView
-        android:id="@+id/textView_single_view_temp_high"
+        android:id="@+id/temp_high_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_0"
