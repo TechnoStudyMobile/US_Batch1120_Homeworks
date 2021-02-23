@@ -16,23 +16,20 @@ data class ForecastResponse(
     @field:SerializedName("data")
     val forecastList: List<Forecast>,
 
-    @field:SerializedName("timezone")
     val timezone: String,
 
-    @field:SerializedName("lon")
     val lon: Double,
 
     @field:SerializedName("state_code")
     val stateCode: String,
 
-    @field:SerializedName("lat")
     val lat: Double
+
 ) : Parcelable
 
 @Parcelize
 data class Forecast(
 
-    @field:SerializedName("pres")
     val pres: Double,
 
     @field:SerializedName("moon_phase")
@@ -44,7 +41,6 @@ data class Forecast(
     @field:SerializedName("moonrise_ts")
     val moonriseTs: Int,
 
-    @field:SerializedName("clouds")
     val clouds: Int,
 
     @field:SerializedName("low_temp")
@@ -53,19 +49,13 @@ data class Forecast(
     @field:SerializedName("wind_spd")
     val windSpd: Double,
 
-    @field:SerializedName("ozone")
     val ozone: Double,
-
-    @field:SerializedName("pop")
     val pop: Int,
 
     @field:SerializedName("valid_date")
     val validDate: String,
 
-    @field:SerializedName("datetime")
     val datetime: String,
-
-    @field:SerializedName("precip")
     val precip: Float,
 
     @field:SerializedName("sunrise_ts")
@@ -74,7 +64,6 @@ data class Forecast(
     @field:SerializedName("min_temp")
     val minTemp: Double,
 
-    @field:SerializedName("weather")
     val weather: Weather,
 
     @field:SerializedName("app_max_temp")
@@ -95,16 +84,12 @@ data class Forecast(
     @field:SerializedName("clouds_mid")
     val cloudsMid: Int,
 
-    @field:SerializedName("vis")
     val vis: Double,
-
-    @field:SerializedName("uv")
     val uv: Double,
 
     @field:SerializedName("high_temp")
     val highTemp: Double,
 
-    @field:SerializedName("temp")
     val temp: Double,
 
     @field:SerializedName("clouds_hi")
@@ -116,7 +101,6 @@ data class Forecast(
     @field:SerializedName("moon_phase_lunation")
     val moonPhaseLunation: Double,
 
-    @field:SerializedName("dewpt")
     val dewpt: Double,
 
     @field:SerializedName("wind_dir")
@@ -128,14 +112,9 @@ data class Forecast(
     @field:SerializedName("clouds_low")
     val cloudsLow: Int,
 
-    @field:SerializedName("rh")
     val rh: Int,
-
-    @field:SerializedName("slp")
     val slp: Double,
-
-    @field:SerializedName("snow")
-    val snow: Int,
+    val snow: Float,
 
     @field:SerializedName("wind_cdir_full")
     val windCdirFull: String,
@@ -143,19 +122,13 @@ data class Forecast(
     @field:SerializedName("moonset_ts")
     val moonsetTs: Int,
 
-    @field:SerializedName("ts")
     val ts: Int
+
 ) : Parcelable
 
 @Parcelize
 data class Weather(
-
-    @field:SerializedName("code")
     val code: Int,
-
-    @field:SerializedName("icon")
     val icon: String,
-
-    @field:SerializedName("description")
     val description: String
 ) : Parcelable

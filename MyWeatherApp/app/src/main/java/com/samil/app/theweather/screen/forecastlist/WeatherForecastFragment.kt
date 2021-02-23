@@ -1,4 +1,4 @@
-package com.samil.app.theweather.screen
+package com.samil.app.theweather.screen.forecastlist
 
 import android.os.Bundle
 import android.util.Log
@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.samil.app.theweather.R
-import com.samil.app.theweather.adapter.WeatherAdapter
+import com.samil.app.theweather.screen.adapters.WeatherAdapter
 import com.samil.app.theweather.model.ForecastResponse
 import kotlinx.android.synthetic.main.fragment_weather_forecast.*
 
-class WeatherForecastFragment : Fragment(R.layout.fragment_weather_forecast) {
+class WeatherForecastFragment : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
     private lateinit var forecastViewModel: ForecastViewModel
 
     override fun onCreateView(
@@ -31,7 +31,6 @@ class WeatherForecastFragment : Fragment(R.layout.fragment_weather_forecast) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = forecast_recyclerView
         forecastViewModel = ViewModelProvider(this).get(ForecastViewModel::class.java)
         forecastViewModel.forecastDummyListLiveData.observe(viewLifecycleOwner, Observer {
             createWeatherList(it)
@@ -40,8 +39,12 @@ class WeatherForecastFragment : Fragment(R.layout.fragment_weather_forecast) {
     }
 
     private fun createWeatherList(forecastResponse: ForecastResponse) {
-        val weatherAdapter = WeatherAdapter(forecastResponse)
+        val adapter = WeatherAdapter(forecastResponse) { position ->
+            //Navigate
+            findNavController()
+                .navigate(R.id.action_weatherForecastFragment_to_forecastDetailsFragment)
+        }
         forecast_recyclerView.layoutManager = LinearLayoutManager(context)
-        forecast_recyclerView.adapter = weatherAdapter
+        forecast_recyclerView.adapter = adapter
     }
 }

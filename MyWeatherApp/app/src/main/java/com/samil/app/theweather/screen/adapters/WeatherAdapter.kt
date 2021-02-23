@@ -1,8 +1,9 @@
-package com.samil.app.theweather.adapter
+package com.samil.app.theweather.screen.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.persistableBundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.samil.app.theweather.R
 import com.samil.app.theweather.model.ForecastResponse
@@ -10,7 +11,8 @@ import com.samil.app.theweather.utils.GetImageId.getImageId
 import kotlinx.android.synthetic.main.item_list_forecast.view.*
 import kotlinx.android.synthetic.main.item_list_forecast_first_big_item.view.*
 
-class WeatherAdapter(private val forecastResponse: ForecastResponse) :
+class WeatherAdapter(
+    private val forecastResponse: ForecastResponse, val onClick: (position: Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val firstItem = 0
@@ -77,5 +79,11 @@ class WeatherAdapter(private val forecastResponse: ForecastResponse) :
         return forecastResponse.forecastList.size
     }
 
-    class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                onClick.invoke(adapterPosition)
+            }
+        }
+    }
 }

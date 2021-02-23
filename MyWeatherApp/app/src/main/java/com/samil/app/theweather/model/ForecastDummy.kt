@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Forecast (
+class ForecastDummy (
     val imageId: Int = 0,
     val textViewWeekdays: String = "Sunday",
     val textViewForecast: String = "Scattered Clouds",

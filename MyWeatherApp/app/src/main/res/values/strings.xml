@@ -4,4 +4,9 @@
     <string name="days_weather_forecast">days_weather_forecast</string>
     <string name="_11">11°</string>
     <string name="_33">33°</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_settings_fragment">Hello Settings fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_details_fragment">Hello details fragment</string>
+    <string name="label_weather_forecast_fragment_title">Daily Weather</string>
 </resources>
