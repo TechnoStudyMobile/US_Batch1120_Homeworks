@@ -11,10 +11,10 @@ import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
-import kotlinx.android.synthetic.main.today_forecast_item_list.view.*
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
+import kotlinx.android.synthetic.main.today_forecast.view.*
 
-class WeatherAdapter(private val forecastList: Forecast) :
+class WeatherAdapter(private val forecastList: Forecast, val onClick: (position: Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val firstItem = 0
     private val otherItems = 1
@@ -22,7 +22,7 @@ class WeatherAdapter(private val forecastList: Forecast) :
         val view: View
         when (viewType) {
             0 -> view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.today_forecast_item_list, parent, false)
+                .inflate(R.layout.today_forecast, parent, false)
 
             else -> view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.forecast_single_view, parent, false)
@@ -89,5 +89,11 @@ class WeatherAdapter(private val forecastList: Forecast) :
         return forecastList.data.size
     }
 
-    class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                onClick.invoke(adapterPosition)
+            }
+        }
+    }
 }

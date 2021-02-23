@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.kryvovyaz.a96_weatherapplication.R
@@ -34,7 +36,9 @@ class ForecastListFragment : Fragment() {
     }
 
     private fun getRecyclerList(forecast: Forecast) {
-        val adapter = WeatherAdapter(forecast)
+        val adapter = WeatherAdapter(forecast) { position ->
+         findNavController().navigate(R.id.action_forecastListFragment_to_forecastDetailsFragment)
+                    }
         weather_recycler_view.layoutManager = LinearLayoutManager(context)
         weather_recycler_view.adapter = adapter
     }
