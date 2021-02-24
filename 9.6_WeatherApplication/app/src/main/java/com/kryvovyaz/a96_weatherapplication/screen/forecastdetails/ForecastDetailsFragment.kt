@@ -47,9 +47,11 @@ class ForecastDetailsFragment : Fragment() {
                 forecast_details.text = it.data.getOrNull(args.position)?.weather?.description
                 date_details.text =
                     it.data.getOrNull(args.position)?.datetime?.let { it1 ->
-                        formatDate(
-                            it1, args.position
-                        )
+                        context?.let { it2 ->
+                            formatDate(
+                                it1, args.position, it2
+                            )
+                        }
                     }
 
                 tempHigh_details.text =

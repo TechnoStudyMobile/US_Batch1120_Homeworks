@@ -56,7 +56,7 @@ class WeatherAdapter(private val forecastList: Forecast, val onClick: (position:
                     )
                     day_of_week_text_view.text =
                         formatDate(
-                            forecastList.data[position].datetime,position)
+                            forecastList.data[position].datetime,position,context)
                     textView_single_view_forecast.text =
                         forecastList.data[position].weather.description
                     temp_high_text_view.text =
