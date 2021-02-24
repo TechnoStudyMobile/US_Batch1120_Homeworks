@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ForecastViewModel : ViewModel() {
+ class ForecastViewModel : ViewModel() {
     private val _forecastLiveData = MutableLiveData<Forecast>()
     val forecastLiveData: LiveData<Forecast>
         get() = _forecastLiveData

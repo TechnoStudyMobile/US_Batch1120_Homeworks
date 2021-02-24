@@ -12,9 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bar_header"
-        app:logo="@drawable/ic_menu_white"
-        app:title=" "
-        app:titleTextColor="@color/black" />
+        app:title="Weather"
+        app:titleTextColor="@color/white" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"

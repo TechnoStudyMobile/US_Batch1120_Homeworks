@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.screen.view.WeatherAdapter
@@ -28,17 +26,21 @@ class ForecastListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ForecastViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(ForecastViewModel::class.java)
         viewModel.fetchForecastInfo()
         viewModel.forecastLiveData.observe(viewLifecycleOwner, Observer {
-            getRecyclerList(it)
+            createRecyclerList(it)
         })
     }
 
-    private fun getRecyclerList(forecast: Forecast) {
+    private fun createRecyclerList(forecast: Forecast) {
         val adapter = WeatherAdapter(forecast) { position ->
-         findNavController().navigate(R.id.action_forecastListFragment_to_forecastDetailsFragment)
-                    }
+            val direction =
+                ForecastListFragmentDirections.actionForecastListFragmentToForecastDetailsFragment(
+                    position
+                )
+            findNavController().navigate(direction)
+        }
         weather_recycler_view.layoutManager = LinearLayoutManager(context)
         weather_recycler_view.adapter = adapter
     }

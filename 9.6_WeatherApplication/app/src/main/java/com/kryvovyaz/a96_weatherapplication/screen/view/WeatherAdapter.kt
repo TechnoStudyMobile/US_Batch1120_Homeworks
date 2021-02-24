@@ -1,11 +1,8 @@
 package com.kryvovyaz.a96_weatherapplication.screen.view
 
-import android.annotation.SuppressLint
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.model.Forecast
@@ -19,19 +16,16 @@ class WeatherAdapter(private val forecastList: Forecast, val onClick: (position:
     private val firstItem = 0
     private val otherItems = 1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
-        val view: View
-        when (viewType) {
-            0 -> view = LayoutInflater.from(parent.context)
+        val view: View = when (viewType) {
+            0 -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.today_forecast, parent, false)
 
-            else -> view = LayoutInflater.from(parent.context)
+            else -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.forecast_single_view, parent, false)
         }
         return WeatherViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (holder.itemViewType) {
@@ -39,40 +33,36 @@ class WeatherAdapter(private val forecastList: Forecast, val onClick: (position:
                 holder.itemView.run {
                     image_today.setImageResource(
                         R.drawable::class.java.getImageId(
-                            forecastList.data.get(position).weather.icon
+                            forecastList.data[position].weather.icon
                         )
                     )
                     forecast_today.text =
-                        forecastList.data.get(position).weather.description
+                        forecastList.data[position].weather.description
                     tempHigh_today.text =
-                        (forecastList.data.get(position).high_temp.toInt().toString() + "°")
+                        (forecastList.data[position].high_temp.toInt().toString() + "°")
                     tempLow_today.text =
-                        (forecastList.data.get(position).low_temp.toInt().toString() + "°")
-                    curent_temp_today.text = "Current " +
-                            (forecastList.data.get(position).temp.toInt().toString() + "°")
+                        (forecastList.data[position].low_temp.toInt().toString() + "°")
+                    curent_temp_today.text = resources.getString(R.string.current_temp).plus(forecastList.data[position].temp.toInt().toString().plus("°"))
                     humidity_today.text =
-                        "Humidity " + forecastList.data.get(position).humidityAverage.toString() + "%"
+                        resources.getString(R.string.humidity).plus(forecastList.data[position].humidityAverage.toString().plus("%"))
                 }
             }
             else -> {
                 holder.itemView.run {
                     this.icon_image_view.setImageResource(
                         R.drawable::class.java.getImageId(
-                            forecastList.data.get(position).weather.icon
+                            forecastList.data[position].weather.icon
                         )
                     )
                     day_of_week_text_view.text =
-                        forecastList.data.get(position).let { setDate ->
-                            formatDate(
-                                setDate.datetime
-                            )
-                        }
+                        formatDate(
+                            forecastList.data[position].datetime,position)
                     textView_single_view_forecast.text =
-                        forecastList.data.get(position).weather.description
+                        forecastList.data[position].weather.description
                     temp_high_text_view.text =
-                        (forecastList.data.get(position).high_temp.toInt().toString() + "°")
+                        (forecastList.data[position].high_temp.toInt().toString() + "°")
                     textView_single_view_temp_low.text =
-                        (forecastList.data.get(position).low_temp.toInt().toString() + "°")
+                        (forecastList.data[position].low_temp.toInt().toString() + "°")
                 }
             }
         }

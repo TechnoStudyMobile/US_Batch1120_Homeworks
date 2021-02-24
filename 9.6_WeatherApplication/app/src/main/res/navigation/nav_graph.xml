@@ -37,6 +37,10 @@
             app:exitAnim="@anim/slide_in_left"
             app:popEnterAnim="@anim/slide_out_left"
             app:popExitAnim="@anim/slide_in_left" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
