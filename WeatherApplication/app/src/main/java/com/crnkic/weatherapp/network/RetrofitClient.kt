@@ -17,6 +17,4 @@ object RetrofitClient {
             }
             return field
         }
-
-
 }

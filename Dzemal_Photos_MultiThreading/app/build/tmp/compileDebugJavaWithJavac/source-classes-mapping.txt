@@ -1,0 +1,22 @@
+com/example/a55myphotos/MainActivity.java
+ com.example.a55myphotos.MainActivity
+ com.example.a55myphotos.MainActivity$1
+ com.example.a55myphotos.MainActivity$2
+com/example/a55myphotos/view/PhotoAdapter.java
+ com.example.a55myphotos.view.PhotoAdapter
+ com.example.a55myphotos.view.PhotoAdapter$PhotoViewHolder
+ com.example.a55myphotos.view.PhotoAdapter$PhotoViewHolder$1
+com/example/a55myphotos/view/DoOnCLick.java
+ com.example.a55myphotos.view.DoOnCLick
+com/example/a55myphotos/MainActivityViewModel.java
+ com.example.a55myphotos.MainActivityViewModel
+ com.example.a55myphotos.MainActivityViewModel$1
+ com.example.a55myphotos.MainActivityViewModel$1$1
+com/example/a55myphotos/model/Photo.java
+ com.example.a55myphotos.model.Photo
+com/example/a55myphotos/network/RetrofitClient.java
+ com.example.a55myphotos.network.RetrofitClient
+com/example/a55myphotos/network/GetDataService.java
+ com.example.a55myphotos.network.GetDataService
+com/example/a55myphotos/BuildConfig.java
+ com.example.a55myphotos.BuildConfig

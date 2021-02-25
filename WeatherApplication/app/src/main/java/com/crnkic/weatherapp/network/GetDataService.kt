@@ -1,14 +1,13 @@
 package com.crnkic.weatherapp.network
 
-import com.crnkic.weatherapp.ForecastResponse.Json4Kotlin_Base
+import com.crnkic.weatherapp.forecastResponse.ForcastResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GetDataService {
 //    @GET("daily?days=14&postal_code=17055&country=US&key=69c331eb3c2c440382c93901d4be55bd")
-//    fun getWeatherData(): Call<Json4Kotlin_Base>
-
+//    fun getWeatherData(): Call<ForcastResponse>
 
     @GET("daily")
     fun getWeatherData(
@@ -16,7 +15,6 @@ interface GetDataService {
             @Query("postal_code") postal_code:String,
             @Query("country") country:String,
             @Query("key") key:String,
-    ): Call<Json4Kotlin_Base>
-
+    ): Call<ForcastResponse>
 
 }

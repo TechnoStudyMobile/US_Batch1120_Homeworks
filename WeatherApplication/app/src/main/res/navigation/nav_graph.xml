@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/weatherFragment">
+
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.crnkic.weatherapp.view.forecastlist.ForecastListFragment"
+        android:label="forecast_list"
+        tools:layout="@layout/weather_fragment" >
+        <action
+            android:id="@+id/action_weatherFragment_to_forcastDetailsFragment"
+            app:destination="@id/forcastDetailsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_weatherFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/forcastDetailsFragment"
+        android:name="com.crnkic.weatherapp.view.forecastdetails.ForecastDetailsFragment"
+        android:label="Forecast Details"
+        tools:layout="@layout/forcast_details_fragment" >
+        <action
+            android:id="@+id/action_forcastDetailsFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.crnkic.weatherapp.view.settings.SettingFragment"
+        android:label="Settings"
+        tools:layout="@layout/setting_fragment" />
+</navigation>
