@@ -8,35 +8,35 @@
     <fragment
         android:id="@+id/forecastListFragment"
         android:name="com.kryvovyaz.a96_weatherapplication.screen.forecastlist.ForecastListFragment"
-        android:label="@string/label_forecast_list_fragment_title">
+        android:label="@string/label_forecast_list_fragment_title"
+        tools:layout="@layout/fragment_forecast">
         <action
             android:id="@+id/action_forecastListFragment_to_forecastDetailsFragment"
             app:destination="@id/forecastDetailsFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
-            app:launchSingleTop="false"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_forecastListFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/forecastDetailsFragment"
         android:name="com.kryvovyaz.a96_weatherapplication.screen.forecastdetails.ForecastDetailsFragment"
-        android:label="fragment_forecast_details"
+        android:label="@string/label_forecast_details"
         tools:layout="@layout/fragment_forecast_details">
         <action
             android:id="@+id/action_forecastDetailsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
-            app:enterAnim="@anim/slide_out_left"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_out_left"
-            app:popExitAnim="@anim/slide_in_left" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <argument
             android:name="position"
             app:argType="integer" />
@@ -45,6 +45,10 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.kryvovyaz.a96_weatherapplication.screen.settings.SettingsFragment"
-        android:label="fragment_settings"
+        android:label="@string/label_gragment_settings"
+        app:enterAnim="@anim/slide_out_left"
+        app:exitAnim="@anim/slide_in_right"
+        app:popEnterAnim="@anim/slide_out_left"
+        app:popExitAnim="@anim/slide_in_left"
         tools:layout="@layout/fragment_settings" />
 </navigation>

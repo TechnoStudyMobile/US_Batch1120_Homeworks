@@ -1,9 +1,8 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastlist
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +20,7 @@ class ForecastListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_forecast, container, false)
     }
 
@@ -43,5 +43,25 @@ class ForecastListFragment : Fragment() {
         }
         weather_recycler_view.layoutManager = LinearLayoutManager(context)
         weather_recycler_view.adapter = adapter
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_list_menu, menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.map_location-> Toast.makeText(
+                context,
+                "Search location option to be implemented",
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.settings -> {
+                val directions =
+                    ForecastListFragmentDirections.actionForecastListFragmentToSettingsFragment()
+                findNavController()
+                    .navigate(directions)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

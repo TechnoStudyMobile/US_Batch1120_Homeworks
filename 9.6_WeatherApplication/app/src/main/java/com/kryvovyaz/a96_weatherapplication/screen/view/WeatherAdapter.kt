@@ -13,76 +13,86 @@ import kotlinx.android.synthetic.main.today_forecast.view.*
 
 class WeatherAdapter(private val forecastList: Forecast, val onClick: (position: Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val firstItem = 0
-    private val otherItems = 1
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
-        val view: View = when (viewType) {
-            0 -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.today_forecast, parent, false)
+    private val FORECAST_DAY = 0
+    private val FORECAST_WEEK = 1
 
-            else -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.forecast_single_view, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == FORECAST_DAY) {
+            WeatherTodayViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.today_forecast, parent, false)
+            )
+        } else {
+            WeatherViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.forecast_single_view, parent, false)
+            )
         }
-        return WeatherViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-        when (holder.itemViewType) {
-            0 -> {
-                holder.itemView.run {
-                    image_today.setImageResource(
-                        R.drawable::class.java.getImageId(
-                            forecastList.data[position].weather.icon
-                        )
-                    )
-                    forecast_today.text =
-                        forecastList.data[position].weather.description
-                    tempHigh_today.text =
-                        (forecastList.data[position].high_temp.toInt().toString() + "°")
-                    tempLow_today.text =
-                        (forecastList.data[position].low_temp.toInt().toString() + "°")
-                    curent_temp_today.text = resources.getString(R.string.current_temp).plus(forecastList.data[position].temp.toInt().toString().plus("°"))
-                    humidity_today.text =
-                        resources.getString(R.string.humidity).plus(forecastList.data[position].humidityAverage.toString().plus("%"))
-                }
-            }
-            else -> {
-                holder.itemView.run {
-                    this.icon_image_view.setImageResource(
-                        R.drawable::class.java.getImageId(
-                            forecastList.data[position].weather.icon
-                        )
-                    )
-                    day_of_week_text_view.text =
-                        formatDate(
-                            forecastList.data[position].datetime,position,context)
-                    textView_single_view_forecast.text =
-                        forecastList.data[position].weather.description
-                    temp_high_text_view.text =
-                        (forecastList.data[position].high_temp.toInt().toString() + "°")
-                    textView_single_view_temp_low.text =
-                        (forecastList.data[position].low_temp.toInt().toString() + "°")
-                }
-            }
+        when (holder) {
+            is WeatherTodayViewHolder -> holder.bind(position)
+            is WeatherViewHolder -> holder.bind(position)
         }
-
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) {
-            firstItem
-        } else otherItems
+        return if (position == 0) FORECAST_DAY else FORECAST_WEEK
     }
 
     override fun getItemCount(): Int {
         return forecastList.data.size
     }
 
+    inner class WeatherTodayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        fun bind(position: Int) {
+            itemView.run {
+                image_today.setImageResource(
+                    R.drawable::class.java.getImageId(
+                        forecastList.data[position].weather.icon
+                    )
+                )
+                forecast_today.text =
+                    forecastList.data[position].weather.description
+                tempHigh_today.text =
+                    (forecastList.data[position].high_temp.toInt().toString() + "°")
+                tempLow_today.text =
+                    (forecastList.data[position].low_temp.toInt().toString() + "°")
+                curent_temp_today.text = resources.getString(R.string.current_temp).plus(" ")
+                    .plus(forecastList.data[position].temp.toInt().toString().plus("°"))
+                humidity_today.text =
+                    resources.getString(R.string.humidity).plus(" ")
+                        .plus(forecastList.data[position].humidityAverage.toString().plus("%"))
+            }
+        }
+    }
+
     inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
                 onClick.invoke(adapterPosition)
+            }
+        }
+
+        fun bind(position: Int) {
+            itemView.run {
+                this.icon_image_view.setImageResource(
+                    R.drawable::class.java.getImageId(
+                        forecastList.data[position].weather.icon
+                    )
+                )
+                day_of_week_text_view.text =
+                    formatDate(
+                        forecastList.data[position].datetime, position, context
+                    )
+                textView_single_view_forecast.text =
+                    forecastList.data[position].weather.description
+                temp_high_text_view.text =
+                    (forecastList.data[position].high_temp.toInt().toString() + "°")
+                textView_single_view_temp_low.text =
+                    (forecastList.data[position].low_temp.toInt().toString() + "°")
             }
         }
     }

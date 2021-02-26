@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
+            android:textStyle="bold"
             android:foregroundGravity="center_horizontal"
             android:gravity="center_horizontal"
             android:text="@string/today"
@@ -61,7 +62,7 @@
             android:layout_below="@id/image_details"
             android:layout_alignStart="@id/image_details"
             android:layout_alignEnd="@id/image_details"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="18dp"
             android:gravity="center_horizontal"
             android:text="@string/forecast"
             android:textSize="18sp" />

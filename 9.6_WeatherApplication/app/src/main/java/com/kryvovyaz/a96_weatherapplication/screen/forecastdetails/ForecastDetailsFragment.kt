@@ -1,21 +1,16 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastdetails
 
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kryvovyaz.a96_weatherapplication.R
-import com.kryvovyaz.a96_weatherapplication.model.Data
-import com.kryvovyaz.a96_weatherapplication.model.Forecast
-import com.kryvovyaz.a96_weatherapplication.screen.forecastlist.ForecastListFragment
 import com.kryvovyaz.a96_weatherapplication.screen.forecastlist.ForecastViewModel
-import com.kryvovyaz.a96_weatherapplication.util.DateUtil
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
-import com.kryvovyaz.a96_weatherapplication.util.KEY_DAILY_FORECAST_DETAILS
 import kotlinx.android.synthetic.main.fragment_forecast_details.*
 
 class ForecastDetailsFragment : Fragment() {
@@ -23,6 +18,7 @@ class ForecastDetailsFragment : Fragment() {
     private lateinit var forecastViewModel: ForecastViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         forecastViewModel = ViewModelProvider(requireActivity()).get(ForecastViewModel::class.java)
     }
 
@@ -53,12 +49,34 @@ class ForecastDetailsFragment : Fragment() {
                             )
                         }
                     }
-
                 tempHigh_details.text =
                     it.data.getOrNull(args.position)?.high_temp?.toInt().toString().plus("°")
                 tempLow_details.text =
                     it.data.getOrNull(args.position)?.low_temp?.toInt().toString().plus("°")
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_details_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.share -> Toast.makeText(
+                context,
+                "Share option to be implemented",
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.settings -> {
+                val directions =
+                    ForecastDetailsFragmentDirections.actionForecastDetailsFragmentToSettingsFragment()
+                findNavController()
+                    .navigate(directions)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

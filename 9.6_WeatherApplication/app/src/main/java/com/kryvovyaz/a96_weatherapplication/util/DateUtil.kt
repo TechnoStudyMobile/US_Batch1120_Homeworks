@@ -10,7 +10,7 @@ object DateUtil {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(valid_date)
         return when (position) {
             0 -> context.resources.getString(R.string.today)
-            in 1..6 -> let { SimpleDateFormat("EEEE", Locale.getDefault()).format(date) }
+            in 1..6 -> SimpleDateFormat("EEEE", Locale.getDefault()).format(date)
             else -> SimpleDateFormat("EEE, MMM dd", Locale.getDefault()).format(date)
         }
     }
