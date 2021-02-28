@@ -24,7 +24,24 @@
     <string name="_100">100</string>
     <string name="pressure">Pressure</string>
     <string name="wind">Wind</string>
+    <string name="wind_speed">km/hr</string>
     <string name="your_location">Your Location</string>
     <string name="label_gragment_settings">Settings</string>
     <string name="label_forecast_details">Forecast Details</string>
+    <string name="humidity_icon">Humidity icon</string>
+    <string name="my_settings_title">My Settings Title</string>
+    <string name="wind_icon">wind icon</string>
+    <string name="notification_settings_subtitle">My settings subtitle</string>
+    <string name="weather_notification_setting_title">Weather Notification</string>
+    <string name="weather_notification_settings_subtitle">Weather Notification</string>
+    <string name="unit_setting_title">Unit system</string>
+    <string name="days_setting_title">Total days in List</string>
+    <string name="celsius_subtitle">Celsius</string>
+    <string name="fahrenheit_subtitle">Fahrenheit</string>
+    <string name="days_selected">Days selected</string>
+    <string-array name="days_array">
+        <item>14</item>
+        <item>7</item>
+    </string-array>
+
 </resources>

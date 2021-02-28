@@ -1,5 +1,7 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastdetails
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -31,6 +33,34 @@ class ForecastDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getForecastDetails()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_details_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.share -> Toast.makeText(
+                context,
+                "Share option to be implemented",
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.settings -> {
+                val directions =
+                    ForecastDetailsFragmentDirections
+                        .actionForecastDetailsFragmentToSettingsFragment()
+                findNavController()
+                    .navigate(directions)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    fun getForecastDetails() {
         forecastViewModel.forecastLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 humidity.text =
@@ -38,7 +68,8 @@ class ForecastDetailsFragment : Fragment() {
                 presure.text = it.data.getOrNull(args.position)?.pressureAverage?.toInt().toString()
                     .plus(" hPa")
                 wind.text =
-                    it.data.getOrNull(args.position)?.wind_spd?.toInt().toString().plus(" km/h ")
+                    it.data.getOrNull(args.position)?.wind_spd?.toInt()
+                        .toString().plus(" m/c ")
                         .plus(it.data.getOrNull(args.position)?.abdreviatedWindDirection)
                 forecast_details.text = it.data.getOrNull(args.position)?.weather?.description
                 date_details.text =
@@ -57,26 +88,8 @@ class ForecastDetailsFragment : Fragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.fragment_details_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.share -> Toast.makeText(
-                context,
-                "Share option to be implemented",
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.settings -> {
-                val directions =
-                    ForecastDetailsFragmentDirections.actionForecastDetailsFragmentToSettingsFragment()
-                findNavController()
-                    .navigate(directions)
-            }
-        }
-        return super.onOptionsItemSelected(item)
+    override fun onResume() {
+        super.onResume()
+        getForecastDetails()
     }
 }

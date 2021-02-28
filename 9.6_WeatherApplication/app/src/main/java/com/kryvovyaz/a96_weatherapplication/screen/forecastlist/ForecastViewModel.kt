@@ -1,11 +1,15 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastlist
 
+import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.network.ForecastService
 import com.kryvovyaz.a96_weatherapplication.network.RetrofitClient
+import com.kryvovyaz.a96_weatherapplication.util.METRIC
+import com.kryvovyaz.a96_weatherapplication.util.Prefs
+import com.kryvovyaz.a96_weatherapplication.util.US
 import com.kryvovyaz.a96_weatherapplication.util.WEATHER_API_KEY
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,9 +20,11 @@ import retrofit2.Response
     val forecastLiveData: LiveData<Forecast>
         get() = _forecastLiveData
 
-    fun fetchForecastInfo() {
+    fun fetchForecastInfo(isCelsius:Boolean,days:Int) {
         val forecastService = RetrofitClient.retrofit?.create(ForecastService::class.java)
-        val forecastCall: Call<Forecast>? = forecastService?.getForecast("14","38.123","-78.543",WEATHER_API_KEY)
+        val units:String =if (isCelsius) METRIC else US
+        val forecastCall: Call<Forecast>? = forecastService?.getForecast(days,"38.123",
+            "-78.543",units, WEATHER_API_KEY)
         forecastCall?.enqueue(object : Callback<Forecast> {
             override fun onResponse(
                 call: Call<Forecast>,
@@ -28,8 +34,7 @@ import retrofit2.Response
                     _forecastLiveData.value = callForecast
                 }
             }
-            override fun onFailure(call: Call<Forecast>, t: Throwable) {
-            }
+            override fun onFailure(call: Call<Forecast>, t: Throwable) {}
         })
     }
 }

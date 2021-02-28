@@ -9,6 +9,7 @@ import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
+import kotlinx.android.synthetic.main.fragment_forecast_details.view.*
 import kotlinx.android.synthetic.main.today_forecast.view.*
 
 class WeatherAdapter(private val forecastList: Forecast, val onClick: (position: Int) -> Unit) :
@@ -62,9 +63,10 @@ class WeatherAdapter(private val forecastList: Forecast, val onClick: (position:
                     (forecastList.data[position].low_temp.toInt().toString() + "°")
                 curent_temp_today.text = resources.getString(R.string.current_temp).plus(" ")
                     .plus(forecastList.data[position].temp.toInt().toString().plus("°"))
-                humidity_today.text =
-                    resources.getString(R.string.humidity).plus(" ")
-                        .plus(forecastList.data[position].humidityAverage.toString().plus("%"))
+                humidity_today.text =(forecastList.data[position].humidityAverage.toString()
+                    .plus("%"))
+                wind_speed_today.text=(forecastList.data[position].wind_spd.toInt().toString()
+                    .plus(" ").plus(resources.getString(R.string.wind_speed)))
             }
         }
     }

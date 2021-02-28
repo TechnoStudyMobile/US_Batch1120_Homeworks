@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.screen.view.WeatherAdapter
+import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.fragment_forecast.*
 
 class ForecastListFragment : Fragment() {
@@ -27,10 +28,14 @@ class ForecastListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ForecastViewModel::class.java)
-        viewModel.fetchForecastInfo()
         viewModel.forecastLiveData.observe(viewLifecycleOwner, Observer {
             createRecyclerList(it)
         })
+        activity?.let {
+            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
+            val days = Prefs.loadDaysSelected(it)
+            viewModel.fetchForecastInfo(isCelsius, days)
+        }
     }
 
     private fun createRecyclerList(forecast: Forecast) {
@@ -44,13 +49,15 @@ class ForecastListFragment : Fragment() {
         weather_recycler_view.layoutManager = LinearLayoutManager(context)
         weather_recycler_view.adapter = adapter
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_list_menu, menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.map_location-> Toast.makeText(
+            R.id.map_location -> Toast.makeText(
                 context,
                 "Search location option to be implemented",
                 Toast.LENGTH_SHORT
