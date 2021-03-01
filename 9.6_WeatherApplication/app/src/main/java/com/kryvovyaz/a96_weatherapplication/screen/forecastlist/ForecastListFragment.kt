@@ -13,10 +13,11 @@ import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.screen.view.WeatherAdapter
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.fragment_forecast.*
+import kotlin.properties.Delegates
 
 class ForecastListFragment : Fragment() {
     private lateinit var viewModel: ForecastViewModel
-
+    private var isCelsius by Delegates.notNull<Boolean>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,14 +33,14 @@ class ForecastListFragment : Fragment() {
             createRecyclerList(it)
         })
         activity?.let {
-            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
+            isCelsius = Prefs.retrieveIsCelsiusSetting(it)
             val days = Prefs.loadDaysSelected(it)
             viewModel.fetchForecastInfo(isCelsius, days)
         }
     }
 
     private fun createRecyclerList(forecast: Forecast) {
-        val adapter = WeatherAdapter(forecast) { position ->
+        val adapter = WeatherAdapter(forecast, isCelsius) { position ->
             val direction =
                 ForecastListFragmentDirections.actionForecastListFragmentToForecastDetailsFragment(
                     position

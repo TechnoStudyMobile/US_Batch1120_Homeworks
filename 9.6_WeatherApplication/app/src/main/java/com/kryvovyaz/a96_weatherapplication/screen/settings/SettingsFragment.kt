@@ -1,6 +1,8 @@
 package com.kryvovyaz.a96_weatherapplication.screen.settings
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,10 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.core.content.res.TypedArrayUtils.getInt
 import com.kryvovyaz.a96_weatherapplication.R
-import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_SETTING_PREF_KEY
 import com.kryvovyaz.a96_weatherapplication.util.IS_DAYS_SELECTED_KEY
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.layout_settings_days.*
@@ -20,8 +19,8 @@ import kotlinx.android.synthetic.main.layout_settings_notification.*
 import kotlinx.android.synthetic.main.layout_settings_unit.*
 
 class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
-    override fun onCreateView(
 
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -31,6 +30,7 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onResume() {
         super.onResume()
         loadSpinnerSelectedDays()
+        setDegreeViews()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,10 +64,15 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setClickListeners() {
         activity?.let { mActivity ->
-            unit_settings_item.setOnClickListener {
-                val isCelsius = Prefs.retrieveIsCelsiusSetting(mActivity)
-                Prefs.setIsCelsiusSetting(mActivity, !isCelsius)
-                setUnitSubtitle(!isCelsius)
+            celsius_degree_text_view.setOnClickListener {
+                Prefs.setIsCelsiusSetting(mActivity, true)
+                setDegreeViews()
+                setUnitSubtitle()
+            }
+            fahrenheit_degree_text_view.setOnClickListener {
+                Prefs.setIsCelsiusSetting(mActivity, false)
+                setDegreeViews()
+                setUnitSubtitle()
             }
         }
     }
@@ -75,14 +80,30 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun setSettingsTitles() {
         notification_settings_item.settings_name.text =
             getString(R.string.weather_notification_setting_title)
-        unit_settings_item.settings_name.text = getString(R.string.unit_setting_title)
+        units_settings_item.settings_name.text = getString(R.string.units_settings_label)
         days_settings_item.settings_name.text = getString(R.string.days_setting_title)
+    }
+
+    private fun setDegreeViews() {
+        activity?.let {
+            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
+            if (isCelsius) {
+                celsius_degree_text_view.setTextColor(Color.BLACK)
+                fahrenheit_degree_text_view.setTextColor(Color.GRAY)
+                celsius_degree_text_view.setTypeface(Typeface.DEFAULT_BOLD)
+                fahrenheit_degree_text_view.setTypeface(Typeface.DEFAULT)
+            } else {
+                celsius_degree_text_view.setTextColor(Color.GRAY)
+                fahrenheit_degree_text_view.setTextColor(Color.BLACK)
+                celsius_degree_text_view.setTypeface(Typeface.DEFAULT)
+                fahrenheit_degree_text_view.setTypeface(Typeface.DEFAULT_BOLD)
+            }
+        }
     }
 
     private fun setSettingsSubtitles() {
         activity?.let {
-            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
-            setUnitSubtitle(isCelsius)
+            setUnitSubtitle()
             setDaysSubtitle()
             //TODO: Get and set, also for notification and Days settings
         }
@@ -93,15 +114,16 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             days_settings_item.settings_value.text = getString(R.string.days_selected)
         }
     }
-
-    private fun setUnitSubtitle(isCelsius: Boolean) {
-        unit_settings_item.settings_value.text = if (isCelsius) {
-            getString(R.string.celsius_subtitle)
-        } else {
-            getString(R.string.fahrenheit_subtitle)
+    private fun setUnitSubtitle() {
+        activity?.let {
+            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
+            units_settings_item.settings_value.text = if (isCelsius) {
+                getString(R.string.degree_celsius)
+            } else {
+                getString(R.string.degree_fahrenheit)
+            }
         }
     }
-
     private fun loadSpinnerSelectedDays() {
         activity?.let { Prefs.retrieveSpinnerPosition(it) }?.let {
             day_settings_spinner.setSelection(

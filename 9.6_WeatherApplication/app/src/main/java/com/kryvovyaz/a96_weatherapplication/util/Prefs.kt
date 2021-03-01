@@ -2,11 +2,7 @@ package com.kryvovyaz.a96_weatherapplication.util
 
 import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
 import android.widget.Spinner
-import androidx.preference.PreferenceManager
-import kotlinx.android.synthetic.main.layout_settings_days.*
-
 
 object Prefs {
     fun retrieveIsCelsiusSetting(activity: Activity): Boolean {

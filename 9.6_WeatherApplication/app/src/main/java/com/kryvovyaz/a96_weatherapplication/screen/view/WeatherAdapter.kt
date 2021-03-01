@@ -9,10 +9,13 @@ import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
-import kotlinx.android.synthetic.main.fragment_forecast_details.view.*
 import kotlinx.android.synthetic.main.today_forecast.view.*
 
-class WeatherAdapter(private val forecastList: Forecast, val onClick: (position: Int) -> Unit) :
+class WeatherAdapter(
+    private val forecastList: Forecast,
+    private val pref: Boolean,
+    val onClick: (position: Int) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val FORECAST_DAY = 0
     private val FORECAST_WEEK = 1
@@ -61,12 +64,16 @@ class WeatherAdapter(private val forecastList: Forecast, val onClick: (position:
                     (forecastList.data[position].high_temp.toInt().toString() + "°")
                 tempLow_today.text =
                     (forecastList.data[position].low_temp.toInt().toString() + "°")
-                curent_temp_today.text = resources.getString(R.string.current_temp).plus(" ")
-                    .plus(forecastList.data[position].temp.toInt().toString().plus("°"))
-                humidity_today.text =(forecastList.data[position].humidityAverage.toString()
+                curent_temp_today.text =
+                    forecastList.data[position].temp.toInt().toString().plus("°")
+                humidity_today.text = (forecastList.data[position].humidityAverage.toString()
                     .plus("%"))
-                wind_speed_today.text=(forecastList.data[position].wind_spd.toInt().toString()
-                    .plus(" ").plus(resources.getString(R.string.wind_speed)))
+                wind_speed_today.text = (forecastList.data[position].wind_spd.toInt().toString()
+                    .plus(" ").plus(
+                        if (pref) resources.getString(R.string.wind_speed_m) else context.getString(
+                            R.string.wind_speed_i
+                        )
+                    ))
             }
         }
     }

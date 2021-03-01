@@ -1,6 +1,5 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastlist
 
-import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +7,6 @@ import com.kryvovyaz.a96_weatherapplication.model.Forecast
 import com.kryvovyaz.a96_weatherapplication.network.ForecastService
 import com.kryvovyaz.a96_weatherapplication.network.RetrofitClient
 import com.kryvovyaz.a96_weatherapplication.util.METRIC
-import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import com.kryvovyaz.a96_weatherapplication.util.US
 import com.kryvovyaz.a96_weatherapplication.util.WEATHER_API_KEY
 import retrofit2.Call
