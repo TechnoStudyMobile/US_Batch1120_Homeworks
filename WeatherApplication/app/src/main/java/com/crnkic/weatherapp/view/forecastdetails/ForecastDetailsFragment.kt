@@ -3,6 +3,7 @@ package com.crnkic.weatherapp.view.forecastdetails
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.crnkic.weatherapp.R
 import com.crnkic.weatherapp.forecastResponse.Forecast
 import com.crnkic.weatherapp.util.DrawableUtil.getImageId
+import com.crnkic.weatherapp.util.Prefs
 import com.crnkic.weatherapp.view.forecastlist.WeatherViewModel
 import kotlinx.android.synthetic.main.forcast_details_fragment.*
 
@@ -62,6 +64,11 @@ class ForecastDetailsFragment : Fragment() {
             }
 
         })
+
+        activity?.let {
+            val value = Prefs.retrieveIsCelsiusSetting(it)
+            Toast.makeText(it, value.toString(), Toast.LENGTH_SHORT).show()
+        }
 
 //        forecast_details.text = listOfItems.toString()
     }

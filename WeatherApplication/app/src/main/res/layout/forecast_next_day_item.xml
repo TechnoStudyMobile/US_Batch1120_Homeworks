@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image_view_cloud"
+            android:id="@+id/next_day_image_view_cloud"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="16dp"
@@ -23,28 +23,28 @@
             android:contentDescription="The Weather is"/>
 
         <TextView
-            android:id="@+id/text_view_day"
+            android:id="@+id/next_day_text_view_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
             tools:text="Tomorrow"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/image_view_cloud"
+            app:layout_constraintStart_toEndOf="@id/next_day_image_view_cloud"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_day_forecast"
+            android:id="@+id/next_day_text_view_day_forecast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             tools:text="Scattered Clouds"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/image_view_cloud"
-            app:layout_constraintTop_toBottomOf="@id/text_view_day" />
+            app:layout_constraintStart_toEndOf="@id/next_day_image_view_cloud"
+            app:layout_constraintTop_toBottomOf="@id/next_day_text_view_day" />
 
         <TextView
-            android:id="@+id/text_view_temperature"
+            android:id="@+id/next_day_text_view_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -56,14 +56,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_temperature_feels_like"
+            android:id="@+id/next_day_text_view_temperature_feels_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             tools:text="15°"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/text_view_temperature"
+            app:layout_constraintStart_toEndOf="@id/next_day_text_view_temperature"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline

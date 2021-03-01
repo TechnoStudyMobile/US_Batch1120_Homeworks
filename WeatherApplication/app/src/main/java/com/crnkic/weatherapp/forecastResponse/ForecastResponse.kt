@@ -46,8 +46,11 @@ data class Forecast(
         @SerializedName("clouds_low") val clouds_low: Int
 ) : Parcelable
 
+
+
+
 @Parcelize
-data class ForcastResponse(
+data class ForecastResponse(
         @SerializedName("data") val forecastList: List<Forecast>,
         val city_name: String,
         val lon: Double,

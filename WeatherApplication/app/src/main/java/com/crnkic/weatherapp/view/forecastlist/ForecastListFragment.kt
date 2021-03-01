@@ -8,7 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crnkic.weatherapp.R
-import com.crnkic.weatherapp.forecastResponse.ForcastResponse
+import com.crnkic.weatherapp.forecastResponse.ForecastResponse
+import com.crnkic.weatherapp.util.Prefs
 import com.crnkic.weatherapp.view.adapters.FragmentAdapter
 import kotlinx.android.synthetic.main.weather_fragment.*
 
@@ -23,6 +24,7 @@ class ForecastListFragment : Fragment() {
         return inflater.inflate(R.layout.weather_fragment, container, false)
     }
 
+    ////////////////////////////////////////////////////////////////////
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_list_menu, menu)
@@ -46,7 +48,12 @@ class ForecastListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         forcastViewModel = ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java)
-        forcastViewModel.fetchData()
+
+        activity?.let {
+            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
+            forcastViewModel.fetchData(isCelsius)
+        }
+
         forcastViewModel.listOfItemsLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 getRecyclerList(it)
@@ -55,7 +62,7 @@ class ForecastListFragment : Fragment() {
 
     }
 
-    private fun getRecyclerList(forecast : ForcastResponse) {
+    private fun getRecyclerList(forecast : ForecastResponse) {
         val adapter = FragmentAdapter(forcastViewModel.listOfItems) { position ->
             //Navigate
 //            val bundle = Bundle()
