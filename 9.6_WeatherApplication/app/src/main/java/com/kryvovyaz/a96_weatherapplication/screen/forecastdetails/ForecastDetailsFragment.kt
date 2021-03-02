@@ -1,4 +1,5 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastdetails
+
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -15,6 +16,7 @@ import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_SETTING_PREF_KEY
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.fragment_forecast_details.*
+import java.util.*
 
 
 class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -30,7 +32,7 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-            return inflater.inflate(R.layout.fragment_forecast_details, container, false)
+        return inflater.inflate(R.layout.fragment_forecast_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,7 +98,7 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
                                 it1, args.position, it2
                             )
                         }
-                    }
+                    }?.capitalize(Locale.ROOT)
                 tempHigh_details.text =
                     it.data.getOrNull(args.position)?.high_temp?.toInt().toString().plus("°")
                 tempLow_details.text =
@@ -104,22 +106,22 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
             }
         })
     }
-//not working currently
+
+    //not working currently
     override fun onResume() {
-    super.onResume()
-        activity?.getSharedPreferences(IS_CELSIUS_SETTING_PREF_KEY, MODE_PRIVATE)
+        super.onResume()
+        activity?.getPreferences(MODE_PRIVATE)
             ?.registerOnSharedPreferenceChangeListener(this)
-}
+        getForecastDetails()
+    }
 
     override fun onPause() {
         super.onPause()
-        activity?.getSharedPreferences(IS_CELSIUS_SETTING_PREF_KEY, MODE_PRIVATE)
+        activity?.getPreferences(MODE_PRIVATE)
             ?.unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key.equals(IS_CELSIUS_SETTING_PREF_KEY)) {
-           getForecastDetails()
-        }
+
     }
 }

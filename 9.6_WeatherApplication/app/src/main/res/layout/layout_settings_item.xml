@@ -7,25 +7,23 @@
 
     <TextView
         android:id="@+id/settings_name"
+        style="@style/TitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/inbetween_settings_margin"
-        android:textColor="@color/black"
-        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/my_settings_title" />
 
     <TextView
         android:id="@+id/settings_value"
+        style="@style/SubTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="@dimen/inbetween_settings_margin"
-        android:textColor="@color/bar_bottom"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_name"

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">9,6_WeatherApplication</string>
+    <string name="forecast">Прогноз</string>
+    <string name="Zero">0</string>
+    <string name="_0">0°</string>
+    <string name="today">Сегодня</string>
+    <string name="h">H</string>
+    <string name="l">L</string>
+    <string name="time">Time</string>
+    <string name="current_temp">Температура </string>
+    <string name="humidity">Влажность  </string>
+    <string name="sync_header">Sync</string>
+    <string name="hello_settings_fragment">settings_fragment</string>
+    <string name="hello_details_fragment">Hello Details Fragment</string>
+    <string name="label_forecast_list_fragment_title">Daily Weather</string>
+    <string name="settings_icon">Settings icon</string>
+    <string name="setting_menu_title">Settings</string>
+    <string name="share">Поделиться</string>
+    <string name="about">About</string>
+    <string name="exit">Выход</string>
+    <string name="search">Поиск</string>
+    <string name="image_details">Image details</string>
+    <string name="pressure">Давление</string>
+    <string name="wind">Ветер</string>
+    <string name="wind_speed_m">м/с</string>
+    <string name="your_location">Местоположение</string>
+    <string name="label_gragment_settings">Настройки</string>
+    <string name="label_forecast_details">Детальный прогноз</string>
+
+    <string name="my_settings_title">My Settings Title</string>
+    <string name="wind_icon">wind icon</string>
+    <string name="notification_settings_subtitle">My settings subtitle</string>
+    <string name="weather_notification_setting_title">Уведомления</string>
+    <string name="weather_notification_settings_subtitle">Weather Notification</string>
+    <string name="unit_setting_title">Измерение в</string>
+    <string name="days_setting_title">Количество дней</string>
+    <string name="days_selected">Дней выбрано</string>
+    <string name="wind_speed_i">м/ч</string>
+    <string name="pesure_m"> мм/рс</string>
+    <string name="presure_i"> ин</string>
+    <string name="units_settings_label">Единица измерения</string>
+</resources>

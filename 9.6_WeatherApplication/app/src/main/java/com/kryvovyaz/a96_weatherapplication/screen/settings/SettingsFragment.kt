@@ -4,12 +4,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.util.IS_DAYS_SELECTED_KEY
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
@@ -64,7 +65,7 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setClickListeners() {
         activity?.let { mActivity ->
-            celsius_degree_text_view.setOnClickListener {
+            celsius_degree_text_view.setOnClickListener { celsius_degree ->
                 Prefs.setIsCelsiusSetting(mActivity, true)
                 setDegreeViews()
                 setUnitSubtitle()
@@ -88,13 +89,13 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         activity?.let {
             val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
             if (isCelsius) {
-                celsius_degree_text_view.setTextColor(Color.BLACK)
+                celsius_degree_text_view.setTextColor(requireActivity().resources.getColor(R.color.bar_header))
                 fahrenheit_degree_text_view.setTextColor(Color.GRAY)
                 celsius_degree_text_view.setTypeface(Typeface.DEFAULT_BOLD)
                 fahrenheit_degree_text_view.setTypeface(Typeface.DEFAULT)
             } else {
                 celsius_degree_text_view.setTextColor(Color.GRAY)
-                fahrenheit_degree_text_view.setTextColor(Color.BLACK)
+                fahrenheit_degree_text_view.setTextColor(requireActivity().resources.getColor(R.color.bar_header))
                 celsius_degree_text_view.setTypeface(Typeface.DEFAULT)
                 fahrenheit_degree_text_view.setTypeface(Typeface.DEFAULT_BOLD)
             }
@@ -103,15 +104,20 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setSettingsSubtitles() {
         activity?.let {
+            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
             setUnitSubtitle()
             setDaysSubtitle()
-            //TODO: Get and set, also for notification and Days settings
+            //TODO: Get and set, also for notification settings
         }
     }
 
     private fun setDaysSubtitle() {
         activity?.let {
-            days_settings_item.settings_value.text = getString(R.string.days_selected)
+            days_settings_item.settings_value.text = getString(R.string.days_selected).plus(
+                it.resources.getString(
+                    R.string.space
+                )
+            ).plus(Prefs.loadDaysSelected(it).toString())
         }
     }
     private fun setUnitSubtitle() {
@@ -135,8 +141,11 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         activity?.let {
             Prefs.setDaysPreferenceSelected(it, day_settings_spinner)
+            (parent?.getChildAt(0) as TextView)
+                .setTextColor(it.resources.getColor(R.color.bar_header))
         }
-    }
+        setDaysSubtitle()
+        }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 }

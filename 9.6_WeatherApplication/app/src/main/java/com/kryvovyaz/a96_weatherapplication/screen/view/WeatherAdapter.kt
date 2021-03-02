@@ -10,6 +10,7 @@ import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
 import kotlinx.android.synthetic.main.today_forecast.view.*
+import java.util.*
 
 class WeatherAdapter(
     private val forecastList: Forecast,
@@ -92,10 +93,12 @@ class WeatherAdapter(
                         forecastList.data[position].weather.icon
                     )
                 )
-                day_of_week_text_view.text =
-                    formatDate(
-                        forecastList.data[position].datetime, position, context
-                    )
+                day_of_week_text_view.text = formatDate(
+                    forecastList.data[position].datetime, position, context
+                ).capitalizeWords()
+                formatDate(
+                    forecastList.data[position].datetime, position, context
+                ).capitalize(Locale.ROOT)
                 textView_single_view_forecast.text =
                     forecastList.data[position].weather.description
                 temp_high_text_view.text =
@@ -105,4 +108,7 @@ class WeatherAdapter(
             }
         }
     }
+
+    fun String.capitalizeWords(): String = split(" ").map { it.capitalize() }
+        .joinToString(" ")
 }
