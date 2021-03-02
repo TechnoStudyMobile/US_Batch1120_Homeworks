@@ -27,7 +27,11 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         getSpinner()
-
+        activity?.let {
+            Prefs.loadDaysPositon(it).let {
+                days_settings_spinner.setSelection(it)
+            }
+        }
     }
 
     private fun getSpinner() {
@@ -47,7 +51,6 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setSettingsTitles()
         setSettingsSubtitles()
         setClickListenesrs()
-
     }
 
 
@@ -73,7 +76,7 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
 
         activity?.let {
-            val day = Prefs.retrieveDaysSetting(it)
+            val day = Prefs.loadDaysPositon(it)
             setDaySubtitle(day)
         }
 
@@ -82,10 +85,10 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     //DAYS
-    private fun setDaySubtitle(day:String) {
+    private fun setDaySubtitle(day:Int) {
         days_settings_item.settings_value.text = when(day) {
-            "7" -> "7 days list"
-            else -> "14 days list"
+            0 -> "7 days list"
+            else -> "16 days list"
         }
     }
 
@@ -108,8 +111,13 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        TODO("Not yet implemented")
+        activity?.let {
+            Prefs.setDaysSettings(it, days_settings_spinner)
+            
+        }
     }
+
+
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("Not yet implemented")

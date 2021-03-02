@@ -11,7 +11,7 @@ interface GetDataService {
 
     @GET("daily")
     fun getWeatherData(
-            @Query("days") days: String,
+            @Query("days") days: Int,
             @Query("postal_code") postal_code: String,
             @Query("country") country: String,
             @Query("units") units: String,

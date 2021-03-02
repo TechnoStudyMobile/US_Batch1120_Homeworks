@@ -51,7 +51,8 @@ class ForecastListFragment : Fragment() {
 
         activity?.let {
             val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
-            forcastViewModel.fetchData(isCelsius)
+            val days =Prefs.retrieveDaysSetting(it)
+            forcastViewModel.fetchData(isCelsius, days)
         }
 
         forcastViewModel.listOfItemsLiveData.observe(viewLifecycleOwner, Observer {

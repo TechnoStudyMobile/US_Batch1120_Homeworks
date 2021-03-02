@@ -20,10 +20,10 @@ class WeatherViewModel() : ViewModel() {
     val listOfItemsLiveData: LiveData<ForecastResponse?>
         get() = _listOfItemsLiveData
 
-    fun fetchData(isCelsius: Boolean) {
+    fun fetchData(isCelsius: Boolean, days : Int) {
         val units: String = if(isCelsius) "M" else "I"
         val getDataService = RetrofitClient.retrofit?.create(GetDataService::class.java)
-        val forecastCall: Call<ForecastResponse>? = getDataService?.getWeatherData("14", "17055", "US", units, WEATHER_API_KEY)
+        val forecastCall: Call<ForecastResponse>? = getDataService?.getWeatherData(days, "17055", "US", units, WEATHER_API_KEY)
 //        val forecastCall: Call<ForecastResponse>? = getDataService?.getWeatherData()
 
         forecastCall?.enqueue(object : Callback<ForecastResponse> {

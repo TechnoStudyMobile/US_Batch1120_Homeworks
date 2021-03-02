@@ -2,6 +2,7 @@ package com.crnkic.weatherapp.util
 
 import android.app.Activity
 import android.content.Context
+import android.widget.Spinner
 import com.DAYS_DEFAULT_SETTINGS_VALUE
 import com.DAYS_SETTING_PREF_KEY
 import com.IS_CELSIUS_DEFAULT_SETTINGS_VALUE
@@ -20,17 +21,27 @@ object Prefs {
         editor.apply()
     }
 
-//    fun retrieveDaysSetting(activity: Activity): String? {
-//        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
-//        return sharedPref.getString(DAYS_SETTING_PREF_KEY, DAYS_DEFAULT_SETTINGS_VALUE)
-//    }
-//
-//    fun setDaysSettings(activity: Activity, value: Boolean) {
-//        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
-//        val editor = sharedPref.edit()
-//        editor.putBoolean(IS_CELSIUS_SETTING_PREF_KEY, value)
-//        editor.apply()
-//    }
+    fun retrieveDaysSetting(activity: Activity): Int {
+        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
+        return sharedPref.getInt(DAYS_SETTING_PREF_KEY, 0)
+    }
+
+    fun setDaysSettings(activity: Activity, spinner : Spinner) {
+        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putInt(DAYS_SETTING_PREF_KEY, spinner.selectedItemPosition)
+        editor.apply()
+    }
+
+    fun loadDaysPositon(activity: Activity) : Int {
+        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
+        val position = sharedPref.getInt(DAYS_SETTING_PREF_KEY, 0)
+        return when (position) {
+            0 -> 7
+            else ->14
+        }
+    }
+
 
 }
 

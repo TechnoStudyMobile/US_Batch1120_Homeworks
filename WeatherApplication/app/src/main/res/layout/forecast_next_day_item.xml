@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp"
     app:cardCornerRadius="8dp">
 
@@ -16,55 +16,55 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="16dp"
-            tools:src="@drawable/image01"
+            android:contentDescription="The Weather is"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="The Weather is"/>
+            tools:src="@drawable/image01" />
 
         <TextView
             android:id="@+id/next_day_text_view_day"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            tools:text="Tomorrow"
-            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/next_day_image_view_cloud"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Tomorrow" />
 
         <TextView
             android:id="@+id/next_day_text_view_day_forecast"
+            style="@style/SubTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            tools:text="Scattered Clouds"
-            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/next_day_image_view_cloud"
-            app:layout_constraintTop_toBottomOf="@id/next_day_text_view_day" />
+            app:layout_constraintTop_toBottomOf="@id/next_day_text_view_day"
+            tools:text="Scattered Clouds" />
 
         <TextView
             android:id="@+id/next_day_text_view_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            tools:text="15°"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="15°" />
 
         <TextView
             android:id="@+id/next_day_text_view_temperature_feels_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            tools:text="15°"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/next_day_text_view_temperature"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="15°" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
