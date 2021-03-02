@@ -14,6 +14,7 @@ interface ForecastService {
         @Query("days") days: String,
         @Query("lat") lat: String,
         @Query("lon") lon: String,
+        @Query("units") units: String,
         @Query("key") key: String
     ): Call<ForecastResponse>
 }

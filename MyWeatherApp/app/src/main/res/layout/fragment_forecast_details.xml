@@ -1,13 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screen.forecastdetails.ForecastDetailsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_details_fragment" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_constraint_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/details_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/forecast_details_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hello_details_fragment" />
+
+        <TextView
+            android:id="@+id/details_day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hello_details_fragment" />
+
+        <ImageView
+            android:id="@+id/details_weather_icon"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forecast_details_text_view"
+            android:layout_margin="16dp"
+            android:src="@drawable/a01n"
+            android:contentDescription="details_image" />
+
+        <TextView
+            android:id="@+id/details_high_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toEndOf="@id/details_weather_icon"
+            app:layout_constraintTop_toBottomOf="@id/forecast_details_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/details_low_temp"
+            android:text="High"
+            android:textSize="64sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/details_low_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toEndOf="@id/details_weather_icon"
+            app:layout_constraintTop_toBottomOf="@id/details_high_temp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Low"
+            android:textSize="48sp"
+            android:textStyle="normal"/>
+
+        <TextView
+            android:id="@+id/details_forecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="@id/details_weather_icon"
+            app:layout_constraintTop_toBottomOf="@id/details_weather_icon"
+            app:layout_constraintEnd_toEndOf="@id/details_weather_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Low"
+            android:textSize="48sp"
+            android:textStyle="normal"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/details_guideline"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_constraint_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_guideline">
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

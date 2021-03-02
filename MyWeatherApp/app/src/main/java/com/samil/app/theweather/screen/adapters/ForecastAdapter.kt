@@ -11,7 +11,7 @@ import com.samil.app.theweather.utils.GetImageId.getImageId
 import kotlinx.android.synthetic.main.item_list_forecast.view.*
 import kotlinx.android.synthetic.main.item_list_forecast_first_big_item.view.*
 
-class WeatherAdapter(
+class ForecastAdapter(
     private val forecastResponse: ForecastResponse, val onClick: (position: Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -20,11 +20,7 @@ class WeatherAdapter(
     lateinit var view: View
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) {
-            firstItem
-        } else {
-            otherItems
-        }
+        return if (position == 0) firstItem else otherItems
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {

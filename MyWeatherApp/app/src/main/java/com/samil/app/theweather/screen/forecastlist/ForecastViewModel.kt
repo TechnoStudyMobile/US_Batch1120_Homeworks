@@ -15,12 +15,13 @@ import retrofit2.Response
 class ForecastViewModel : ViewModel() {
 
     private val _forecastListLiveData = MutableLiveData<ForecastResponse>()
-    val forecastDummyListLiveData: LiveData<ForecastResponse>
+    val forecastListLiveData: LiveData<ForecastResponse>
         get() = _forecastListLiveData
 
-    fun fetchForecastInfo() {
+    fun fetchForecastInfo(isCelsius: Boolean) {
         val forecastService = RetrofitClient.retrofit?.create(ForecastService::class.java)
-        val forecastCall = forecastService?.getForecast("14", "38.123", "-78.543", WEATHER_API_KEY)
+        val units = if (isCelsius)"M" else "I"
+        val forecastCall = forecastService?.getForecast("16", "38.123", "-78.543",units, WEATHER_API_KEY)
         forecastCall?.enqueue(object : Callback<ForecastResponse> {
             override fun onResponse(
                 call: Call<ForecastResponse>,
