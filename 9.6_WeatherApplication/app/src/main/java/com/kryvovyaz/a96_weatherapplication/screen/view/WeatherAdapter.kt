@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.model.Forecast
+import com.kryvovyaz.a96_weatherapplication.util.Capitalization.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
@@ -93,9 +94,9 @@ class WeatherAdapter(
                         forecastList.data[position].weather.icon
                     )
                 )
-                day_of_week_text_view.text = formatDate(
+                day_of_week_text_view.text = capitalizeWords(formatDate(
                     forecastList.data[position].datetime, position, context
-                ).capitalizeWords()
+                ))
                 formatDate(
                     forecastList.data[position].datetime, position, context
                 ).capitalize(Locale.ROOT)
@@ -108,7 +109,4 @@ class WeatherAdapter(
             }
         }
     }
-
-    fun String.capitalizeWords(): String = split(" ").map { it.capitalize() }
-        .joinToString(" ")
 }

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.screen.forecastlist.ForecastViewModel
+import com.kryvovyaz.a96_weatherapplication.util.Capitalization.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_SETTING_PREF_KEY
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
@@ -91,14 +92,14 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
                         ).plus(" ")
                         .plus(it.data.getOrNull(args.position)?.abdreviatedWindDirection)
                 forecast_details.text = it.data.getOrNull(args.position)?.weather?.description
-                date_details.text =
-                    it.data.getOrNull(args.position)?.datetime?.let { it1 ->
-                        context?.let { it2 ->
-                            formatDate(
-                                it1, args.position, it2
-                            )
-                        }
-                    }?.capitalize(Locale.ROOT)
+                date_details.text = it.data.getOrNull(args.position)?.datetime?.let { it1 ->
+                    context?.let { it2 ->
+                        formatDate(
+                            it1, args.position, it2
+                        )
+                    }
+                }?.let { it3 -> capitalizeWords(it3) }
+
                 tempHigh_details.text =
                     it.data.getOrNull(args.position)?.high_temp?.toInt().toString().plus("°")
                 tempLow_details.text =
