@@ -17,8 +17,6 @@ import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_SETTING_PREF_KEY
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.fragment_forecast_details.*
-import java.util.*
-
 
 class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val args: ForecastDetailsFragmentArgs by navArgs()
@@ -72,9 +70,21 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
         forecastViewModel.forecastLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 humidity.text =
-                    it.data.getOrNull(args.position)?.humidityAverage.toString().plus(" %")
+                    it.data.getOrNull(args.position)?.humidityAverage.toString().plus(
+                        getString(
+                            R.string.space
+                        )
+                    ).plus(
+                        getString(
+                            R.string.percent
+                        )
+                    )
                 presure.text = it.data.getOrNull(args.position)?.pressureAverage?.toInt().toString()
-                    .plus(" ")
+                    .plus(
+                        getString(
+                            R.string.space
+                        )
+                    )
                     .plus(
                         if (Prefs.retrieveIsCelsiusSetting(requireActivity()))
                             getString(R.string.pesure_m) else getString(
@@ -83,13 +93,18 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
                     )
                 wind.text =
                     it.data.getOrNull(args.position)?.wind_spd?.toInt()
-                        .toString().plus(" ")
+                        .toString().plus(
+                            getString(
+                                R.string.space
+                            )
+                        )
                         .plus(
                             if (Prefs.retrieveIsCelsiusSetting(requireActivity()))
                                 getString(R.string.wind_speed_m) else getString(
                                 R.string.wind_speed_i
                             )
-                        ).plus(" ")
+                        ).plus(getString(
+                            R.string.space))
                         .plus(it.data.getOrNull(args.position)?.abdreviatedWindDirection)
                 forecast_details.text = it.data.getOrNull(args.position)?.weather?.description
                 date_details.text = it.data.getOrNull(args.position)?.datetime?.let { it1 ->
@@ -99,11 +114,12 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
                         )
                     }
                 }?.let { it3 -> capitalizeWords(it3) }
-
                 tempHigh_details.text =
-                    it.data.getOrNull(args.position)?.high_temp?.toInt().toString().plus("°")
+                    it.data.getOrNull(args.position)?.high_temp?.toInt().toString()
+                        .plus(context?.getString(R.string.degree_character))
                 tempLow_details.text =
-                    it.data.getOrNull(args.position)?.low_temp?.toInt().toString().plus("°")
+                    it.data.getOrNull(args.position)?.low_temp?.toInt().toString()
+                        .plus(context?.getString(R.string.degree_character))
             }
         })
     }
@@ -123,6 +139,6 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-getForecastDetails()
+        getForecastDetails()
     }
 }

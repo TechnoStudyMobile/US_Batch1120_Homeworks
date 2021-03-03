@@ -11,10 +11,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bar_header"
+        app:titleTextColor="@color/white"
         android:theme="@style/BaseTheme"
-        app:title="Weather"
-        app:titleTextColor="@color/white" />
+        app:title="Weather" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"

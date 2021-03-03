@@ -48,6 +48,9 @@
     <string name="slash" translatable="false">/</string>
     <string name="space" translatable="false">\ \</string>
     <string name="default_days_selected" translatable="false">14</string>
+    <string name="percent" translatable="false">%</string>
+    <string name="degree_character" translatable="false">°</string>
+    <string name="space1">\" \"</string>
     <string-array name="days_array">
         <item>14</item>
         <item>7</item>

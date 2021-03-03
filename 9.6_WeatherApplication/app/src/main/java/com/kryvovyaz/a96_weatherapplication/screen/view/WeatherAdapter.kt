@@ -63,15 +63,18 @@ class WeatherAdapter(
                 forecast_today.text =
                     forecastList.data[position].weather.description
                 tempHigh_today.text =
-                    (forecastList.data[position].high_temp.toInt().toString() + "°")
+                    forecastList.data[position].high_temp.toInt().toString()
+                        .plus(context.getString(R.string.degree_character))
                 tempLow_today.text =
-                    (forecastList.data[position].low_temp.toInt().toString() + "°")
+                    forecastList.data[position].low_temp.toInt().toString()
+                        .plus(context.getString(R.string.degree_character))
                 curent_temp_today.text =
-                    forecastList.data[position].temp.toInt().toString().plus("°")
+                    forecastList.data[position].temp.toInt().toString()
+                        .plus(context.getString(R.string.degree_character))
                 humidity_today.text = (forecastList.data[position].humidityAverage.toString()
-                    .plus("%"))
+                    .plus(context.getString(R.string.percent)))
                 wind_speed_today.text = (forecastList.data[position].wind_spd.toInt().toString()
-                    .plus(" ").plus(
+                    .plus(context.getString(R.string.space)).plus(
                         if (pref) resources.getString(R.string.wind_speed_m) else context.getString(
                             R.string.wind_speed_i
                         )
@@ -94,18 +97,22 @@ class WeatherAdapter(
                         forecastList.data[position].weather.icon
                     )
                 )
-                day_of_week_text_view.text = capitalizeWords(formatDate(
-                    forecastList.data[position].datetime, position, context
-                ))
+                day_of_week_text_view.text = capitalizeWords(
+                    formatDate(
+                        forecastList.data[position].datetime, position, context
+                    )
+                )
                 formatDate(
                     forecastList.data[position].datetime, position, context
                 ).capitalize(Locale.ROOT)
                 textView_single_view_forecast.text =
                     forecastList.data[position].weather.description
                 temp_high_text_view.text =
-                    (forecastList.data[position].high_temp.toInt().toString() + "°")
+                    forecastList.data[position].high_temp.toInt().toString()
+                        .plus(context.getString(R.string.degree_character))
                 textView_single_view_temp_low.text =
-                    (forecastList.data[position].low_temp.toInt().toString() + "°")
+                    forecastList.data[position].low_temp.toInt().toString()
+                        .plus(context.getString(R.string.degree_character))
             }
         }
     }
