@@ -122,6 +122,6 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-
+getForecastDetails()
     }
 }
