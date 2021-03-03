@@ -34,7 +34,7 @@
         android:id="@+id/textView_single_view_forecast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:text="@string/forecast"
         android:textSize="16sp"
         android:textColor="@color/bar_header"

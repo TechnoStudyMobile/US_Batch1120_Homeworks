@@ -42,5 +42,7 @@
     </style>
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorControlNormal">@color/white</item>
+        <item name="android:fontFamily">@font/bevan</item>
     </style>
+
 </resources>
