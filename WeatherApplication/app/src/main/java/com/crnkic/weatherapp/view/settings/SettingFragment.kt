@@ -27,15 +27,17 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         getSpinner()
+
         activity?.let {
-            Prefs.loadDaysPositon(it).let {
+            Prefs.retrievePinnerPosition(it).let {
                 days_settings_spinner.setSelection(it)
             }
         }
     }
 
     private fun getSpinner() {
-        context?.let {context->
+        days_settings_spinner.onItemSelectedListener = this
+        context?.let { context ->
             ArrayAdapter.createFromResource(
                     context,
                     R.array.days_array,
@@ -53,11 +55,7 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setClickListenesrs()
     }
 
-
-
-
-
-
+    //unit changer
     private fun setClickListenesrs() {
         activity?.let { mActivity ->
             unit_settings_item.setOnClickListener {
@@ -70,13 +68,15 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     //ALL SUBTITLES
     private fun setSettingsSubtitles() {
+        //unit subtitle
         activity?.let {
             val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
             setUnitSubtitle(isCelsius)
         }
 
+        //days subtitle
         activity?.let {
-            val day = Prefs.loadDaysPositon(it)
+            val day = Prefs.loadDaysPosition(it)
             setDaySubtitle(day)
         }
 
@@ -85,15 +85,18 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     //DAYS
-    private fun setDaySubtitle(day:Int) {
-        days_settings_item.settings_value.text = when(day) {
-            0 -> "7 days list"
-            else -> "16 days list"
+    private fun setDaySubtitle(day: Int) {
+        if(day == 7) {
+            days_settings_item.settings_value.text = resources.getStringArray(R.array.days_array)[0]
         }
+        else {
+            days_settings_item.settings_value.text = resources.getStringArray(R.array.days_array)[1]
+        }
+
     }
 
     //UNIT
-    private fun setUnitSubtitle(isCelsius : Boolean) {
+    private fun setUnitSubtitle(isCelsius: Boolean) {
         unit_settings_item.settings_value.text = if (isCelsius) {
             getString(R.string.celsius_subtitle)
         } else {
@@ -109,19 +112,14 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     }
 
-
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         activity?.let {
             Prefs.setDaysSettings(it, days_settings_spinner)
-            
         }
     }
-
-
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("Not yet implemented")
     }
-
 
 }

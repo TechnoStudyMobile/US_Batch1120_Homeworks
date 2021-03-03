@@ -65,11 +65,6 @@ class ForecastDetailsFragment : Fragment() {
 
         })
 
-        activity?.let {
-            val value = Prefs.retrieveIsCelsiusSetting(it)
-            Toast.makeText(it, value.toString(), Toast.LENGTH_SHORT).show()
-        }
-
 //        forecast_details.text = listOfItems.toString()
     }
 

@@ -80,9 +80,6 @@ private fun String.format(): String {
     return SimpleDateFormat("EEEE, MMM-dd").format(Date())
 }
 
-
-
-
 class ForecastNextDayViewHolder(itemView: View, val doOnClick: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
     init {
         itemView.setOnClickListener { doOnClick.invoke(adapterPosition) }

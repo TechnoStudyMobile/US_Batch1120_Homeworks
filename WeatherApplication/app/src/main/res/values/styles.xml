@@ -8,7 +8,7 @@
     </style>
 
     <style name="SubTitleText"> parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/subtitle_text</item>
         <item name="android:textSize">14sp</item>
     </style>
 

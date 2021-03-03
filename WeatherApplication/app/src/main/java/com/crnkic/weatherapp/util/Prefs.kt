@@ -21,7 +21,7 @@ object Prefs {
         editor.apply()
     }
 
-    fun retrieveDaysSetting(activity: Activity): Int {
+    fun retrievePinnerPosition(activity: Activity): Int {
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
         return sharedPref.getInt(DAYS_SETTING_PREF_KEY, 0)
     }
@@ -33,15 +33,14 @@ object Prefs {
         editor.apply()
     }
 
-    fun loadDaysPositon(activity: Activity) : Int {
+    fun loadDaysPosition(activity: Activity) : Int {
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
         val position = sharedPref.getInt(DAYS_SETTING_PREF_KEY, 0)
         return when (position) {
             0 -> 7
-            else ->14
+            else -> 14
         }
     }
-
 
 }
 

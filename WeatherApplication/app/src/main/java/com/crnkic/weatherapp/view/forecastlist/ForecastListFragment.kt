@@ -51,7 +51,7 @@ class ForecastListFragment : Fragment() {
 
         activity?.let {
             val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
-            val days =Prefs.retrieveDaysSetting(it)
+            val days =Prefs.retrievePinnerPosition(it)
             forcastViewModel.fetchData(isCelsius, days)
         }
 
