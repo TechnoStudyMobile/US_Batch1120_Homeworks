@@ -96,4 +96,3 @@ class ForecastNextDayViewHolder(itemView: View, val doOnClick: (position: Int) -
         }
     }
 }
-

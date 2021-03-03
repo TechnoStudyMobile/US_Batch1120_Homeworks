@@ -35,8 +35,7 @@ object Prefs {
 
     fun loadDaysPosition(activity: Activity) : Int {
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
-        val position = sharedPref.getInt(DAYS_SETTING_PREF_KEY, 0)
-        return when (position) {
+        return when (sharedPref.getInt(DAYS_SETTING_PREF_KEY, 0)) {
             0 -> 7
             else -> 14
         }

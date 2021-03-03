@@ -28,11 +28,6 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
         initViews()
         getSpinner()
 
-        activity?.let {
-            Prefs.retrievePinnerPosition(it).let {
-                days_settings_spinner.setSelection(it)
-            }
-        }
     }
 
     private fun getSpinner() {
@@ -45,6 +40,12 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 days_settings_spinner.adapter = adapter
+            }
+        }
+
+        activity?.let {activity ->
+            Prefs.retrievePinnerPosition(activity).let {
+                days_settings_spinner.setSelection(it)
             }
         }
     }

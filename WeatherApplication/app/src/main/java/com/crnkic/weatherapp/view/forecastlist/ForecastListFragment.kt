@@ -56,14 +56,11 @@ class ForecastListFragment : Fragment() {
         }
 
         forcastViewModel.listOfItemsLiveData.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
                 getRecyclerList(it)
-            }
         })
-
     }
 
-    private fun getRecyclerList(forecast : ForecastResponse) {
+    private fun getRecyclerList(forecast : ForecastResponse?) {
         val adapter = FragmentAdapter(forcastViewModel.listOfItems) { position ->
             //Navigate
 //            val bundle = Bundle()
