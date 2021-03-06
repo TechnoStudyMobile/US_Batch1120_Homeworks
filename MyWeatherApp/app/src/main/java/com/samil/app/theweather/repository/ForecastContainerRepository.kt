@@ -1,6 +1,7 @@
 package com.samil.app.theweather.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.samil.app.theweather.WEATHER_API_KEY
 import com.samil.app.theweather.database.ForecastContainerDao
 import com.samil.app.theweather.database.WeatherDatabase
@@ -12,6 +13,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ForecastContainerRepository(private var dao: ForecastContainerDao) {
+
+    val forecastListLiveData: LiveData<ForecastContainer> = dao.getForecastContainer()
 
     fun getForecastContainer(isCelsius: Boolean){
         fetchForecastContainer(isCelsius)
@@ -37,9 +40,8 @@ class ForecastContainerRepository(private var dao: ForecastContainerDao) {
                 call: Call<ForecastContainer>,
                 response: Response<ForecastContainer>
             ) {
-                Log.d("WeatherApp", response.body().toString())
+                Log.d("WeatherApp", response.message() + response.body().toString())
                 val forecastContainer: ForecastContainer? = response.body()
-                //_forecastListLiveData.value = forecastContainer
 
                 //Save to db
                 forecastContainer?.let {

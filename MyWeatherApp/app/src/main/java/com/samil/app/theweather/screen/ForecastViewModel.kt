@@ -21,16 +21,13 @@ import java.lang.ref.WeakReference
 class ForecastViewModel(private val forecastContainerRepository: ForecastContainerRepository) :
     ViewModel() {
 
-    private val _forecastListLiveData = MutableLiveData<ForecastContainer>()
+    private val _forecastListLiveData = forecastContainerRepository.forecastListLiveData
     val forecastListLiveData: LiveData<ForecastContainer>
         get() = _forecastListLiveData
 
     fun getforecastContainer(isCelsius: Boolean) {
-
+        forecastContainerRepository.getForecastContainer(isCelsius)
     }
-
-
-
 }
 
 class ForecastViewModelFactory(private val application: Application) : ViewModelProvider.Factory {

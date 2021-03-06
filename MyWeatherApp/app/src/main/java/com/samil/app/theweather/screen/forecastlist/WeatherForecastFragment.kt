@@ -41,27 +41,16 @@ class WeatherForecastFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val factory = ForecastViewModelFactory(requireActivity().application)
-        forecastViewModel =
-            ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
-
+//        val factory = ForecastViewModelFactory(requireActivity().application)
+//        forecastViewModel =
+//            ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
         forecastViewModel.forecastListLiveData.observe(viewLifecycleOwner, Observer {
-            createWeatherList(it)
+            createForecastList(it)
         })
-
-
-
     }
 
-    private fun createWeatherList(forecastContainer: ForecastContainer) {
+    private fun createForecastList(forecastContainer: ForecastContainer) {
         val adapter = ForecastAdapter(forecastContainer) { position ->
-            //Navigate
-//            val bundle = Bundle()
-//            bundle.putParcelable(KEY_DAILY_FORECAST_DETAILS, forecastResponse.forecastList[position])
-//            findNavController()
-//                .navigate(R.id.action_weatherForecastFragment_to_forecastDetailsFragment, bundle)
-
-            //val direction = ForecastDetailsFragmentDirections
             val direction = WeatherForecastFragmentDirections
                 .actionWeatherForecastFragmentToForecastDetailsFragment(position)
             findNavController().navigate(direction)
@@ -83,10 +72,9 @@ class WeatherForecastFragment : Fragment() {
                 findNavController().navigate(direction)
             }
             R.id.map_location -> {
-                //TODO: Share the Forecast details as a text
+                //TODO: Open Google maps with user`s location
             }
         }
-        //Handle cases
         return super.onOptionsItemSelected(item)
     }
 }

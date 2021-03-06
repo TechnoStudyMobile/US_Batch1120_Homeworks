@@ -52,6 +52,7 @@ class SettingsFragment : Fragment() {
         activity?.let {
             val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
             setUnitSubtitle(isCelsius)
+            //TODO: Get and set, also for notification and Days settings
         }
     }
 
@@ -61,6 +62,7 @@ class SettingsFragment : Fragment() {
         }else {
             getString(R.string.fahrenheit_subtitle)
         }
+        unit_settings_item.settings_value.textSize = 30f
     }
 
 

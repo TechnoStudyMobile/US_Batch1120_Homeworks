@@ -6,15 +6,6 @@ import com.google.gson.reflect.TypeToken
 import com.samil.app.theweather.model.Forecast
 import com.samil.app.theweather.model.Weather
 
-//class WeatherConverter {
-//
-//    @TypeConverter
-//    fun weatherToString(weather: Weather): String = Gson().toJson(weather)
-//
-//    @TypeConverter
-//    fun stringToWeather(string: String): Weather = Gson().fromJson(string, Weather::class.java)
-//}
-
 class ForecastListConverter {
 
     @TypeConverter
