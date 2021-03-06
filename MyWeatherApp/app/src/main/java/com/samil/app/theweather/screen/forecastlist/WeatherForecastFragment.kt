@@ -10,13 +10,24 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.samil.app.theweather.R
 import com.samil.app.theweather.screen.adapters.ForecastAdapter
-import com.samil.app.theweather.model.ForecastResponse
+import com.samil.app.theweather.model.ForecastContainer
+import com.samil.app.theweather.screen.ForecastViewModel
+import com.samil.app.theweather.screen.ForecastViewModelFactory
 import com.samil.app.theweather.utils.Prefs
 import kotlinx.android.synthetic.main.fragment_weather_forecast.*
 
 class WeatherForecastFragment : Fragment() {
 
     private lateinit var forecastViewModel: ForecastViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val factory = ForecastViewModelFactory(requireActivity().application)
+        forecastViewModel = ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
+
+        val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
+        forecastViewModel.getforecastContainer(isCelsius)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,21 +41,20 @@ class WeatherForecastFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        forecastViewModel = ViewModelProvider(requireActivity()).get(ForecastViewModel::class.java)
+        val factory = ForecastViewModelFactory(requireActivity().application)
+        forecastViewModel =
+            ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
 
         forecastViewModel.forecastListLiveData.observe(viewLifecycleOwner, Observer {
             createWeatherList(it)
         })
-        activity?.let {
-            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
-            forecastViewModel.fetchForecastInfo(isCelsius)
-        }
+
 
 
     }
 
-    private fun createWeatherList(forecastResponse: ForecastResponse) {
-        val adapter = ForecastAdapter(forecastResponse) { position ->
+    private fun createWeatherList(forecastContainer: ForecastContainer) {
+        val adapter = ForecastAdapter(forecastContainer) { position ->
             //Navigate
 //            val bundle = Bundle()
 //            bundle.putParcelable(KEY_DAILY_FORECAST_DETAILS, forecastResponse.forecastList[position])
@@ -66,9 +76,10 @@ class WeatherForecastFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId ){
+        when (item.itemId) {
             R.id.settings -> {
-                val direction = WeatherForecastFragmentDirections.actionWeatherForecastFragmentToSettingsFragment()
+                val direction =
+                    WeatherForecastFragmentDirections.actionWeatherForecastFragmentToSettingsFragment()
                 findNavController().navigate(direction)
             }
             R.id.map_location -> {

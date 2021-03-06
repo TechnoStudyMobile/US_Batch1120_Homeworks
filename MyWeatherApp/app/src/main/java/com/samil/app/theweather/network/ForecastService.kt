@@ -1,6 +1,6 @@
 package com.samil.app.theweather.network
 
-import com.samil.app.theweather.model.ForecastResponse
+import com.samil.app.theweather.model.ForecastContainer
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -16,5 +16,5 @@ interface ForecastService {
         @Query("lon") lon: String,
         @Query("units") units: String,
         @Query("key") key: String
-    ): Call<ForecastResponse>
+    ): Call<ForecastContainer>
 }

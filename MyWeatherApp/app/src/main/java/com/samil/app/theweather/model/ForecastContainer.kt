@@ -1,30 +1,29 @@
 package com.samil.app.theweather.model
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
 @Parcelize
-data class ForecastResponse(
-
-    @field:SerializedName("country_code")
+@Entity(tableName = "forecastContainers")
+data class ForecastContainer(
+    @Expose(deserialize = false, serialize = false)
+    @PrimaryKey(autoGenerate = false)
+    val id: Int = 0,
+    @SerializedName(value = "country_code")
     val countryCode: String,
-
-    @field:SerializedName("city_name")
+    @SerializedName(value = "city_name")
     val cityName: String,
-
-    @field:SerializedName("data")
+    @SerializedName("data")
     val forecastList: List<Forecast>,
-
     val timezone: String,
-
     val lon: Double,
-
-    @field:SerializedName("state_code")
+    @SerializedName(value = "state_code")
     val stateCode: String,
-
     val lat: Double
-
 ) : Parcelable
 
 @Parcelize

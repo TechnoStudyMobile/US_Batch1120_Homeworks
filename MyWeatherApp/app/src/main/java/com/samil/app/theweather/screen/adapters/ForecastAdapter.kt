@@ -3,16 +3,15 @@ package com.samil.app.theweather.screen.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.persistableBundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.samil.app.theweather.R
-import com.samil.app.theweather.model.ForecastResponse
+import com.samil.app.theweather.model.ForecastContainer
 import com.samil.app.theweather.utils.GetImageId.getImageId
 import kotlinx.android.synthetic.main.item_list_forecast.view.*
 import kotlinx.android.synthetic.main.item_list_forecast_first_big_item.view.*
 
 class ForecastAdapter(
-    private val forecastResponse: ForecastResponse, val onClick: (position: Int) -> Unit) :
+    private val forecastContainer: ForecastContainer, val onClick: (position: Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val firstItem = 0
@@ -41,38 +40,38 @@ class ForecastAdapter(
                 holder.itemView.run {
                     imageView_forecast_first_element.setImageResource(
                         R.drawable::class.java
-                            .getImageId(forecastResponse.forecastList[position].weather.icon)
+                            .getImageId(forecastContainer.forecastList[position].weather.icon)
                     )
-                    textView_weekdays_first_element.text = forecastResponse
+                    textView_weekdays_first_element.text = forecastContainer
                         .forecastList[position].datetime
                     textView_forecast_first_element.text =
-                        forecastResponse.forecastList[position].weather.description
+                        forecastContainer.forecastList[position].weather.description
                     textView_high_temp_first_element.text =
-                        forecastResponse.forecastList[position].maxTemp.toString()
+                        forecastContainer.forecastList[position].maxTemp.toString()
                     textView_low_temp_first_element.text =
-                        forecastResponse.forecastList[position].minTemp.toString()
+                        forecastContainer.forecastList[position].minTemp.toString()
                 }
             }
             else -> {
                 holder.itemView.run {
                     imageView_forecast.setImageResource(
                         R.drawable::class.java
-                            .getImageId(forecastResponse.forecastList[position].weather.icon)
+                            .getImageId(forecastContainer.forecastList[position].weather.icon)
                     )
-                    textView_weekdays.text = forecastResponse.forecastList[position].datetime
+                    textView_weekdays.text = forecastContainer.forecastList[position].datetime
                     textView_forecast.text =
-                        forecastResponse.forecastList[position].weather.description
+                        forecastContainer.forecastList[position].weather.description
                     textView_high_temp.text =
-                        forecastResponse.forecastList[position].maxTemp.toString()
+                        forecastContainer.forecastList[position].maxTemp.toString()
                     textView_low_temp.text =
-                        forecastResponse.forecastList[position].minTemp.toString()
+                        forecastContainer.forecastList[position].minTemp.toString()
                 }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return forecastResponse.forecastList.size
+        return forecastContainer.forecastList.size
     }
 
     inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

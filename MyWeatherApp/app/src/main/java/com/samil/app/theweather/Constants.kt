@@ -6,3 +6,6 @@ const val KEY_DAILY_FORECAST_DETAILS = "key_daily_forecast_details"
 //SharedPref
 const val IS_CELSIUS_DEFAULT_SETTINGS_VALUE = true
 const val IS_CELSIUS_SETTINGS_PREF_KEY = "is_metric_setting_key"
+
+//Room -database
+const val WEATHER_ROOM_DATABASE_NAME = "weather_database"

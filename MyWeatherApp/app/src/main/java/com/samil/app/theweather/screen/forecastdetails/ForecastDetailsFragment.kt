@@ -11,7 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.samil.app.theweather.R
 import com.samil.app.theweather.model.Forecast
-import com.samil.app.theweather.screen.forecastlist.ForecastViewModel
+import com.samil.app.theweather.screen.ForecastViewModel
+import com.samil.app.theweather.screen.ForecastViewModelFactory
 import com.samil.app.theweather.utils.Prefs
 import kotlinx.android.synthetic.main.fragment_forecast_details.*
 
@@ -28,7 +29,8 @@ class ForecastDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        forecastViewModel = ViewModelProvider(requireActivity()).get(ForecastViewModel::class.java)
+        val factory = ForecastViewModelFactory(requireActivity().application)
+        forecastViewModel = ViewModelProvider(requireActivity(),factory).get(ForecastViewModel::class.java)
 
     }
 
