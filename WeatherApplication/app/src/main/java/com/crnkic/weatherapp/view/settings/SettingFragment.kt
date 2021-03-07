@@ -43,9 +43,13 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
 
-        activity?.let {activity ->
-            Prefs.retrievePinnerPosition(activity).let {
-                days_settings_spinner.setSelection(it)
+        activity?.let { activity ->
+            Prefs.loadDaysSettingsValue(activity).let {
+                if (it == 7) {
+                    days_settings_spinner.setSelection(0)
+                } else {
+                    days_settings_spinner.setSelection(1)
+                }
             }
         }
     }
@@ -77,7 +81,7 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         //days subtitle
         activity?.let {
-            val day = Prefs.loadDaysPosition(it)
+            val day = Prefs.loadDaysSettingsValue(it)
             setDaySubtitle(day)
         }
 
@@ -87,10 +91,9 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     //DAYS
     private fun setDaySubtitle(day: Int) {
-        if(day == 7) {
+        if (day == 7) {
             days_settings_item.settings_value.text = resources.getStringArray(R.array.days_array)[0]
-        }
-        else {
+        } else {
             days_settings_item.settings_value.text = resources.getStringArray(R.array.days_array)[1]
         }
 
@@ -115,7 +118,9 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         activity?.let {
-            Prefs.setDaysSettings(it, days_settings_spinner)
+            val value = resources.getStringArray(R.array.days_array)[position]
+            Prefs.setDaysSettings(it, value.toInt())
+            setDaySubtitle(value.toInt())
         }
     }
 

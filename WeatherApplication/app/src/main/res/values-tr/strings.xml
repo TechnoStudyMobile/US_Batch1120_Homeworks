@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Hava Durumu</string>
+
+
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+    <string name="settings_menu_title">Settings</string>
+    <string name="your_location_menu_title">Your location</string>
+    <string name="share_menu_title">share_menu_title</string>
+    <string name="weather_notification_setting_title">Weather Notification</string>
+    <string name="unit_setting_title">Unit system</string>
+    <string name="days_setting_title">Total days in List</string>
+    <string name="celsius_subtitle">Celsius</string>
+    <string name="fahrenheit_subtitle">Fahrenheit</string>
+
+</resources>

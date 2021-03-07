@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TitleText"> parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+
+    </style>
+
+    <style name="SubTitleText"> parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/subtitle_text</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+</resources>

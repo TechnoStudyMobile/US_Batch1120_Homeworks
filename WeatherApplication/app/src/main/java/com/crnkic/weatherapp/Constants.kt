@@ -10,3 +10,6 @@ const val IS_CELSIUS_SETTING_PREF_KEY = "is_metric_setting_key"
 //SharedPrefIsCelsius or Fahrenheit
 const val DAYS_SETTING_PREF_KEY = "days_setting_key"
 const val DAYS_DEFAULT_SETTINGS_VALUE = "true"
+
+//Room - database
+const val WEATHER_ROOM_DATABASE_NAME = "weather_database"

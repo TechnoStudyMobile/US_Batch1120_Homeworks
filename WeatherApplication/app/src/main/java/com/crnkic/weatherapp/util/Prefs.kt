@@ -21,24 +21,16 @@ object Prefs {
         editor.apply()
     }
 
-    fun retrievePinnerPosition(activity: Activity): Int {
+    fun loadDaysSettingsValue(activity: Activity): Int {
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
-        return sharedPref.getInt(DAYS_SETTING_PREF_KEY, 0)
+        return sharedPref.getInt(DAYS_SETTING_PREF_KEY, 7)
     }
 
-    fun setDaysSettings(activity: Activity, spinner : Spinner) {
+    fun setDaysSettings(activity: Activity, value : Int) {
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.putInt(DAYS_SETTING_PREF_KEY, spinner.selectedItemPosition)
+        editor.putInt(DAYS_SETTING_PREF_KEY, value)
         editor.apply()
-    }
-
-    fun loadDaysPosition(activity: Activity) : Int {
-        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
-        return when (sharedPref.getInt(DAYS_SETTING_PREF_KEY, 0)) {
-            0 -> 7
-            else -> 14
-        }
     }
 
 }

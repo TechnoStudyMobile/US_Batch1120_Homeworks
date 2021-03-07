@@ -3,21 +3,20 @@ package com.crnkic.weatherapp.view.forecastdetails
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.crnkic.weatherapp.R
-import com.crnkic.weatherapp.forecastResponse.Forecast
+import com.crnkic.weatherapp.model.Forecast
 import com.crnkic.weatherapp.util.DrawableUtil.getImageId
-import com.crnkic.weatherapp.util.Prefs
-import com.crnkic.weatherapp.view.forecastlist.WeatherViewModel
+import com.crnkic.weatherapp.view.forecastlist.ForecastViewModel
+import com.crnkic.weatherapp.view.forecastlist.ForecastViewModelFactory
 import kotlinx.android.synthetic.main.forcast_details_fragment.*
 
 class ForecastDetailsFragment : Fragment() {
-    private lateinit var forcastViewModel: WeatherViewModel
+    private lateinit var forecastViewModel: ForecastViewModel
 
     private val args : ForecastDetailsFragmentArgs by navArgs()
 
@@ -31,8 +30,8 @@ class ForecastDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-        forcastViewModel = ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java)
+        val factory = ForecastViewModelFactory(requireActivity().application)
+        forecastViewModel = ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
 
 //        arguments?.let {
 //            listOfItems = it.getParcelable(KEY_DAILY_FORECAST_DETAILS)
@@ -50,7 +49,7 @@ class ForecastDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        forcastViewModel.listOfItemsLiveData.observe(viewLifecycleOwner, Observer {
+        forecastViewModel.forecastListLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
 //                for.text = it.forecastList.getOrNull(args.position).toString()
                 image_view_cloud_detailed_fragment.setImageResource(R.drawable::class.java.getImageId(it.forecastList.getOrNull(args.position)?.weather?.icon))
@@ -81,7 +80,7 @@ class ForecastDetailsFragment : Fragment() {
             }
 
             R.id.share -> {
-                //TODO: share forcast details as a text
+                //TODO: share forecast details as a text
             }
         }
         return super.onOptionsItemSelected(item)
