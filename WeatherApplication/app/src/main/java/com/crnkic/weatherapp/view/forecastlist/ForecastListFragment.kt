@@ -12,6 +12,7 @@ import com.crnkic.weatherapp.R
 import com.crnkic.weatherapp.model.ForecastContainer
 import com.crnkic.weatherapp.util.Prefs
 import com.crnkic.weatherapp.view.adapters.FragmentAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.weather_fragment.*
 
 class ForecastListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
