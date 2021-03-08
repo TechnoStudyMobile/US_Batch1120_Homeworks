@@ -12,7 +12,6 @@ import com.crnkic.weatherapp.R
 import com.crnkic.weatherapp.model.ForecastContainer
 import com.crnkic.weatherapp.util.Prefs
 import com.crnkic.weatherapp.view.adapters.FragmentAdapter
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.weather_fragment.*
 
 class ForecastListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -37,8 +36,10 @@ class ForecastListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 getRecyclerList(it)
             }
         })
+        Thread(){
+            swipe_container.setOnRefreshListener(this)
+        }.start()
     }
-
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,8 +70,6 @@ class ForecastListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        swipe_container.setOnRefreshListener(this)
     }
 
     private fun getRecyclerList(forecast: ForecastContainer) {
@@ -80,22 +79,18 @@ class ForecastListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 //            bundle.putParcelable(KEY_DAILY_FORECAST_DETAILS, forecast.forecastList[position])
 //            findNavController().navigate(R.id.action_weatherFragment_to_forcastDetailsFragment, bundle)
 
-            val direction =
-                    ForecastListFragmentDirections.actionWeatherFragmentToForcastDetailsFragment(
-                            position
-                    )
+            val direction = ForecastListFragmentDirections.actionWeatherFragmentToForcastDetailsFragment(position)
             findNavController().navigate(direction)
 
         }
         recyclerView_fragment.layoutManager = LinearLayoutManager(context)
         recyclerView_fragment.adapter = adapter
     }
+
     override fun onRefresh() {
         val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
         val days = Prefs.loadDaysSettingsValue(requireActivity())
         forecastViewModel.getForecastContainer(isCelsius, days)
         swipe_container.isRefreshing = false
-
     }
-
 }

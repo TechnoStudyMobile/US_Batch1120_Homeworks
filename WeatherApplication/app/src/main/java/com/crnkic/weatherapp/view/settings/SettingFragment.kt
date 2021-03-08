@@ -7,14 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.lifecycle.ViewModelProvider
 import com.crnkic.weatherapp.R
 import com.crnkic.weatherapp.util.Prefs
+import com.crnkic.weatherapp.view.forecastlist.ForecastViewModel
+import com.crnkic.weatherapp.view.forecastlist.ForecastViewModelFactory
 import kotlinx.android.synthetic.main.layout_settings_days.*
 import kotlinx.android.synthetic.main.layout_settings_item.view.*
 import kotlinx.android.synthetic.main.layout_settings_notification.*
 import kotlinx.android.synthetic.main.layout_settings_unit.*
 
 class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
+    private lateinit var forecastViewModel: ForecastViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val factory = ForecastViewModelFactory(requireActivity().application)
+        forecastViewModel = ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +37,6 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         getSpinner()
-
     }
 
     private fun getSpinner() {
@@ -57,18 +66,26 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun initViews() {
         setSettingsTitles()
         setSettingsSubtitles()
-        setClickListenesrs()
+        setClickListeners()
     }
 
     //unit changer
-    private fun setClickListenesrs() {
+    private fun setClickListeners() {
         activity?.let { mActivity ->
             unit_settings_item.setOnClickListener {
                 val isCelsius = Prefs.retrieveIsCelsiusSetting(mActivity)
                 Prefs.setIsCelsiusSettings(mActivity, !isCelsius)
                 setUnitSubtitle(!isCelsius)
+                refreshData()
+
             }
         }
+    }
+
+    private fun refreshData() {
+        val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
+        val days = Prefs.loadDaysSettingsValue(requireActivity())
+        forecastViewModel.getForecastContainer(isCelsius, days)
     }
 
     //ALL SUBTITLES
@@ -121,6 +138,7 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val value = resources.getStringArray(R.array.days_array)[position]
             Prefs.setDaysSettings(it, value.toInt())
             setDaySubtitle(value.toInt())
+            refreshData()
         }
     }
 

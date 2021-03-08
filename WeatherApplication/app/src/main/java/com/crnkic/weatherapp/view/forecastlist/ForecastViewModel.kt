@@ -4,7 +4,6 @@ package com.crnkic.weatherapp.view.forecastlist
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.crnkic.weatherapp.model.ForecastContainer
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.crnkic.weatherapp.database.WeatherDatabase
