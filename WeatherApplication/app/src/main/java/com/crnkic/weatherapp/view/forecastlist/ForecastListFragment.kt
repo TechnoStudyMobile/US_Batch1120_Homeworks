@@ -1,31 +1,32 @@
 package com.crnkic.weatherapp.view.forecastlist
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.crnkic.weatherapp.R
 import com.crnkic.weatherapp.model.ForecastContainer
 import com.crnkic.weatherapp.util.Prefs
 import com.crnkic.weatherapp.view.adapters.FragmentAdapter
 import kotlinx.android.synthetic.main.weather_fragment.*
 
-class ForecastListFragment : Fragment() {
+class ForecastListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var forecastViewModel: ForecastViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = ForecastViewModelFactory(requireActivity().application)
-        forecastViewModel =
-            ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
+        forecastViewModel = ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
 
         val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
         val days = Prefs.loadDaysSettingsValue(requireActivity())
         forecastViewModel.getForecastContainer(isCelsius, days)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,11 +36,11 @@ class ForecastListFragment : Fragment() {
                 getRecyclerList(it)
             }
         })
-
     }
 
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.weather_fragment, container, false)
@@ -68,6 +69,7 @@ class ForecastListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        swipe_container.setOnRefreshListener(this)
     }
 
     private fun getRecyclerList(forecast: ForecastContainer) {
@@ -78,13 +80,21 @@ class ForecastListFragment : Fragment() {
 //            findNavController().navigate(R.id.action_weatherFragment_to_forcastDetailsFragment, bundle)
 
             val direction =
-                ForecastListFragmentDirections.actionWeatherFragmentToForcastDetailsFragment(
-                    position
-                )
+                    ForecastListFragmentDirections.actionWeatherFragmentToForcastDetailsFragment(
+                            position
+                    )
             findNavController().navigate(direction)
 
         }
         recyclerView_fragment.layoutManager = LinearLayoutManager(context)
         recyclerView_fragment.adapter = adapter
     }
+    override fun onRefresh() {
+        val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
+        val days = Prefs.loadDaysSettingsValue(requireActivity())
+        forecastViewModel.getForecastContainer(isCelsius, days)
+        swipe_container.isRefreshing = false
+
+    }
+
 }
