@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">9,6_WeatherApplication</string>
-    <string name="day_of_week">Day of Week</string>
-    <string name="forecast">Forecast</string>
+    <string name="day_of_week" translatable="false">Day of Week</string>
+    <string name="forecastContainer">Forecast</string>
     <string name="Zero">0</string>
     <string name="_0">0°</string>
     <string name="today">Today</string>
@@ -22,7 +22,6 @@
     <string name="search">Search</string>
     <string name="image_details">Image details</string>
     <string name="_100" translatable="false">100</string>
-    <string name="pressure">Pressure</string>
     <string name="wind">Wind</string>
     <string name="wind_speed_m">m/s</string>
     <string name="your_location">Your Location</string>
@@ -50,10 +49,18 @@
     <string name="default_days_selected" translatable="false">14</string>
     <string name="percent" translatable="false">%</string>
     <string name="degree_character" translatable="false">°</string>
-    <string name="space1">\" \"</string>
+    <string name="space1" translatable="false">\" \"</string>
+    <string name="sunrise_icon" translatable="false">sunrise_icon</string>
+    <string name="sunset_icon" translatable="false">sunset_icon</string>
+    <string name="pressure_icon" translatable="false">pressure_icon</string>
+    <string name="pressure">Pressure</string>
+    <string name="precipitation_icon" translatable="false">precipitation_icon</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="weather">Weather</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
     <string-array name="days_array">
         <item>14</item>
         <item>7</item>
     </string-array>
-
 </resources>

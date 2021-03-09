@@ -104,7 +104,6 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setSettingsSubtitles() {
         activity?.let {
-            val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
             setUnitSubtitle()
             setDaysSubtitle()
             //TODO: Get and set, also for notification settings
@@ -120,6 +119,7 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             ).plus(Prefs.loadDaysSelected(it).toString())
         }
     }
+
     private fun setUnitSubtitle() {
         activity?.let {
             val isCelsius = Prefs.retrieveIsCelsiusSetting(it)
@@ -130,6 +130,7 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
     }
+
     private fun loadSpinnerSelectedDays() {
         activity?.let { Prefs.retrieveSpinnerPosition(it) }?.let {
             day_settings_spinner.setSelection(
@@ -145,7 +146,7 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 .setTextColor(it.resources.getColor(R.color.bar_header))
         }
         setDaysSubtitle()
-        }
+    }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 }

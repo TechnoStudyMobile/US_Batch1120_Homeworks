@@ -8,16 +8,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kryvovyaz.a96_weatherapplication.ForecastViewModel
+import com.kryvovyaz.a96_weatherapplication.ForecastViewModelFactory
 import com.kryvovyaz.a96_weatherapplication.R
-import com.kryvovyaz.a96_weatherapplication.model.Forecast
+import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
 import com.kryvovyaz.a96_weatherapplication.screen.view.WeatherAdapter
+import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_DEFAULT_SETTINGS_VALUE
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.fragment_forecast.*
-import kotlin.properties.Delegates
 
 class ForecastListFragment : Fragment() {
-    private lateinit var viewModel: ForecastViewModel
-    private var isCelsius by Delegates.notNull<Boolean>()
+
+    private lateinit var forecastViewModel: ForecastViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val factory = ForecastViewModelFactory(requireActivity().application)
+        forecastViewModel =
+            ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
+        val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
+        val days = Prefs.loadDaysSelected(requireActivity())
+        forecastViewModel.getForecastContainer(isCelsius, days)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,25 +40,30 @@ class ForecastListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(ForecastViewModel::class.java)
-        viewModel.forecastLiveData.observe(viewLifecycleOwner, Observer {
-            createRecyclerList(it)
-        })
-        activity?.let {
-            isCelsius = Prefs.retrieveIsCelsiusSetting(it)
-            val days = Prefs.loadDaysSelected(it)
-            viewModel.fetchForecastInfo(isCelsius, days)
+        //refresher
+        swipe_container.setOnRefreshListener {
+            val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
+            val days = Prefs.loadDaysSelected(requireActivity())
+            forecastViewModel.getForecastContainer(isCelsius, days)
+            swipe_container.isRefreshing = false
         }
+        //
+        forecastViewModel.forecastListLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                getRecyclerList(it)
+            }
+        })
     }
 
-    private fun createRecyclerList(forecast: Forecast) {
-        val adapter = WeatherAdapter(forecast, isCelsius) { position ->
-            val direction =
-                ForecastListFragmentDirections.actionForecastListFragmentToForecastDetailsFragment(
-                    position
-                )
-            findNavController().navigate(direction)
-        }
+    private fun getRecyclerList(forecastContainer: ForecastContainer) {
+        val adapter =
+            WeatherAdapter(forecastContainer, IS_CELSIUS_DEFAULT_SETTINGS_VALUE) { position ->
+                val direction =
+                    ForecastListFragmentDirections.actionForecastListFragmentToForecastDetailsFragment(
+                        position
+                    )
+                findNavController().navigate(direction)
+            }
         weather_recycler_view.layoutManager = LinearLayoutManager(context)
         weather_recycler_view.adapter = adapter
     }

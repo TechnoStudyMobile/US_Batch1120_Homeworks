@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">9,6_WeatherApplication</string>
-    <string name="forecast">Прогноз</string>
+    <string name="forecastContainer">Прогноз</string>
     <string name="Zero">0</string>
     <string name="_0">0°</string>
     <string name="today">Сегодня</string>
@@ -27,7 +27,6 @@
     <string name="your_location">Местоположение</string>
     <string name="label_gragment_settings">Настройки</string>
     <string name="label_forecast_details">Детальный прогноз</string>
-
     <string name="my_settings_title">My Settings Title</string>
     <string name="wind_icon">wind icon</string>
     <string name="notification_settings_subtitle">My settings subtitle</string>
@@ -36,8 +35,12 @@
     <string name="unit_setting_title">Измерение в</string>
     <string name="days_setting_title">Количество дней</string>
     <string name="days_selected">Дней выбрано</string>
-    <string name="wind_speed_i">м/ч</string>
+    <string name="wind_speed_i">м/c</string>
     <string name="pesure_m"> мм/рс</string>
     <string name="presure_i"> ин</string>
     <string name="units_settings_label">Единица измерения</string>
+    <string name="precipitation">Осадки</string>
+    <string name="weather">Погода</string>
+    <string name="sunrise">Восход</string>
+    <string name="sunset">Закат</string>
 </resources>

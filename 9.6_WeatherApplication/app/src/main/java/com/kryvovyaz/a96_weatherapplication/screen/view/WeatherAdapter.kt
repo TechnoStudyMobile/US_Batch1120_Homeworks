@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kryvovyaz.a96_weatherapplication.R
-import com.kryvovyaz.a96_weatherapplication.model.Forecast
-import com.kryvovyaz.a96_weatherapplication.util.Capitalization.capitalizeWords
+import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
+import com.kryvovyaz.a96_weatherapplication.util.TextUtil.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.today_forecast.view.*
 import java.util.*
 
 class WeatherAdapter(
-    private val forecastList: Forecast,
+    private val forecastContainerList: ForecastContainer,
     private val pref: Boolean,
     val onClick: (position: Int) -> Unit
 ) :
@@ -48,7 +48,7 @@ class WeatherAdapter(
     }
 
     override fun getItemCount(): Int {
-        return forecastList.data.size
+        return forecastContainerList.forecastList.size
     }
 
     inner class WeatherTodayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -57,23 +57,23 @@ class WeatherAdapter(
             itemView.run {
                 image_today.setImageResource(
                     R.drawable::class.java.getImageId(
-                        forecastList.data[position].weather.icon
+                        forecastContainerList.forecastList[position].weather.icon
                     )
                 )
                 forecast_today.text =
-                    forecastList.data[position].weather.description
+                    forecastContainerList.forecastList[position].weather.description
                 tempHigh_today.text =
-                    forecastList.data[position].high_temp.toInt().toString()
+                    forecastContainerList.forecastList[position].high_temp.toInt().toString()
                         .plus(context.getString(R.string.degree_character))
                 tempLow_today.text =
-                    forecastList.data[position].low_temp.toInt().toString()
+                    forecastContainerList.forecastList[position].low_temp.toInt().toString()
                         .plus(context.getString(R.string.degree_character))
                 curent_temp_today.text =
-                    forecastList.data[position].temp.toInt().toString()
+                    forecastContainerList.forecastList[position].temp.toInt().toString()
                         .plus(context.getString(R.string.degree_character))
-                humidity_today.text = (forecastList.data[position].humidityAverage.toString()
+                humidity_today.text = (forecastContainerList.forecastList[position].humidityAverage.toString()
                     .plus(context.getString(R.string.percent)))
-                wind_speed_today.text = (forecastList.data[position].wind_spd.toInt().toString()
+                wind_speed_today.text = (forecastContainerList.forecastList[position].wind_spd.toInt().toString()
                     .plus(context.getString(R.string.space)).plus(
                         if (pref) resources.getString(R.string.wind_speed_m) else context.getString(
                             R.string.wind_speed_i
@@ -94,24 +94,24 @@ class WeatherAdapter(
             itemView.run {
                 this.icon_image_view.setImageResource(
                     R.drawable::class.java.getImageId(
-                        forecastList.data[position].weather.icon
+                        forecastContainerList.forecastList[position].weather.icon
                     )
                 )
                 day_of_week_text_view.text = capitalizeWords(
                     formatDate(
-                        forecastList.data[position].datetime, position, context
+                        forecastContainerList.forecastList[position].datetime, position, context
                     )
                 )
                 formatDate(
-                    forecastList.data[position].datetime, position, context
+                    forecastContainerList.forecastList[position].datetime, position, context
                 ).capitalize(Locale.ROOT)
                 textView_single_view_forecast.text =
-                    forecastList.data[position].weather.description
+                    forecastContainerList.forecastList[position].weather.description
                 temp_high_text_view.text =
-                    forecastList.data[position].high_temp.toInt().toString()
+                    forecastContainerList.forecastList[position].high_temp.toInt().toString()
                         .plus(context.getString(R.string.degree_character))
                 textView_single_view_temp_low.text =
-                    forecastList.data[position].low_temp.toInt().toString()
+                    forecastContainerList.forecastList[position].low_temp.toInt().toString()
                         .plus(context.getString(R.string.degree_character))
             }
         }

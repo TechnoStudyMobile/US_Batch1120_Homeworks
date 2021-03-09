@@ -11,16 +11,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kryvovyaz.a96_weatherapplication.R
-import com.kryvovyaz.a96_weatherapplication.screen.forecastlist.ForecastViewModel
-import com.kryvovyaz.a96_weatherapplication.util.Capitalization.capitalizeWords
+import com.kryvovyaz.a96_weatherapplication.ForecastViewModel
+import com.kryvovyaz.a96_weatherapplication.util.TextUtil.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
+import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
 import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_SETTING_PREF_KEY
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
+import com.kryvovyaz.a96_weatherapplication.util.TimeUtil.convertTime
 import kotlinx.android.synthetic.main.fragment_forecast_details.*
 
-class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class ForecastDetailsFragment : Fragment() {
     private val args: ForecastDetailsFragmentArgs by navArgs()
     private lateinit var forecastViewModel: ForecastViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -36,9 +40,7 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreferences: SharedPreferences? =
-            activity?.getSharedPreferences(IS_CELSIUS_SETTING_PREF_KEY, MODE_PRIVATE)
-        sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
+
         getForecastDetails()
     }
 
@@ -67,10 +69,19 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
     }
 
     fun getForecastDetails() {
-        forecastViewModel.forecastLiveData.observe(viewLifecycleOwner, Observer {
+        forecastViewModel.forecastListLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
+                it.forecastList.getOrNull(args.position)?.weather?.icon?.let { it1 ->
+                    R.drawable::class.java.getImageId(
+                        it1
+                    )
+                }?.let { it2 ->
+                    icon_details.setImageResource(
+                        it2
+                    )
+                }
                 humidity.text =
-                    it.data.getOrNull(args.position)?.humidityAverage.toString().plus(
+                    it.forecastList.getOrNull(args.position)?.humidityAverage.toString().plus(
                         getString(
                             R.string.space
                         )
@@ -79,20 +90,21 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
                             R.string.percent
                         )
                     )
-                presure.text = it.data.getOrNull(args.position)?.pressureAverage?.toInt().toString()
-                    .plus(
-                        getString(
-                            R.string.space
+                pressure.text =
+                    it.forecastList.getOrNull(args.position)?.pressureAverage?.toInt().toString()
+                        .plus(
+                            getString(
+                                R.string.space
+                            )
                         )
-                    )
-                    .plus(
-                        if (Prefs.retrieveIsCelsiusSetting(requireActivity()))
-                            getString(R.string.pesure_m) else getString(
-                            R.string.presure_i
+                        .plus(
+                            if (Prefs.retrieveIsCelsiusSetting(requireActivity()))
+                                getString(R.string.pesure_m) else getString(
+                                R.string.presure_i
+                            )
                         )
-                    )
                 wind.text =
-                    it.data.getOrNull(args.position)?.wind_spd?.toInt()
+                    it.forecastList.getOrNull(args.position)?.wind_spd?.toInt()
                         .toString().plus(
                             getString(
                                 R.string.space
@@ -103,11 +115,15 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
                                 getString(R.string.wind_speed_m) else getString(
                                 R.string.wind_speed_i
                             )
-                        ).plus(getString(
-                            R.string.space))
-                        .plus(it.data.getOrNull(args.position)?.abdreviatedWindDirection)
-                forecast_details.text = it.data.getOrNull(args.position)?.weather?.description
-                date_details.text = it.data.getOrNull(args.position)?.datetime?.let { it1 ->
+                        ).plus(
+                            getString(
+                                R.string.space
+                            )
+                        )
+                        .plus(it.forecastList.getOrNull(args.position)?.abdreviatedWindDirection)
+                forecast_details.text =
+                    it.forecastList.getOrNull(args.position)?.weather?.description
+                date_details.text = it.forecastList.getOrNull(args.position)?.datetime?.let { it1 ->
                     context?.let { it2 ->
                         formatDate(
                             it1, args.position, it2
@@ -115,30 +131,32 @@ class ForecastDetailsFragment : Fragment(), SharedPreferences.OnSharedPreference
                     }
                 }?.let { it3 -> capitalizeWords(it3) }
                 tempHigh_details.text =
-                    it.data.getOrNull(args.position)?.high_temp?.toInt().toString()
+                    it.forecastList.getOrNull(args.position)?.high_temp?.toInt().toString()
                         .plus(context?.getString(R.string.degree_character))
                 tempLow_details.text =
-                    it.data.getOrNull(args.position)?.low_temp?.toInt().toString()
+                    it.forecastList.getOrNull(args.position)?.low_temp?.toInt().toString()
                         .plus(context?.getString(R.string.degree_character))
+                sunrise.text =
+                    it.forecastList.getOrNull(args.position)?.sunrise_time_unix_timestamps?.let { it1 ->
+                        convertTime(
+                            it1
+                        ).toString()
+                    }
+                sunset.text =
+                    it.forecastList.getOrNull(args.position)?.sunset_time_unix_timestamps?.let { it1 ->
+                        convertTime(
+                            it1
+                        ).toString()
+                    }
+                precipitation.text =
+                    it.forecastList.getOrNull(args.position)?.probability?.toInt().toString().plus(
+                        getString(
+                            R.string.percent
+                        )
+                    )
+
             }
         })
     }
 
-    //not working currently
-    override fun onResume() {
-        super.onResume()
-        activity?.getPreferences(MODE_PRIVATE)
-            ?.registerOnSharedPreferenceChangeListener(this)
-        getForecastDetails()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        activity?.getPreferences(MODE_PRIVATE)
-            ?.unregisterOnSharedPreferenceChangeListener(this)
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        getForecastDetails()
-    }
 }

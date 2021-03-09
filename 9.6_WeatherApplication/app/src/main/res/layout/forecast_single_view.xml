@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/forecast"
+        android:text="@string/forecastContainer"
         android:textSize="16sp"
         android:textColor="@color/bar_header"
         app:layout_constraintBottom_toBottomOf="@id/icon_image_view"

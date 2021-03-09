@@ -53,4 +53,12 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="ForecastDetailsDescription">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="ForecastDetailsIcons">
+        <item name="tint">@color/white</item>
+    </style>
 </resources>

@@ -7,3 +7,5 @@ const val IS_CELSIUS_SETTING_PREF_KEY = "is_metric_setting_key"
 const val IS_DAYS_SELECTED_KEY = "days_selected"
 const val METRIC="M"
 const val US="I"
+//room-database
+const val WEATHER_ROOM_DATABASE_NAME="weather_database"
