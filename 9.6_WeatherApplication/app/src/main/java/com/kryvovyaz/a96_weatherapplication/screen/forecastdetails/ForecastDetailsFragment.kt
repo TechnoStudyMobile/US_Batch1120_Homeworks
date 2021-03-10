@@ -1,7 +1,5 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastdetails
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -12,10 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModel
+import com.kryvovyaz.a96_weatherapplication.util.App
 import com.kryvovyaz.a96_weatherapplication.util.TextUtil.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
-import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_SETTING_PREF_KEY
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import com.kryvovyaz.a96_weatherapplication.util.TimeUtil.convertTime
 import kotlinx.android.synthetic.main.fragment_forecast_details.*
@@ -29,6 +27,7 @@ class ForecastDetailsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         forecastViewModel = ViewModelProvider(requireActivity()).get(ForecastViewModel::class.java)
+        forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
     }
 
     override fun onCreateView(
@@ -140,16 +139,16 @@ class ForecastDetailsFragment : Fragment() {
                     it.forecastList.getOrNull(args.position)?.sunrise_time_unix_timestamps?.let { it1 ->
                         convertTime(
                             it1
-                        ).toString()
+                        )
                     }
                 sunset.text =
                     it.forecastList.getOrNull(args.position)?.sunset_time_unix_timestamps?.let { it1 ->
                         convertTime(
                             it1
-                        ).toString()
+                        )
                     }
                 precipitation.text =
-                    it.forecastList.getOrNull(args.position)?.probability?.toInt().toString().plus(
+                    it.forecastList.getOrNull(args.position)?.probability?.toString().plus(
                         getString(
                             R.string.percent
                         )
@@ -159,4 +158,9 @@ class ForecastDetailsFragment : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
+        getForecastDetails()
+    }
 }

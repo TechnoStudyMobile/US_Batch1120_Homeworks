@@ -4,9 +4,11 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.kryvovyaz.a96_weatherapplication.database.WeatherDatabase
 import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
 import com.kryvovyaz.a96_weatherapplication.repository.ForecastContainerRepository
+import kotlinx.coroutines.launch
 
 class ForecastViewModel(private val forecastContainerRepository: ForecastContainerRepository) :
     ViewModel() {
@@ -15,10 +17,11 @@ class ForecastViewModel(private val forecastContainerRepository: ForecastContain
     val forecastListLiveData: LiveData<ForecastContainer>
         get() = _forecastListLiveData
 
-    private val repository = ForecastContainerRepository(forecastContainerRepository.dao)
-
     fun getForecastContainer(isCelsius: Boolean, days: Int) {
-        forecastContainerRepository.getForecastContainer(isCelsius, days)
+        viewModelScope.launch {
+            forecastContainerRepository.getForecastContainer(isCelsius, days)
+        }
+
         //if(user refresh()) {
     }
 }

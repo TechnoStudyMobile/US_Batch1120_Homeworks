@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bar_header">
+    android:background="@drawable/gradient_bg">
 
     <ImageView
         android:id="@+id/image_today"
@@ -14,6 +14,7 @@
         android:src="@drawable/a01d"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_icons_vertical"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -25,11 +26,11 @@
 
     <TextView
         android:id="@+id/header_today"
+        style="@style/ForecastTodayDescription"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:text="@string/today"
-        style="@style/ForecastTodayDescription"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -99,8 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/l"
-        app:layout_constraintLeft_toRightOf="@id/tempHigh_today"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
         app:layout_constraintTop_toBottomOf="@id/header_today" />
 
     <ImageView
@@ -125,11 +125,11 @@
 
     <TextView
         android:id="@+id/curent_temp_today"
+        style="@style/ForecastTodayDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginTop="6dp"
-        style="@style/ForecastTodayDescription"
         android:textSize="24sp"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"

@@ -1,5 +1,6 @@
 package com.kryvovyaz.a96_weatherapplication
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        toolbar.setTitleTextColor(resources.getColor(R.color.design_default_color_on_primary));
         initializeToolbar()
     }
 

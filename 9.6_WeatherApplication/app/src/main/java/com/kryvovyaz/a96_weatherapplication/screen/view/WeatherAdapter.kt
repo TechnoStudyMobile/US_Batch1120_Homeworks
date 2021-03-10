@@ -1,5 +1,6 @@
 package com.kryvovyaz.a96_weatherapplication.screen.view
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
 import com.kryvovyaz.a96_weatherapplication.util.TextUtil.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
+import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.forecast_single_view.view.*
 import kotlinx.android.synthetic.main.today_forecast.view.*
 import java.util.*

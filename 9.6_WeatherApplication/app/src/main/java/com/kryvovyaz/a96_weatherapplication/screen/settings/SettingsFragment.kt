@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.kryvovyaz.a96_weatherapplication.R
+import com.kryvovyaz.a96_weatherapplication.util.App
 import com.kryvovyaz.a96_weatherapplication.util.IS_DAYS_SELECTED_KEY
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.layout_settings_days.*
@@ -68,12 +70,14 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             celsius_degree_text_view.setOnClickListener { celsius_degree ->
                 Prefs.setIsCelsiusSetting(mActivity, true)
                 setDegreeViews()
+                App.prefs?.icCelsius = true
                 setUnitSubtitle()
             }
             fahrenheit_degree_text_view.setOnClickListener {
                 Prefs.setIsCelsiusSetting(mActivity, false)
                 setDegreeViews()
                 setUnitSubtitle()
+            App.prefs?.icCelsius = false
             }
         }
     }
@@ -146,6 +150,8 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 .setTextColor(it.resources.getColor(R.color.bar_header))
         }
         setDaysSubtitle()
+
+         App.prefs?.days = if (position == 0) 14 else 7
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}

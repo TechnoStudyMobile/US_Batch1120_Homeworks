@@ -9,6 +9,8 @@ import com.kryvovyaz.a96_weatherapplication.network.RetrofitClient
 import com.kryvovyaz.a96_weatherapplication.util.METRIC
 import com.kryvovyaz.a96_weatherapplication.util.US
 import com.kryvovyaz.a96_weatherapplication.util.WEATHER_API_KEY
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,9 +18,8 @@ import retrofit2.Response
 class ForecastContainerRepository(val dao: ForecastContainerDao) {
 
     val forecastListLiveData: LiveData<ForecastContainer> = dao.getForecastContainer()
-    lateinit var forecastContainer: ForecastContainer
-    var latestRequestTime: Long = -1//implementing updater
-  /*************   implemanting location listener  *********************************/
+
+    /*************   implemanting location listener  *********************************/
     private var listener: ((Location) -> Unit)? = null
 
     fun setOnLocationChangedListener(listener: (Location) -> Unit) {
@@ -28,48 +29,34 @@ class ForecastContainerRepository(val dao: ForecastContainerDao) {
     private fun onLocationUpdated(location: Location) {
         listener?.invoke(location)
     }
+
     /***********************************************************************/
 
-    fun getForecastContainer(isCelsius: Boolean, days: Int) {
-        fetchForecastContainer(isCelsius, days)
+  suspend fun getForecastContainer(isCelsius: Boolean, days: Int) {
+        withContext(Dispatchers.IO) {
+            fetchForecastContainer(isCelsius, days)
+        }
     }
-
-    //Repository
-    fun insertToDatabase(forecastContainer: ForecastContainer) {
-        Thread {
-            dao.deleteAll()
-            dao.insert(forecastContainer)
-
-        }.start()
-    }
-
-    fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
-
-//        if ((System.currentTimeMillis() - latestRequestTime) < 1800000) {//updater
-//            return
-//        }
+    private fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
         val forecastService = RetrofitClient.retrofit?.create(ForecastService::class.java)
         val units = if (isCelsius) METRIC else US
         val forecastCall = forecastService?.getForecast(
             days, "38.123",
             "-78.543", units, WEATHER_API_KEY
         )
-        forecastCall?.enqueue(object : Callback<ForecastContainer> {
-            override fun onResponse(
-                call: Call<ForecastContainer>,
-                container: Response<ForecastContainer>
-            ) {
-                latestRequestTime = System.currentTimeMillis()//updater
-                container.body()?.let {
-                    forecastContainer = it
-                }
-
-                //Save to DB
-                insertToDatabase(forecastContainer)
+        try {
+            val response = forecastCall?.execute()
+            val forecastContainer = response?.body()
+            forecastContainer?.let {
+                insertToDatabase(it)
             }
+            //TODO:fix if response is null
+        } catch (ex: Exception) {
+        }
+    }
 
-
-            override fun onFailure(call: Call<ForecastContainer>, t: Throwable) {}
-        })
+    private fun insertToDatabase(forecastContainer: ForecastContainer) {
+        dao.deleteAll()
+        dao.insert(forecastContainer)
     }
 }

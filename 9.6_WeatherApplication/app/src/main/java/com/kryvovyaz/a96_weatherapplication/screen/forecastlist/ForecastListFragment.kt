@@ -13,6 +13,7 @@ import com.kryvovyaz.a96_weatherapplication.ForecastViewModelFactory
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
 import com.kryvovyaz.a96_weatherapplication.screen.view.WeatherAdapter
+import com.kryvovyaz.a96_weatherapplication.util.App
 import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_DEFAULT_SETTINGS_VALUE
 import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import kotlinx.android.synthetic.main.fragment_forecast.*
@@ -20,14 +21,16 @@ import kotlinx.android.synthetic.main.fragment_forecast.*
 class ForecastListFragment : Fragment() {
 
     private lateinit var forecastViewModel: ForecastViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = ForecastViewModelFactory(requireActivity().application)
         forecastViewModel =
             ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
-        val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
-        val days = Prefs.loadDaysSelected(requireActivity())
-        forecastViewModel.getForecastContainer(isCelsius, days)
+//        val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
+//        val days = Prefs.loadDaysSelected(requireActivity())
+
+        forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
     }
 
     override fun onCreateView(
@@ -40,14 +43,6 @@ class ForecastListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //refresher
-        swipe_container.setOnRefreshListener {
-            val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
-            val days = Prefs.loadDaysSelected(requireActivity())
-            forecastViewModel.getForecastContainer(isCelsius, days)
-            swipe_container.isRefreshing = false
-        }
-        //
         forecastViewModel.forecastListLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 getRecyclerList(it)
@@ -57,7 +52,10 @@ class ForecastListFragment : Fragment() {
 
     private fun getRecyclerList(forecastContainer: ForecastContainer) {
         val adapter =
-            WeatherAdapter(forecastContainer, IS_CELSIUS_DEFAULT_SETTINGS_VALUE) { position ->
+            WeatherAdapter(
+                forecastContainer,
+                Prefs.retrieveIsCelsiusSetting(requireActivity())
+            ) { position ->
                 val direction =
                     ForecastListFragmentDirections.actionForecastListFragmentToForecastDetailsFragment(
                         position
@@ -88,5 +86,11 @@ class ForecastListFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
+
     }
 }

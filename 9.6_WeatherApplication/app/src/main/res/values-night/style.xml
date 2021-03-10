@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:colorBackground">@color/bar_header</item>
+        <item name="android:textColor">@color/bar_header</item>
+        <item name="android:tint">@color/bar_bottom</item>
+        <item name="android:title">@color/bar_header</item>
+        <item name="colorControlNormal">@color/bar_bottom</item>
+        <item name="actionBarPopupTheme">@style/SubmenuHeaderStyle</item>
+        <item name="android:background">@color/bar_header</item>
+    </style>
 
+    <style name="SubmenuHeaderStyle" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/bar_header</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
     <style name="DetailsForecastText">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/black</item>
@@ -31,9 +44,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorControlNormal">@color/bar_header</item>
         <item name="android:fontFamily">@font/bevan</item>
+        <item name="android:textColor">@color/bar_header</item>
     </style>
 
 
