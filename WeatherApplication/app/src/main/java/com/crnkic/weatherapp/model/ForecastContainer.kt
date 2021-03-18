@@ -7,7 +7,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-
 @Parcelize
 @Entity(tableName = "forecastContainerTable")
 data class ForecastContainer(
@@ -20,7 +19,7 @@ data class ForecastContainer(
         val timezone: String,
         val lat: Double,
         val country_code: String,
-        val state_code: String,
+        val state_code: String
 ) : Parcelable
 
 @Parcelize

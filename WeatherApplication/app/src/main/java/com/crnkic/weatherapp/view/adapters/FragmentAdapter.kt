@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.crnkic.weatherapp.R
 import com.crnkic.weatherapp.util.DrawableUtil.getImageId
 import com.crnkic.weatherapp.model.ForecastContainer
 import com.crnkic.weatherapp.model.Forecast
+import com.crnkic.weatherapp.util.Prefs
 import kotlinx.android.synthetic.main.forecast_next_day_item.view.*
 import kotlinx.android.synthetic.main.forecast_today_item.view.*
 import java.text.SimpleDateFormat
@@ -49,6 +51,7 @@ class FragmentAdapter(
     }
 
     override fun getItemCount(): Int {
+
         return forecast.forecastList.size
     }
 

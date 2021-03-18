@@ -2,24 +2,34 @@ package com.crnkic.weatherapp.view.forecastlist
 
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import com.crnkic.weatherapp.model.ForecastContainer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.crnkic.weatherapp.database.WeatherDatabase
+import com.crnkic.weatherapp.model.ForecastContainerResult
 import com.crnkic.weatherapp.repository.ForecastContainerRepository
+import kotlinx.coroutines.launch
 
-class ForecastViewModel(private val forecastContainerRepository: ForecastContainerRepository) : ViewModel() {
+class ForecastViewModel(private val forecastContainerRepository: ForecastContainerRepository) :
+    ViewModel() {
 
-    private val _forecastListLiveData = forecastContainerRepository.forecastListLiveData
-    val forecastListLiveData: LiveData<ForecastContainer>
-        get() = _forecastListLiveData
+    private val _forecastContainerResultLiveData = forecastContainerRepository.forecastContainerResultLiveData
 
-    fun getForecastContainer(isCelsius: Boolean, days: Int) {
-        forecastContainerRepository.getForecastContainer(isCelsius, days)
-        //if(user refresh()) {
+    val forecastContainerResultLiveData: LiveData<ForecastContainerResult>
+        get() = _forecastContainerResultLiveData
+
+    fun getSavedForecastContainer() {
+        viewModelScope.launch {
+            forecastContainerRepository.getSavedForecastContainer()
+        }
+
+    }
+
+    fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
+        _forecastContainerResultLiveData.value = ForecastContainerResult.IsLoading
+        viewModelScope.launch {
+            forecastContainerRepository.fetchForecastContainer(isCelsius, days)
         }
     }
+}
 
 
 class ForecastViewModelFactory(private val application: Application) : ViewModelProvider.Factory {

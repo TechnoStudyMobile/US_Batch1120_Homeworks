@@ -9,7 +9,7 @@
         android:id="@+id/weatherFragment"
         android:name="com.crnkic.weatherapp.view.forecastlist.ForecastListFragment"
         android:label="forecast_list"
-        tools:layout="@layout/weather_fragment" >
+        tools:layout="@layout/fragment_forecast_list" >
         <action
             android:id="@+id/action_weatherFragment_to_forcastDetailsFragment"
             app:destination="@id/forcastDetailsFragment"

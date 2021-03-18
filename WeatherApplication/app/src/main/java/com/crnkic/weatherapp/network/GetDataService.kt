@@ -15,7 +15,7 @@ interface GetDataService {
             @Query("postal_code") postal_code: String,
             @Query("country") country: String,
             @Query("units") units: String,
-            @Query("key") key: String,
+            @Query("key") key: String
     ): Call<ForecastContainer>
 
 }

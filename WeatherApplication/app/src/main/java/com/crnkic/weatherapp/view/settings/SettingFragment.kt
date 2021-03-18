@@ -85,7 +85,7 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun refreshData() {
         val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
         val days = Prefs.loadDaysSettingsValue(requireActivity())
-        forecastViewModel.getForecastContainer(isCelsius, days)
+        forecastViewModel.fetchForecastContainer(isCelsius, days)
     }
 
     //ALL SUBTITLES
@@ -134,12 +134,9 @@ class SettingFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        activity?.let {
-            val value = resources.getStringArray(R.array.days_array)[position]
-            Prefs.setDaysSettings(it, value.toInt())
-            setDaySubtitle(value.toInt())
-            refreshData()
-        }
+        val value = resources.getStringArray(R.array.days_array)[position]
+        Prefs.setDaysSettings(requireActivity(), value.toInt())
+        setDaySubtitle(value.toInt())
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
