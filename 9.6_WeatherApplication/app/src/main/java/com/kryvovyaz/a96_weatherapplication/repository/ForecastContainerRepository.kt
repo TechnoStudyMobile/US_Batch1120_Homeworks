@@ -1,7 +1,6 @@
 package com.kryvovyaz.a96_weatherapplication.repository
 
-import android.location.Location
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.kryvovyaz.a96_weatherapplication.database.ForecastContainerDao
 import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
 import com.kryvovyaz.a96_weatherapplication.network.ForecastService
@@ -11,47 +10,45 @@ import com.kryvovyaz.a96_weatherapplication.util.US
 import com.kryvovyaz.a96_weatherapplication.util.WEATHER_API_KEY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.lang.Error
 
-class ForecastContainerRepository(val dao: ForecastContainerDao) {
+class ForecastContainerRepository(private val dao: ForecastContainerDao) {
 
-    val forecastListLiveData: LiveData<ForecastContainer> = dao.getForecastContainer()
+    val forecastContainerResultLiveData = MutableLiveData<ForecastContainerResult>()
 
-    /*************   implemanting location listener  *********************************/
-    private var listener: ((Location) -> Unit)? = null
+   suspend fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
+       withContext(Dispatchers.IO) {
+           val forecastService = RetrofitClient.retrofit?.create(ForecastService::class.java)
+           val units = if (isCelsius) METRIC else US
+           val forecastCall = forecastService?.getForecast(
+               days, "38.123",
+               "-78.543", units, WEATHER_API_KEY
+           )
+           try {
+               val response = forecastCall?.execute()
+               val forecastContainer = response?.body()
+               forecastContainer?.let {
+                   forecastContainerResultLiveData
+                       .postValue(ForecastContainerResult.Success(it))
+                   insertToDatabase(it)
+               }
+               //TODO:handle error cases when  forecastContainer is null
+           } catch (ex: Exception) {
 
-    fun setOnLocationChangedListener(listener: (Location) -> Unit) {
-        this.listener = listener
-    }
-
-    private fun onLocationUpdated(location: Location) {
-        listener?.invoke(location)
-    }
-
-    /***********************************************************************/
-
-  suspend fun getForecastContainer(isCelsius: Boolean, days: Int) {
+               forecastContainerResultLiveData.postValue(
+                   ForecastContainerResult
+                       .Failure(Error(ex.message))
+               )
+           }
+       }
+   }
+    suspend fun getSavedForecastContainer() {
         withContext(Dispatchers.IO) {
-            fetchForecastContainer(isCelsius, days)
+            val forecastContainer = dao.getForecastContainer()
+            forecastContainer?.let{
+                ForecastContainerResult.Success(forecastContainer)
         }
-    }
-    private fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
-        val forecastService = RetrofitClient.retrofit?.create(ForecastService::class.java)
-        val units = if (isCelsius) METRIC else US
-        val forecastCall = forecastService?.getForecast(
-            days, "38.123",
-            "-78.543", units, WEATHER_API_KEY
-        )
-        try {
-            val response = forecastCall?.execute()
-            val forecastContainer = response?.body()
-            forecastContainer?.let {
-                insertToDatabase(it)
-            }
-            //TODO:fix if response is null
-        } catch (ex: Exception) {
+
         }
     }
 

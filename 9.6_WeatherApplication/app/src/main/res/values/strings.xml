@@ -59,6 +59,16 @@
     <string name="weather">Weather</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunset">Sunset</string>
+    <string name="settings_location_title">Use current location</string>
+    <string name="current_location">Current Location</string>
+    <string name="today_notification_title">Today\'s Weather</string>
+    <string name="today_notofication_chanel_name">Today\'s  Forecast</string>
+    <string name="today_notofication_chanel_description" translatable="false">This notification will show today\'s forecast details</string>
+    <string name="error_dialog_icon" translatable="false">Error dialog icon</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="forecast_is_created_based_on_your_device_location_let_apps_find_your_device_s_location">Forecast is created based on your device location. Do you want to let this app find your device’s location?</string>
+    <string name="location_permission_missing">Location permission missing.</string>
     <string-array name="days_array">
         <item>14</item>
         <item>7</item>

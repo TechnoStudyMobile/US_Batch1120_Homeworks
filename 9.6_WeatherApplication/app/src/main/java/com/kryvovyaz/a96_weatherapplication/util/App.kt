@@ -15,8 +15,10 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         instance = this
         prefs = Pref(applicationContext)
+    //create notification chanel
+        NotificationUtil.createNotificationChanel(applicationContext)
     }
+
 }

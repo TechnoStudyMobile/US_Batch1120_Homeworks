@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="bar_header">#6ab7ff</color>
     <color name="bar_bottom">#8B9298</color>
+    <color name="colorError">#91041A</color>
+
 </resources>

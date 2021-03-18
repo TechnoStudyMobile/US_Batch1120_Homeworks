@@ -4,6 +4,10 @@
     package="com.kryvovyaz.a96_weatherapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
+
     <application
         android:name=".util.App"
         android:allowBackup="true"
@@ -14,7 +18,8 @@
         android:theme="@style/Theme.96_WeatherApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name="com.kryvovyaz.a96_weatherapplication.MainActivity">
+        <activity
+            android:name="com.kryvovyaz.a96_weatherapplication.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

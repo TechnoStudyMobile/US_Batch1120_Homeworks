@@ -6,10 +6,23 @@
     android:orientation="vertical"
     tools:context=".screen.settings.SettingsFragment">
 
-    <include layout="@layout/layout_settings_notification" />
+    <include
 
-    <include layout="@layout/layout_settings_unit" />
+        layout="@layout/layout_settings_notification"
+        android:id="@+id/settings_notifications"/>
 
-    <include layout="@layout/layout_settings_days" />
+    <include
+
+        layout="@layout/layout_settings_unit"
+        android:id="@+id/settings_units"/>
+
+    <include
+
+        layout="@layout/layout_settings_days"
+        android:id="@+id/setting_days"/>
+
+    <include layout="@layout/layout_settings_location"
+        android:id="@+id/settings_location"/>
+
 
 </LinearLayout>

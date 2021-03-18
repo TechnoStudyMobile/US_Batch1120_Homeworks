@@ -9,7 +9,7 @@
         android:id="@+id/forecastListFragment"
         android:name="com.kryvovyaz.a96_weatherapplication.screen.forecastlist.ForecastListFragment"
         android:label="@string/label_forecast_list_fragment_title"
-        tools:layout="@layout/fragment_forecast">
+        tools:layout="@layout/fragment_forecast_list">
         <action
             android:id="@+id/action_forecastListFragment_to_forecastDetailsFragment"
             app:destination="@id/forecastDetailsFragment"

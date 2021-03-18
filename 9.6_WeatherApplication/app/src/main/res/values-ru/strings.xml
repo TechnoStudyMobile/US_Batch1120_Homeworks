@@ -43,4 +43,10 @@
     <string name="weather">Погода</string>
     <string name="sunrise">Восход</string>
     <string name="sunset">Закат</string>
+    <string name="settings_location_title">Использовать местоположение</string>
+    <string name="current_location">Настоящее местоположение</string>
+    <string name="today_notification_title">Today\'s Weather</string>
+    <string name="today_notofication_chanel_name">Today\'s  Forecast</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
 </resources>

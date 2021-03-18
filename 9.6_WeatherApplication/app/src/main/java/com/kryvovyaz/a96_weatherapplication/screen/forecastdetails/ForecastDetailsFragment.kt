@@ -10,15 +10,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModel
+import com.kryvovyaz.a96_weatherapplication.ForecastViewModelFactory
+import com.kryvovyaz.a96_weatherapplication.databinding.FragmentForecastDetailsBinding
+import com.kryvovyaz.a96_weatherapplication.databinding.FragmentForecastListBinding
+import com.kryvovyaz.a96_weatherapplication.repository.ForecastContainerResult
 import com.kryvovyaz.a96_weatherapplication.util.App
 import com.kryvovyaz.a96_weatherapplication.util.TextUtil.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
-import com.kryvovyaz.a96_weatherapplication.util.Prefs
 import com.kryvovyaz.a96_weatherapplication.util.TimeUtil.convertTime
-import kotlinx.android.synthetic.main.fragment_forecast_details.*
 
 class ForecastDetailsFragment : Fragment() {
+    private var _binding: FragmentForecastDetailsBinding? = null
+    private val binding get() = _binding!!
     private val args: ForecastDetailsFragmentArgs by navArgs()
     private lateinit var forecastViewModel: ForecastViewModel
 
@@ -26,20 +30,23 @@ class ForecastDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        forecastViewModel = ViewModelProvider(requireActivity()).get(ForecastViewModel::class.java)
-        forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
+        val factory = ForecastViewModelFactory(requireActivity().application)
+        forecastViewModel = ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
+       // forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
+        forecastViewModel.getSavedForecastContainer()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_forecast_details, container, false)
+        _binding = FragmentForecastDetailsBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         getForecastDetails()
     }
 
@@ -67,100 +74,126 @@ class ForecastDetailsFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun getForecastDetails() {
-        forecastViewModel.forecastListLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                it.forecastList.getOrNull(args.position)?.weather?.icon?.let { it1 ->
-                    R.drawable::class.java.getImageId(
-                        it1
-                    )
-                }?.let { it2 ->
-                    icon_details.setImageResource(
-                        it2
-                    )
+    private fun getForecastDetails() {
+        forecastViewModel.forecastContainerResultLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let { forecastContainerResult ->
+                when (forecastContainerResult) {
+                    is ForecastContainerResult.Failure -> {
+                    }
+                    ForecastContainerResult.IsLoading -> {
+                    }
+                    is ForecastContainerResult.Success -> {
+                        forecastContainerResult.forecastContainer.forecastList
+                            .getOrNull(args.position)?.weather?.icon?.let { it1 ->
+                                R.drawable::class.java.getImageId(
+                                    it1
+                                )
+                            }?.let { it2 ->
+                                binding.iconDetails.setImageResource(
+                                    it2
+                                )
+                            }
+                        binding.humidity.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.humidityAverage.toString().plus(
+                                    getString(
+                                        R.string.space
+                                    )
+                                ).plus(
+                                    getString(
+                                        R.string.percent
+                                    )
+                                )
+                        binding.pressure.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.pressureAverage?.toInt().toString()
+                                .plus(
+                                    getString(
+                                        R.string.space
+                                    )
+                                )
+                                .plus(
+                                    if (App.prefs!!.icCelsius)
+                                        getString(R.string.pesure_m) else getString(
+                                        R.string.presure_i
+                                    )
+                                )
+                       binding.wind.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.wind_spd?.toInt()
+                                .toString().plus(
+                                    getString(
+                                        R.string.space
+                                    )
+                                )
+                                .plus(
+                                    if (App.prefs!!.icCelsius)
+                                        getString(R.string.wind_speed_m) else getString(
+                                        R.string.wind_speed_i
+                                    )
+                                ).plus(
+                                    getString(
+                                        R.string.space
+                                    )
+                                )
+                                .plus(
+                                    forecastContainerResult.forecastContainer.forecastList
+                                        .getOrNull(args.position)?.abdreviatedWindDirection
+                                )
+                        binding.forecastDetails.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.weather?.description
+                        binding.dateDetails.text = forecastContainerResult.forecastContainer.forecastList
+                            .getOrNull(args.position)?.datetime?.let { it1 ->
+                                context?.let { it2 ->
+                                    formatDate(
+                                        it1, args.position, it2
+                                    )
+                                }
+                            }?.let { it3 -> capitalizeWords(it3) }
+                        binding.tempHighDetails.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.high_temp?.toInt().toString()
+                                .plus(context?.getString(R.string.degree_character))
+                        binding.tempLowDetails.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.low_temp?.toInt().toString()
+                                .plus(context?.getString(R.string.degree_character))
+                        binding.sunrise.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.sunrise_time_unix_timestamps?.let { it1 ->
+                                    convertTime(
+                                        it1
+                                    )
+                                }
+                        binding.sunset.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.sunset_time_unix_timestamps?.let { it1 ->
+                                    convertTime(
+                                        it1
+                                    )
+                                }
+                        binding.precipitation.text =
+                            forecastContainerResult.forecastContainer.forecastList
+                                .getOrNull(args.position)?.probability?.toString().plus(
+                                    getString(
+                                        R.string.percent
+                                    )
+                                )
+                    }
                 }
-                humidity.text =
-                    it.forecastList.getOrNull(args.position)?.humidityAverage.toString().plus(
-                        getString(
-                            R.string.space
-                        )
-                    ).plus(
-                        getString(
-                            R.string.percent
-                        )
-                    )
-                pressure.text =
-                    it.forecastList.getOrNull(args.position)?.pressureAverage?.toInt().toString()
-                        .plus(
-                            getString(
-                                R.string.space
-                            )
-                        )
-                        .plus(
-                            if (Prefs.retrieveIsCelsiusSetting(requireActivity()))
-                                getString(R.string.pesure_m) else getString(
-                                R.string.presure_i
-                            )
-                        )
-                wind.text =
-                    it.forecastList.getOrNull(args.position)?.wind_spd?.toInt()
-                        .toString().plus(
-                            getString(
-                                R.string.space
-                            )
-                        )
-                        .plus(
-                            if (Prefs.retrieveIsCelsiusSetting(requireActivity()))
-                                getString(R.string.wind_speed_m) else getString(
-                                R.string.wind_speed_i
-                            )
-                        ).plus(
-                            getString(
-                                R.string.space
-                            )
-                        )
-                        .plus(it.forecastList.getOrNull(args.position)?.abdreviatedWindDirection)
-                forecast_details.text =
-                    it.forecastList.getOrNull(args.position)?.weather?.description
-                date_details.text = it.forecastList.getOrNull(args.position)?.datetime?.let { it1 ->
-                    context?.let { it2 ->
-                        formatDate(
-                            it1, args.position, it2
-                        )
-                    }
-                }?.let { it3 -> capitalizeWords(it3) }
-                tempHigh_details.text =
-                    it.forecastList.getOrNull(args.position)?.high_temp?.toInt().toString()
-                        .plus(context?.getString(R.string.degree_character))
-                tempLow_details.text =
-                    it.forecastList.getOrNull(args.position)?.low_temp?.toInt().toString()
-                        .plus(context?.getString(R.string.degree_character))
-                sunrise.text =
-                    it.forecastList.getOrNull(args.position)?.sunrise_time_unix_timestamps?.let { it1 ->
-                        convertTime(
-                            it1
-                        )
-                    }
-                sunset.text =
-                    it.forecastList.getOrNull(args.position)?.sunset_time_unix_timestamps?.let { it1 ->
-                        convertTime(
-                            it1
-                        )
-                    }
-                precipitation.text =
-                    it.forecastList.getOrNull(args.position)?.probability?.toString().plus(
-                        getString(
-                            R.string.percent
-                        )
-                    )
 
             }
         })
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onResume() {
         super.onResume()
-        forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
+        forecastViewModel.fetchForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
         getForecastDetails()
     }
 }

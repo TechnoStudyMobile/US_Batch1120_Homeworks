@@ -1,28 +1,31 @@
 package com.kryvovyaz.a96_weatherapplication
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.kryvovyaz.a96_weatherapplication.database.WeatherDatabase
-import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
 import com.kryvovyaz.a96_weatherapplication.repository.ForecastContainerRepository
+import com.kryvovyaz.a96_weatherapplication.repository.ForecastContainerResult
 import kotlinx.coroutines.launch
 
 class ForecastViewModel(private val forecastContainerRepository: ForecastContainerRepository) :
     ViewModel() {
 
-    private val _forecastListLiveData = forecastContainerRepository.forecastListLiveData
-    val forecastListLiveData: LiveData<ForecastContainer>
-        get() = _forecastListLiveData
+    private val _forecastContainerResultLiveData = forecastContainerRepository.
+    forecastContainerResultLiveData
+    val forecastContainerResultLiveData: LiveData<ForecastContainerResult>
+        get() = _forecastContainerResultLiveData
 
-    fun getForecastContainer(isCelsius: Boolean, days: Int) {
+    fun getSavedForecastContainer() {
         viewModelScope.launch {
-            forecastContainerRepository.getForecastContainer(isCelsius, days)
+            forecastContainerRepository.getSavedForecastContainer()
         }
+    }
 
-        //if(user refresh()) {
+    fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
+        _forecastContainerResultLiveData.value = ForecastContainerResult.IsLoading
+        viewModelScope.launch {
+            forecastContainerRepository.fetchForecastContainer(isCelsius, days)
+        }
     }
 }
 

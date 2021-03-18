@@ -1,36 +1,57 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastlist
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModel
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModelFactory
 import com.kryvovyaz.a96_weatherapplication.R
+import com.kryvovyaz.a96_weatherapplication.databinding.FragmentForecastListBinding
 import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
+import com.kryvovyaz.a96_weatherapplication.repository.ForecastContainerResult
 import com.kryvovyaz.a96_weatherapplication.screen.view.WeatherAdapter
 import com.kryvovyaz.a96_weatherapplication.util.App
-import com.kryvovyaz.a96_weatherapplication.util.IS_CELSIUS_DEFAULT_SETTINGS_VALUE
-import com.kryvovyaz.a96_weatherapplication.util.Prefs
-import kotlinx.android.synthetic.main.fragment_forecast.*
+import com.kryvovyaz.a96_weatherapplication.util.NotificationUtil
+import com.kryvovyaz.a96_weatherapplication.util.PermissionUtil
 
 class ForecastListFragment : Fragment() {
-
+    private var _binding: FragmentForecastListBinding? = null
+    private val binding get() = _binding!!
     private lateinit var forecastViewModel: ForecastViewModel
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                getLocationDetails()
+            } else {
+                Snackbar.make(
+                    binding.forecastListFragment,
+                    "Permission denied.Can't load the data",
+                    Snackbar.LENGTH_INDEFINITE
+                )
+                    .setAction("Give Permission") {
+                        showAlertDialog()
+                    }
+                    .show()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = ForecastViewModelFactory(requireActivity().application)
         forecastViewModel =
             ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
-//        val isCelsius = Prefs.retrieveIsCelsiusSetting(requireActivity())
-//        val days = Prefs.loadDaysSelected(requireActivity())
-
-        forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
+        forecastViewModel.getSavedForecastContainer()
     }
 
     override fun onCreateView(
@@ -38,32 +59,112 @@ class ForecastListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_forecast, container, false)
+        _binding = FragmentForecastListBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    private fun getLocationDetails() {
+        //TODO:Get location
+        getForecastContainer()
+    }
+
+    private fun getForecastContainer() {
+        forecastViewModel.fetchForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        forecastViewModel.forecastListLiveData.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                getRecyclerList(it)
+        askForLocationPermission()
+
+        forecastViewModel.forecastContainerResultLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let { forecastContainerResult ->
+                when (forecastContainerResult) {
+                    is ForecastContainerResult.Failure -> {
+                        //TODO: Show error dialog (Couldn't fetch from internet)
+                    }
+                    ForecastContainerResult.IsLoading -> {
+                        //TODO: Show loading animation
+                    }
+                    is ForecastContainerResult.Success -> {
+                        createForecastList(forecastContainerResult.forecastContainer)
+
+                        //Fire a notification
+                        forecastContainerResult.forecastContainer.forecastList.firstOrNull()
+                            ?.let { forecast ->
+                                //in-app notification
+                                NotificationUtil.fireTodayForecastNotification(
+                                    requireContext(),
+                                    forecast
+                                )
+                            }
+
+                    }
+                }
             }
         })
+
+        //TODO: Put into a better place so it doesn't called every time
+        //Ask user permission
+
     }
 
-    private fun getRecyclerList(forecastContainer: ForecastContainer) {
+    private fun askForLocationPermission() {
+        when {
+            PermissionUtil.isLocationPermissionGranted(requireContext()) -> getLocationDetails()
+//            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
+//                showAlertDialog()
+//            }
+            else -> {
+                showAlertDialog()
+                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+    }
+
+    private fun showAlertDialog() {
+        val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
+        val view = LayoutInflater.from(context)
+            .inflate(
+                R.layout.layout_error_dialog,
+                requireView().findViewById(R.id.layoutDialogContainer)
+            );
+        builder.setView(view)
+        val alertDialog = builder.create()
+        view.findViewById<Button>(R.id.errorDialogButtonNo).setOnClickListener {
+            Snackbar.make(
+                binding.forecastListFragment,
+                "Permission denied.Can't load the data",
+                Snackbar.LENGTH_INDEFINITE
+            )
+                .setAction("Give Permission") {
+                    PackageManager.PERMISSION_GRANTED
+                    getLocationDetails()
+                }
+                .show()
+            alertDialog.dismiss()
+        }
+        view.findViewById<Button>(R.id.errorDialogButtonYes).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    private fun createForecastList(forecastContainer: ForecastContainer) {
         val adapter =
             WeatherAdapter(
                 forecastContainer,
-                Prefs.retrieveIsCelsiusSetting(requireActivity())
+                App.prefs!!.icCelsius
             ) { position ->
                 val direction =
-                    ForecastListFragmentDirections.actionForecastListFragmentToForecastDetailsFragment(
-                        position
-                    )
+                    ForecastListFragmentDirections
+                        .actionForecastListFragmentToForecastDetailsFragment(
+                            position
+                        )
                 findNavController().navigate(direction)
             }
-        weather_recycler_view.layoutManager = LinearLayoutManager(context)
-        weather_recycler_view.adapter = adapter
+        binding.weatherRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.weatherRecyclerView.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -88,9 +189,15 @@ class ForecastListFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onResume() {
         super.onResume()
-        forecastViewModel.getForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
-
+//        forecastViewModel.fetchForecastContainer(
+//            App.prefs!!.icCelsius,
+//            App.prefs!!.days)
     }
 }
