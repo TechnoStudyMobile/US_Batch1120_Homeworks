@@ -50,12 +50,16 @@
         <item name="android:textColor">@color/bar_header</item>
     </style>
 
-
+    <style name="ButtonsTextColor">
+        <item name="android:textColor">@color/bar_header</item>
+    </style>
     <style name="ForecastDetailsDescription">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">12sp</item>
     </style>
-
+    <style name="DialogTextColor">
+        <item name="android:textColor">@color/bar_header</item>
+    </style>
     <style name="ForecastDetailsIcons">
         <item name="tint">@color/black</item>
     </style>

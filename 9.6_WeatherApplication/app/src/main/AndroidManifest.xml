@@ -4,28 +4,36 @@
     package="com.kryvovyaz.a96_weatherapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
 
     <application
+
         android:name=".util.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="9.6_WeatherApp"
+        android:label="WeatherApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.96_WeatherApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity
-            android:name="com.kryvovyaz.a96_weatherapplication.MainActivity">
+
+        <activity android:name="com.kryvovyaz.a96_weatherapplication.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-    </application>
+        <receiver android:name=".ConnectionBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+          </application>
 
 </manifest>

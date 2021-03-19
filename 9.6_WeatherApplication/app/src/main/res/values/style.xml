@@ -72,6 +72,12 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="DialogTextColor">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="ButtonsTextColor">
+        <item name="android:textColor">@color/white</item>
+    </style>
     <style name="ForecastDetailsDescription">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">12sp</item>

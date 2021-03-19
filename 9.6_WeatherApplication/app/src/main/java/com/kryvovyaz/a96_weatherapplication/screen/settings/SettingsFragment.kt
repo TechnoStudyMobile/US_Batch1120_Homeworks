@@ -14,32 +14,19 @@ import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.databinding.*
 import com.kryvovyaz.a96_weatherapplication.util.App
 
-
 class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var _binding: FragmentSettingsBinding? = null
-//    private var _bindingsettings: FragmentSettingsBinding? = null
-
     private var _bindingDays: LayoutSettingsDaysBinding? = null
     private var _bindingUnits: LayoutSettingsUnitBinding? = null
     private var _bindingNotification: LayoutSettingsNotificationBinding? = null
     private var _bindingLocation: LayoutSettingsLocationBinding? = null
     private val binding get() = _binding!!
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        _bindingDays =binding.settingDays
+        _bindingDays = binding.settingDays
         _bindingUnits = binding.settingsUnits
         _bindingNotification = binding.settingsNotifications
         _bindingLocation = binding.settingsLocation
@@ -74,7 +61,6 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setClickListeners() {
-
         _bindingUnits?.celsiusDegreeTextView?.setOnClickListener { celsius_degree ->
             App.prefs?.icCelsius = true
             setDegreeViews()
@@ -89,11 +75,13 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
     private fun setSettingsTitles() {
-       _bindingNotification?.notificationSettingsItem?.settingsName?.text =
+        _bindingNotification?.notificationSettingsItem?.settingsName?.text =
             getString(R.string.weather_notification_setting_title)
-       _bindingUnits?.unitsSettingsItem?.settingsName?.text = getString(R.string.units_settings_label)
+        _bindingUnits?.unitsSettingsItem?.settingsName?.text =
+            getString(R.string.units_settings_label)
         _bindingDays?.daysSettingsItem?.settingsName?.text = getString(R.string.days_setting_title)
-       _bindingLocation?.locationSettingsItem?.settingsName?.text = getString(R.string.settings_location_title)
+        _bindingLocation?.locationSettingsItem?.settingsName?.text =
+            getString(R.string.settings_location_title)
     }
 
     private fun setDegreeViews() {
@@ -104,16 +92,16 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     .resources.getColor(R.color.bar_header)
             )
             _bindingUnits?.fahrenheitDegreeTextView?.setTextColor(Color.GRAY)
-            _bindingUnits?.celsiusDegreeTextView?.setTypeface(Typeface.DEFAULT_BOLD)
-            _bindingUnits?.fahrenheitDegreeTextView?.setTypeface(Typeface.DEFAULT)
+            _bindingUnits?.celsiusDegreeTextView?.typeface = Typeface.DEFAULT_BOLD
+            _bindingUnits?.fahrenheitDegreeTextView?.typeface=Typeface.DEFAULT
         } else {
             _bindingUnits?.celsiusDegreeTextView?.setTextColor(Color.GRAY)
             _bindingUnits?.fahrenheitDegreeTextView?.setTextColor(
                 requireActivity()
                     .resources.getColor(R.color.bar_header)
             )
-            _bindingUnits?.celsiusDegreeTextView?.setTypeface(Typeface.DEFAULT)
-            _bindingUnits?.fahrenheitDegreeTextView?.setTypeface(Typeface.DEFAULT_BOLD)
+            _bindingUnits?.celsiusDegreeTextView?.typeface = Typeface.DEFAULT
+            _bindingUnits?.fahrenheitDegreeTextView?.typeface=Typeface.DEFAULT_BOLD
         }
     }
 
@@ -125,7 +113,8 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setLocationSubtitle() {
-        _bindingLocation?.locationSettingsItem?.settingsName?.text = getString(R.string.current_location)
+        _bindingLocation?.locationSettingsItem?.settingsName?.text =
+            getString(R.string.current_location)
     }
 
     private fun setDaysSubtitle() {
@@ -161,9 +150,9 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        _bindingLocation=null
-        _bindingNotification=null
-        _bindingDays=null
-        _bindingUnits=null
+        _bindingLocation = null
+        _bindingNotification = null
+        _bindingDays = null
+        _bindingUnits = null
     }
 }

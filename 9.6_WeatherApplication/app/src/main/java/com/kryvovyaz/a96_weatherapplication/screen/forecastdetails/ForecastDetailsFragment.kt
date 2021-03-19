@@ -1,13 +1,16 @@
 package com.kryvovyaz.a96_weatherapplication.screen.forecastdetails
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.kryvovyaz.a96_weatherapplication.ConnectionBroadcastReceiver
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModel
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModelFactory
@@ -40,9 +43,21 @@ class ForecastDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        /*
+     *Connection Broadcast,will register and register itself.See Utils ConnectionBroadcastReceiver.kt
+      */
+        ConnectionBroadcastReceiver.registerToFragmentAndAutoUnregister(requireActivity(),
+            this, object : ConnectionBroadcastReceiver() {
+                override fun onConnectionChanged(hasConnection: Boolean) {
+                    if (hasConnection){
+                        getForecastDetails()
+                    }else{
+                        showErrorDialog()
+                    }
+                }
+            })
         _binding = FragmentForecastDetailsBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -185,6 +200,20 @@ class ForecastDetailsFragment : Fragment() {
 
             }
         })
+    }
+    private fun showErrorDialog() {
+        val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
+        val view = LayoutInflater.from(context)
+            .inflate(
+                R.layout.layout_error_dialog,
+                requireView().findViewById(R.id.layoutDialogContainer)
+            );
+        builder.setView(view)
+        val alertDialog = builder.create()
+        view.findViewById<Button>(R.id.errorDialogButtonOK).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
     }
     override fun onDestroyView() {
         super.onDestroyView()

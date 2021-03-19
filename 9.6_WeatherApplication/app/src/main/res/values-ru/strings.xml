@@ -49,4 +49,6 @@
     <string name="today_notofication_chanel_name">Today\'s  Forecast</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
+    <string name="ok">OK</string>
+    <string name="dialog_error_message">Application was not able to retrieve the forecast. Check you internet connection or try again later</string>
 </resources>

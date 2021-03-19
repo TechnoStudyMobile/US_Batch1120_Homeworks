@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
-    android:background="@color/bar_bottom">
+
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutDialogError"
+        android:id="@+id/layoutDialog"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginBottom="20dp"
+        android:background="@color/bar_bottom"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -21,18 +23,18 @@
             android:layout_height="wrap_content"
             android:background="@drawable/title_success_background"
             android:padding="10dp"
-            android:text="@string/something_went_wrong"
+            android:text="@string/location_permission_missing"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/errorDialogIcon"
+            style="@style/ForecastDetailsIcons"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/error_dialog_icon"
-            style="@style/ForecastDetailsIcons"
             android:src="@drawable/ic_error"
             app:layout_constraintBottom_toBottomOf="@id/dialogTextTitle"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +49,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="60dp"
-            android:text="@string/dialog_error_message"
+            android:text="@string/forecast_is_created_based_on_your_device_location_let_apps_find_your_device_s_location"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,16 +57,30 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/errorDialogButtonOK"
+        android:id="@+id/errorDialogButtonNo"
+        style="@style/ButtonsTextColor"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/error_dialog_button"
+        android:text="@string/no"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/layoutDialog"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/errorDialogButtonYes"
+        style="@style/ButtonsTextColor"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/error_dialog_button"
-        android:text="@string/ok"
-        style="@style/ButtonsTextColor"
+        android:text="@string/yes"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/layoutDialogError"
+        app:layout_constraintBottom_toBottomOf="@id/layoutDialog"
         app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

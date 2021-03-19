@@ -69,6 +69,10 @@
     <string name="yes">Yes</string>
     <string name="forecast_is_created_based_on_your_device_location_let_apps_find_your_device_s_location">Forecast is created based on your device location. Do you want to let this app find your device’s location?</string>
     <string name="location_permission_missing">Location permission missing.</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="application_was_not_able_to_retrieve_the_forecast_check_you_internet_connection_or_try_again_later.">Application was not able to retrieve the forecast. Check you internet connection or try again later</string>
+    <string name="ok">OK</string>
+    <string name="dialog_error_message">Application was not able to retrieve the forecast. Check you internet connection and try again later</string>
     <string-array name="days_array">
         <item>14</item>
         <item>7</item>

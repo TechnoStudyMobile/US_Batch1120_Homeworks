@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.kryvovyaz.a96_weatherapplication.ConnectionBroadcastReceiver
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModel
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModelFactory
 import com.kryvovyaz.a96_weatherapplication.R
@@ -25,7 +26,9 @@ import com.kryvovyaz.a96_weatherapplication.util.App
 import com.kryvovyaz.a96_weatherapplication.util.NotificationUtil
 import com.kryvovyaz.a96_weatherapplication.util.PermissionUtil
 
+
 class ForecastListFragment : Fragment() {
+
     private var _binding: FragmentForecastListBinding? = null
     private val binding get() = _binding!!
     private lateinit var forecastViewModel: ForecastViewModel
@@ -40,7 +43,7 @@ class ForecastListFragment : Fragment() {
                     Snackbar.LENGTH_INDEFINITE
                 )
                     .setAction("Give Permission") {
-                        showAlertDialog()
+                        showPermissionDialog()
                     }
                     .show()
             }
@@ -59,9 +62,17 @@ class ForecastListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
+        /*
+        *Connection Broadcast,will register and register itself.See Utils ConnectionBroadcastReceiver.kt
+         */
+        ConnectionBroadcastReceiver.registerToFragmentAndAutoUnregister(requireActivity(),
+            this, object : ConnectionBroadcastReceiver() {
+                override fun onConnectionChanged(hasConnection: Boolean) {
+                    getForecastContainer()
+                }
+            })
         _binding = FragmentForecastListBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     private fun getLocationDetails() {
@@ -81,10 +92,10 @@ class ForecastListFragment : Fragment() {
             it?.let { forecastContainerResult ->
                 when (forecastContainerResult) {
                     is ForecastContainerResult.Failure -> {
-                        //TODO: Show error dialog (Couldn't fetch from internet)
+                        showErrorDialog()
                     }
                     ForecastContainerResult.IsLoading -> {
-                        //TODO: Show loading animation
+                        // show animation
                     }
                     is ForecastContainerResult.Success -> {
                         createForecastList(forecastContainerResult.forecastContainer)
@@ -103,10 +114,6 @@ class ForecastListFragment : Fragment() {
                 }
             }
         })
-
-        //TODO: Put into a better place so it doesn't called every time
-        //Ask user permission
-
     }
 
     private fun askForLocationPermission() {
@@ -116,38 +123,10 @@ class ForecastListFragment : Fragment() {
 //                showAlertDialog()
 //            }
             else -> {
-                showAlertDialog()
+                showPermissionDialog()
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
         }
-    }
-
-    private fun showAlertDialog() {
-        val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
-        val view = LayoutInflater.from(context)
-            .inflate(
-                R.layout.layout_error_dialog,
-                requireView().findViewById(R.id.layoutDialogContainer)
-            );
-        builder.setView(view)
-        val alertDialog = builder.create()
-        view.findViewById<Button>(R.id.errorDialogButtonNo).setOnClickListener {
-            Snackbar.make(
-                binding.forecastListFragment,
-                "Permission denied.Can't load the data",
-                Snackbar.LENGTH_INDEFINITE
-            )
-                .setAction("Give Permission") {
-                    PackageManager.PERMISSION_GRANTED
-                    getLocationDetails()
-                }
-                .show()
-            alertDialog.dismiss()
-        }
-        view.findViewById<Button>(R.id.errorDialogButtonYes).setOnClickListener {
-            alertDialog.dismiss()
-        }
-        alertDialog.show()
     }
 
     private fun createForecastList(forecastContainer: ForecastContainer) {
@@ -189,15 +168,51 @@ class ForecastListFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showPermissionDialog() {
+        val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
+        val view = LayoutInflater.from(context)
+            .inflate(
+                R.layout.layout_permission_dialog,
+                requireView().findViewById(R.id.layoutDialogContainer)
+            );
+        builder.setView(view)
+        val alertDialog = builder.create()
+        view.findViewById<Button>(R.id.errorDialogButtonNo).setOnClickListener {
+            Snackbar.make(
+                binding.forecastListFragment,
+                "Permission denied.Can't load the data",
+                Snackbar.LENGTH_INDEFINITE
+            )
+                .setAction("Give Permission") {
+                    PackageManager.PERMISSION_GRANTED
+                    getLocationDetails()
+                }
+                .show()
+            alertDialog.dismiss()
+        }
+        view.findViewById<Button>(R.id.errorDialogButtonYes).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    private fun showErrorDialog() {
+        val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
+        val view = LayoutInflater.from(context)
+            .inflate(
+                R.layout.layout_error_dialog,
+                requireView().findViewById(R.id.layoutDialogContainer)
+            );
+        builder.setView(view)
+        val alertDialog = builder.create()
+        view.findViewById<Button>(R.id.errorDialogButtonOK).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        forecastViewModel.fetchForecastContainer(
-//            App.prefs!!.icCelsius,
-//            App.prefs!!.days)
     }
 }
