@@ -62,15 +62,12 @@ class ForecastListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        /*
-        *Connection Broadcast,will register and register itself.See Utils ConnectionBroadcastReceiver.kt
-         */
-        ConnectionBroadcastReceiver.registerToFragmentAndAutoUnregister(requireActivity(),
-            this, object : ConnectionBroadcastReceiver() {
-                override fun onConnectionChanged(hasConnection: Boolean) {
-                    getForecastContainer()
-                }
-            })
+        ConnectionBroadcastReceiver.registerToFragmentAndAutoUnregister(requireActivity(), this, object : ConnectionBroadcastReceiver() {
+            override fun onConnectionChanged(hasConnection: Boolean) {
+               getForecastContainer()
+
+            }
+        })
         _binding = FragmentForecastListBinding.inflate(inflater, container, false)
         return binding.root
     }

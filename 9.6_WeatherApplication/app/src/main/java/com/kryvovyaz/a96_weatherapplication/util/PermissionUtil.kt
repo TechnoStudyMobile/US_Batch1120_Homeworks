@@ -14,7 +14,5 @@ object PermissionUtil {
         return ContextCompat.checkSelfPermission(context, Manifest.permission
             .ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
     }
-    fun showLocationPermissionGranted(activity: AppCompatActivity){
-
-    }
+    fun showLocationPermissionGranted(activity: AppCompatActivity){}
 }
