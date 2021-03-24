@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Weather Forecast</string>
+    <string name="weather_icon">Weather Icon</string>
+    <string name="settings">Settings</string>
+    <string name="your_location_menu_title">Your Location</string>
+    <string name="share_title">Share</string>
+    <string name="weather_notification_settings_label">Weather Notification</string>
+    <string name="units_settings_label">Unit System</string>
+    <string name="number_days_settings_label">Number of Days</string>
+    <string name="celsius">Celsius</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="degree_celsius" translatable="false">°C</string>
+    <string name="slash" translatable="false">/</string>
+    <string name="degree_fahrenheit" translatable="false">°F</string>
+    <string name="day_forecast">" day-forecast"</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+    <string name="weather_notifications_enabled">Weather notifications enabled</string>
+    <string name="weather_notifications_disabled">Weather notifications disabled</string>
+    <string name="language">Language</string>
+    <string name="sunrise_label">Sunrise</string>
+    <string name="sunset_label">Sunset</string>
+    <string name="wind_speed_label">Wind</string>
+    <string name="wind_direction_label">Wind Direction</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="precipitation_probability_label">Precip. Prob.</string>
+    <string name="accumulated_precipitation_label">Precipitation</string>
+    <string name="average_pressure_label">Pressure</string>
+    <string name="visibility_label">Visibility</string>
+    <string name="max_uv_index_label">UV Index</string>
+    <string name="details_fragment_label">Day Info</string>
+    <string name="today_notification_channel_name">Today \'s Weather</string>
+    <string name="today_notification_title">This is notification title</string>
+    <string name="today_notification_channel_desc">Today\'s notification channel description</string>
+    <string name="label_location_permission_textview">Weather Forecast for your area can not be displayed since the location permission is not granted. \n\nPlease go to device settings to allow access to your location and restart Weather Forecast.</string>
+    <string name="label_button_loc_perm_grants">Yes, Please</string>
+    <string name="label_button_loc_perm_denies">Not now</string>
+
+    <string-array name="number_of_days">
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Türkçe</item>
+    </string-array>
+</resources>
