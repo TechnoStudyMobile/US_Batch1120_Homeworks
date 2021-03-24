@@ -17,5 +17,3 @@ const val LAST_EPOCH_TIME_KEY = "last epoch time key"
 //Room Database related
 const val FORECAST_ROOM_DATABASE_NAME = "forecast database"
 const val THREE_HOUR_EPOCH_TIME: Long = 3 * 60 * 60 * 1000
-
-// This comment is for checking git push!!!

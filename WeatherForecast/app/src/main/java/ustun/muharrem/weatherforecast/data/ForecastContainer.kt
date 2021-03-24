@@ -13,10 +13,7 @@ data class ForecastContainer(
     @Expose(deserialize = false, serialize = false)
     @PrimaryKey
     val id: Int = 0,
-    @Expose(serialize = false, deserialize = false)
-    val forecastEpoch: Long,
-//    @Expose(serialize = false, deserialize = false)
-//    val isCelsius: Boolean = SharedPrefs.isCelsius,
+
     val data: List<Forecast>,
     val city_name: String,
     val lon: Double,

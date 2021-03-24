@@ -30,12 +30,6 @@ class ForecastViewModel(private val forecastContainerRepository: ForecastContain
         }
     }
 
-//    fun getPreviouslySavedForecastContainer() {
-//        viewModelScope.launch {
-//            forecastContainerRepository.getPreviouslySavedForecastContainer()
-//        }
-//    }
-
     fun initializeAppLangCode() {
         if (SharedPrefs.langCode == null) {
             SharedPrefs.langCode = when (Locale.getDefault().language) {

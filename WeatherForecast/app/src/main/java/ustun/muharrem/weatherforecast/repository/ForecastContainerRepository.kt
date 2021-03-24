@@ -18,42 +18,24 @@ class ForecastContainerRepository(private val dao: ForecastContainerDao) {
     val forecastContainerResultLiveData = MutableLiveData<ForecastContainerResult>()
 
     private suspend fun getSavedForecastContainer() {
-//        withContext(Dispatchers.IO) {
-            //What happens if the app runs for the very first time???
+        withContext(Dispatchers.IO) {
             val forecastContainer = dao.getForecastContainer()
             forecastContainer?.let {
                 withContext(Dispatchers.Main) {
                     forecastContainerResultLiveData.value =
-                        ForecastContainerResult.Success(forecastContainer)
+                        ForecastContainerResult.Success(it)
                 }
             }
-//        }
+        }
     }
 
-    // TODO: Remove suspend after taking the logic out of the database call
     suspend fun getForecastContainer() {
-        withContext(Dispatchers.IO) {
             if (System.currentTimeMillis() - SharedPrefs.lastEpochTime > THREE_HOUR_EPOCH_TIME) {
                 fetchForecastContainer()
             } else {
                getSavedForecastContainer()
             }
-        }
     }
-
-//    private suspend fun timePassed(): Boolean {
-//        var forecastEpochBefore: Long
-//        withContext(Dispatchers.IO) {
-//            forecastEpochBefore = dao.getForecastEpoch()
-//        }
-//        return System.currentTimeMillis() - forecastEpochBefore > THREE_HOUR_EPOCH_TIME
-//    }
-
-//    private fun insertToDatabase(forecastContainer: ForecastContainer) {
-//        dao.insert(forecastContainer)
-//        dao.updateForecastEpoch(System.currentTimeMillis())
-//        dao.updateIsCelsius(SharedPrefs.isCelsius)
-//    }
 
     suspend fun fetchForecastContainer() {
         withContext(Dispatchers.IO) {
@@ -72,7 +54,6 @@ class ForecastContainerRepository(private val dao: ForecastContainerDao) {
                         forecastContainerResultLiveData.value = ForecastContainerResult.Success(it)
                     }
                     SharedPrefs.lastEpochTime = System.currentTimeMillis()
-                    dao.updateForecastEpoch(System.currentTimeMillis())
                     dao.insert(it)
                 }
                 // TODO: Handle if forecastContainer is null

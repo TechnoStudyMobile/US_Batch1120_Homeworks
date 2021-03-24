@@ -28,6 +28,6 @@ object SharedPrefs {
         set(value) = sharedPref.edit().putString(LANG_CODE_SETTINGS_KEY, value).apply()
 
     var lastEpochTime: Long
-        get() = sharedPref.getLong(LAST_EPOCH_TIME_KEY, System.currentTimeMillis())
+        get() = sharedPref.getLong(LAST_EPOCH_TIME_KEY, 0)
         set(value) = sharedPref.edit().putLong(LAST_EPOCH_TIME_KEY, value).apply()
 }
