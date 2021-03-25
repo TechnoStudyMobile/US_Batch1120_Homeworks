@@ -4,8 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
-import kotlinx.android.parcel.Parcelize
-import ustun.muharrem.weatherforecast.utilities.SharedPrefs
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "forecastContainers")

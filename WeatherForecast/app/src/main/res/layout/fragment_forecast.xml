@@ -17,7 +17,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
-        android:id="@+id/location_permission_layout"
+        android:id="@+id/included_loc_perm_layout"
         layout="@layout/layout_location_permission"
         android:visibility="invisible"/>
 </FrameLayout>

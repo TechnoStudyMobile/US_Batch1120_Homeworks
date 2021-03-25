@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.forecast_item_view.view.*
-import kotlinx.android.synthetic.main.forecast_today_item_view.view.*
 import ustun.muharrem.weatherforecast.R
 import ustun.muharrem.weatherforecast.data.ForecastContainer
+import ustun.muharrem.weatherforecast.databinding.ForecastItemViewBinding
+import ustun.muharrem.weatherforecast.databinding.ForecastTodayItemViewBinding
 import ustun.muharrem.weatherforecast.utilities.DateUtil
 import ustun.muharrem.weatherforecast.utilities.DrawableManager.getImageId
 import ustun.muharrem.weatherforecast.utilities.SharedPrefs
@@ -18,24 +18,25 @@ class ForecastListAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    inner class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ForecastViewHolder(private val binding: ForecastItemViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener {
+            binding.root.setOnClickListener {
                 onClick.invoke(adapterPosition)
             }
         }
 
         fun bind(position: Int) {
-            itemView.run {
-                high_temp_forecast_item_view.text =
+            binding.run {
+                highTempForecastItemView.text =
                     forecastContainer.data[position].high_temp.roundToInt().toString().plus("°")
-                low_temp_forecast_item_view.text =
+                lowTempForecastItemView.text =
                     forecastContainer.data[position].low_temp.roundToInt().toString().plus("°")
-                weather_description_forecast_item_view.text =
+                weatherDescriptionForecastItemView.text =
                     forecastContainer.data[position].weather.description
-                date_forecast_item_view.text =
+                dateForecastItemView.text =
                     DateUtil.getDateText(forecastContainer.data[position].valid_date, position)
-                weather_icon_forecast_item_view.setImageResource(
+                weatherIconForecastItemView.setImageResource(
                     R.drawable::class.java.getImageId(
                         forecastContainer.data[position].weather.icon
                     )
@@ -44,24 +45,25 @@ class ForecastListAdapter(
         }
     }
 
-    inner class ForecastTodayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ForecastTodayViewHolder(private val binding: ForecastTodayItemViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener {
+            binding.root.setOnClickListener {
                 onClick.invoke(adapterPosition)
             }
         }
 
         fun bind(position: Int) {
-            itemView.run {
-                forecast_today_item_view_high_temp.text =
+            binding.run {
+                forecastTodayItemViewHighTemp.text =
                     forecastContainer.data[position].high_temp.roundToInt().toString().plus("°")
-                forecast_today_item_view_low_temp.text =
+                forecastTodayItemViewLowTemp.text =
                     forecastContainer.data[position].low_temp.roundToInt().toString().plus("°")
-                forecast_today_item_view_weather_description.text =
+                forecastTodayItemViewWeatherDescription.text =
                     forecastContainer.data[position].weather.description
-                forecast_today_item_view_date.text =
+                forecastTodayItemViewDate.text =
                     DateUtil.getDateText(forecastContainer.data[position].valid_date, position)
-                forecast_today_item_view_icon.setImageResource(
+                forecastTodayItemViewIcon.setImageResource(
                     R.drawable::class.java.getImageId(forecastContainer.data[position].weather.icon)
                 )
             }
@@ -77,13 +79,15 @@ class ForecastListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TODAY) {
             ForecastTodayViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.forecast_today_item_view, parent, false)
+                ForecastTodayItemViewBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
             )
         } else {
             ForecastViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.forecast_item_view, parent, false)
+                ForecastItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
         }
     }

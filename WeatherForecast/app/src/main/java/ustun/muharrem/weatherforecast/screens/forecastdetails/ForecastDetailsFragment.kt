@@ -7,11 +7,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_forecast_details.*
-import kotlinx.android.synthetic.main.layout_forecast_details_item.view.*
 import ustun.muharrem.weatherforecast.R
 import ustun.muharrem.weatherforecast.data.Forecast
 import ustun.muharrem.weatherforecast.data.ForecastContainerResult
+import ustun.muharrem.weatherforecast.databinding.FragmentForecastDetailsBinding
 import ustun.muharrem.weatherforecast.screens.ForecastViewModel
 import ustun.muharrem.weatherforecast.screens.ForecastViewModelFactory
 import ustun.muharrem.weatherforecast.utilities.DateUtil
@@ -21,6 +20,9 @@ import java.util.*
 import kotlin.math.roundToInt
 
 class ForecastDetailsFragment : Fragment() {
+    private var _binding: FragmentForecastDetailsBinding? = null
+    private val binding
+        get() = _binding!!
     private val args: ForecastDetailsFragmentArgs by navArgs()
     private lateinit var forecastViewModel: ForecastViewModel
 
@@ -34,9 +36,10 @@ class ForecastDetailsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentForecastDetailsBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_forecast_details, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +56,7 @@ class ForecastDetailsFragment : Fragment() {
                         // TODO: Show spinner
                     }
                     is ForecastContainerResult.Success -> {
-                        city_name.text = forecastContainerResult.forecastContainer.city_name
+                        binding.cityName.text = forecastContainerResult.forecastContainer.city_name
                         setDetailsHeaderValues(forecastContainerResult.forecastContainer.data[args.position])
                         setDetailsItemValues(forecastContainerResult.forecastContainer.data[args.position])
                     }
@@ -63,52 +66,54 @@ class ForecastDetailsFragment : Fragment() {
     }
 
     private fun setDetailsHeaderValues(forecast: Forecast) {
-        date_text_view.text = DateUtil.getDateText(forecast.valid_date, 0)
-        icon_image_view.setImageResource(R.drawable::class.java.getImageId(forecast.weather.icon))
-        high_temp_text_view.text = forecast.high_temp.roundToInt().toString().plus("°")
-        low_temp_text_view.text = forecast.low_temp.roundToInt().toString().plus("°")
-        weather_description_text_view.text = forecast.weather.description
+        binding.dateTextView.text = DateUtil.getDateText(forecast.valid_date, 0)
+        binding.iconImageView.setImageResource(R.drawable::class.java.getImageId(forecast.weather.icon))
+        binding.highTempTextView.text = forecast.high_temp.roundToInt().toString().plus("°")
+        binding.lowTempTextView.text = forecast.low_temp.roundToInt().toString().plus("°")
+        binding.weatherDescriptionTextView.text = forecast.weather.description
     }
 
     private fun setDetailsItemValues(forecast: Forecast) {
-        sunrise_time_details_item.forecast_details_value.text =
+        binding.sunriseTimeDetailsItem.forecastDetailsValue.text =
             DateUtil.getTimeText(forecast.sunrise_ts)
-        sunset_time_details_item.forecast_details_value.text =
+        binding.sunsetTimeDetailsItem.forecastDetailsValue.text =
             DateUtil.getTimeText(forecast.sunset_ts)
         val windSpeedUnit = if (SharedPrefs.isCelsius) " m/s" else " mph"
-        wind_speed_details_item.forecast_details_value.text =
+        binding.windSpeedDetailsItem.forecastDetailsValue.text =
             forecast.wind_spd.toString().plus(windSpeedUnit)
-        wind_direction_details_item.forecast_details_value.text =
+        binding.windDirectionDetailsItem.forecastDetailsValue.text =
             forecast.wind_cdir_full.capitalize(Locale.ROOT)
-        humidity_details_item.forecast_details_value.text = forecast.rh.toString().plus("%")
-        precipitation_probability_details_item.forecast_details_value.text =
+        binding.humidityDetailsItem.forecastDetailsValue.text = forecast.rh.toString().plus("%")
+        binding.precipitationProbabilityDetailsItem.forecastDetailsValue.text =
             forecast.pop.toString().plus("%")
         val precipUnit = if (SharedPrefs.isCelsius) " mm" else " in"
-        liquid_precipitation_details_item.forecast_details_value.text =
+        binding.liquidPrecipitationDetailsItem.forecastDetailsValue.text =
             forecast.precip.toString().plus(precipUnit)
-        pressure_details_item.forecast_details_value.text =
+        binding.pressureDetailsItem.forecastDetailsValue.text =
             forecast.pres.toString().plus(" mbar")
         val visLength = if (SharedPrefs.isCelsius) " km" else " mi"
-        visibility_details_item.forecast_details_value.text =
+        binding.visibilityDetailsItem.forecastDetailsValue.text =
             forecast.vis.toString().plus(visLength)
-        max_uv_index_details_item.forecast_details_value.text = forecast.uv.toString()
+        binding.maxUvIndexDetailsItem.forecastDetailsValue.text = forecast.uv.toString()
     }
 
     private fun setDetailsItemLabels() {
-        sunrise_time_details_item.forecast_details_label.text = getString(R.string.sunrise_label)
-        sunset_time_details_item.forecast_details_label.text = getString(R.string.sunset_label)
-        wind_speed_details_item.forecast_details_label.text = getString(R.string.wind_speed_label)
-        wind_direction_details_item.forecast_details_label.text =
+        binding.sunriseTimeDetailsItem.forecastDetailsLabel.text = getString(R.string.sunrise_label)
+        binding.sunsetTimeDetailsItem.forecastDetailsLabel.text = getString(R.string.sunset_label)
+        binding.windSpeedDetailsItem.forecastDetailsLabel.text =
+            getString(R.string.wind_speed_label)
+        binding.windDirectionDetailsItem.forecastDetailsLabel.text =
             getString(R.string.wind_direction_label)
-        humidity_details_item.forecast_details_label.text = getString(R.string.humidity_label)
-        precipitation_probability_details_item.forecast_details_label.text =
+        binding.humidityDetailsItem.forecastDetailsLabel.text = getString(R.string.humidity_label)
+        binding.precipitationProbabilityDetailsItem.forecastDetailsLabel.text =
             getString(R.string.precipitation_probability_label)
-        liquid_precipitation_details_item.forecast_details_label.text =
+        binding.liquidPrecipitationDetailsItem.forecastDetailsLabel.text =
             getString(R.string.accumulated_precipitation_label)
-        pressure_details_item.forecast_details_label.text =
+        binding.pressureDetailsItem.forecastDetailsLabel.text =
             getString(R.string.average_pressure_label)
-        visibility_details_item.forecast_details_label.text = getString(R.string.visibility_label)
-        max_uv_index_details_item.forecast_details_label.text =
+        binding.visibilityDetailsItem.forecastDetailsLabel.text =
+            getString(R.string.visibility_label)
+        binding.maxUvIndexDetailsItem.forecastDetailsLabel.text =
             getString(R.string.max_uv_index_label)
     }
 

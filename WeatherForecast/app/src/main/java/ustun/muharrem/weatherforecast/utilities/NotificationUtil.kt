@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import ustun.muharrem.weatherforecast.R
 import ustun.muharrem.weatherforecast.data.Forecast
 import ustun.muharrem.weatherforecast.utilities.DrawableManager.getImageId

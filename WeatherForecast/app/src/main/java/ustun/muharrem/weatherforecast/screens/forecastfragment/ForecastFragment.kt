@@ -10,11 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_forecast.*
-import kotlinx.android.synthetic.main.layout_location_permission.*
 import ustun.muharrem.weatherforecast.R
 import ustun.muharrem.weatherforecast.data.ForecastContainer
 import ustun.muharrem.weatherforecast.data.ForecastContainerResult
+import ustun.muharrem.weatherforecast.databinding.FragmentForecastBinding
 import ustun.muharrem.weatherforecast.screens.ForecastViewModel
 import ustun.muharrem.weatherforecast.screens.ForecastViewModelFactory
 import ustun.muharrem.weatherforecast.screens.adapters.ForecastListAdapter
@@ -25,6 +24,9 @@ import ustun.muharrem.weatherforecast.utilities.SharedPrefs
 
 class ForecastFragment : Fragment() {
 
+    private var _binding: FragmentForecastBinding? = null
+    private val binding
+    get() = _binding!!
     private lateinit var forecastViewModel: ForecastViewModel
     private val sharedPrefListener =
         SharedPreferences.OnSharedPreferenceChangeListener { sharedPref, key ->
@@ -37,9 +39,9 @@ class ForecastFragment : Fragment() {
     ) { isGranted ->
         if (isGranted) {
             getLocationDetails()
-            location_permission_layout.visibility = View.GONE
+            binding.includedLocPermLayout.layoutLocationPermission.visibility = View.GONE
         } else {
-            location_permission_layout.visibility = View.VISIBLE
+            binding.includedLocPermLayout.layoutLocationPermission.visibility = View.VISIBLE
         }
     }
 
@@ -56,16 +58,17 @@ class ForecastFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentForecastBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_forecast, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        swipe_to_refresh.setOnRefreshListener {
+        binding.swipeToRefresh.setOnRefreshListener {
             askForLocationPermission()
-            swipe_to_refresh.isRefreshing = false
+            binding.swipeToRefresh.isRefreshing = false
         }
 
 //        button_grants_location_permission.setOnClickListener {
@@ -99,9 +102,14 @@ class ForecastFragment : Fragment() {
         askForLocationPermission()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun createRecyclerView(forecastContainer: ForecastContainer) {
-        recycler_view_forecast_fragment.layoutManager = LinearLayoutManager(context)
-        recycler_view_forecast_fragment.adapter =
+        binding.recyclerViewForecastFragment.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewForecastFragment.adapter =
             ForecastListAdapter(forecastContainer) { position ->
                 val direction =
                     ForecastFragmentDirections.actionForecastFragmentToForecastDetailsFragment(
