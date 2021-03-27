@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ustun.muharrem.weatherforecast.data.ForecastContainerResult
 import ustun.muharrem.weatherforecast.database.ForecastDatabase
+import ustun.muharrem.weatherforecast.database.ForecastLocalDataService
 import ustun.muharrem.weatherforecast.repository.ForecastContainerRepository
 import ustun.muharrem.weatherforecast.utilities.*
 import java.util.*
@@ -44,7 +45,8 @@ class ForecastViewModelFactory(private val application: Application) : ViewModel
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ForecastViewModel::class.java)) {
             val dao = ForecastDatabase.getDatabase(application).getForecastContainerDao()
-            val repository = ForecastContainerRepository(dao)
+            val forecastLocalDataService = ForecastLocalDataService(dao)
+            val repository = ForecastContainerRepository(forecastLocalDataService)
             @Suppress("UNCHECKED_CAST")
             return ForecastViewModel(repository) as T
         }

@@ -4,6 +4,7 @@ package ustun.muharrem.weatherforecast.utilities
 const val API_KEY = "4851d18a868d4d029f16f37d0962382e"
 const val METRIC_QUERY_PARAM_VALUE = "M"
 const val IMPERIAL_QUERY_PARAM_VALUE = "I"
+const val RESPONSE_PARSING_ERROR_MESSAGE = "Backend forecast parsing was unsuccessful!"
 
 // Shared Preferences related
 const val SHARED_PREFERENCES_NAME = "shared preference name"
@@ -17,3 +18,4 @@ const val LAST_EPOCH_TIME_KEY = "last epoch time key"
 //Room Database related
 const val FORECAST_ROOM_DATABASE_NAME = "forecast database"
 const val THREE_HOUR_EPOCH_TIME: Long = 3 * 60 * 60 * 1000
+const val DB_IS_EMPTY_MESSAGE = "No saved forecast container in the database"
