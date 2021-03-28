@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="ring"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/bar_bottom" />
+   <gradient android:startColor="@color/bar_header"
+       android:endColor="@color/bar_bottom"
+       android:gradientRadius="180dp"/>
+
+<gradient android:gradientRadius="90dp"/>
+    <size android:width="48dp"
+        android:height="48dp"/>
+</shape>

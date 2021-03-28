@@ -86,4 +86,16 @@
     <style name="ForecastDetailsIcons">
         <item name="tint">@color/white</item>
     </style>
+        <style name="SearchBarTheme" parent="MaterialSearchBarLight">
+            <item name="mt_searchBarColor">@color/searchBarPrimaryColor</item>
+            <item name="mt_dividerColor">@color/bar_bottom</item>
+            <item name="mt_navIconTint">@color/bar_header</item>
+            <item name="mt_searchIconTint">@color/bar_header</item>
+            <item name="mt_clearIconTint">@color/bar_header</item>
+            <item name="mt_menuIconTint">@color/bar_header</item>
+            <item name="mt_backIconTint">@color/bar_header</item>
+            <item name="mt_textColor">@color/bar_bottom</item>
+            <item name="mt_hintColor">@color/searchBarHintColor</item>
+            <item name="mt_placeholderColor">@color/bar_bottom</item>
+        </style>
 </resources>

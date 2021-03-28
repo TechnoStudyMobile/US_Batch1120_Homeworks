@@ -8,9 +8,5 @@
         app:showAsAction="ifRoom">
 
     </item>
-    <item
-        android:id="@+id/map_location"
-        android:title="@string/your_location">
 
-    </item>
 </menu>

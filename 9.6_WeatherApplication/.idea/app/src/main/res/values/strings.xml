@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">9,6_WeatherApplication</string>
+    <string name="day_of_week" translatable="false">Day of Week</string>
+    <string name="forecastContainer">Forecast</string>
+    <string name="Zero">0</string>
+    <string name="_0">0°</string>
+    <string name="today">Today</string>
+    <string name="h">H</string>
+    <string name="l">L</string>
+    <string name="time">Time</string>
+    <string name="current_temp">Current temp </string>
+    <string name="humidity">Humidity  </string>
+    <string name="sync_header">Sync</string>
+    <string name="hello_settings_fragment">settings_fragment</string>
+    <string name="hello_details_fragment">Hello Details Fragment</string>
+    <string name="label_forecast_list_fragment_title">Daily Weather</string>
+    <string name="settings_icon">Settings icon</string>
+    <string name="setting_menu_title">Settings</string>
+    <string name="share">Share</string>
+    <string name="about">About</string>
+    <string name="exit">Exit</string>
+    <string name="search">Search</string>
+    <string name="image_details">Image details</string>
+    <string name="_100" translatable="false">100</string>
+    <string name="wind">Wind</string>
+    <string name="wind_speed_m">m/s</string>
+    <string name="your_location">Your Location</string>
+    <string name="label_gragment_settings">Settings</string>
+    <string name="label_forecast_details">Forecast Details</string>
+    <string name="humidity_icon" translatable="false">Humidity icon</string>
+    <string name="my_settings_title">My Settings Title</string>
+    <string name="wind_icon">wind icon</string>
+    <string name="notification_settings_subtitle">My settings subtitle</string>
+    <string name="weather_notification_setting_title">Weather Notification</string>
+    <string name="weather_notification_settings_subtitle">Weather Notification</string>
+    <string name="unit_setting_title">Unit system</string>
+    <string name="days_setting_title">Total days in List</string>
+    <string name="days_selected">Days selected </string>
+    <string name="icon" translatable="false">Icon</string>
+    <string name="today_temp_icon" translatable="false">Today Temp Icon</string>
+    <string name="wind_speed_i">mph</string>
+    <string name="pesure_m"> mb</string>
+    <string name="presure_i"> in</string>
+    <string name="degree_celsius" translatable="false">°C</string>
+    <string name="degree_fahrenheit" translatable="false">°F</string>
+    <string name="units_settings_label">Unit System</string>
+    <string name="slash" translatable="false">/</string>
+    <string name="space" translatable="false">\ \</string>
+    <string name="default_days_selected" translatable="false">14</string>
+    <string name="percent" translatable="false">%</string>
+    <string name="degree_character" translatable="false">°</string>
+    <string name="space1" translatable="false">\" \"</string>
+    <string name="sunrise_icon" translatable="false">sunrise_icon</string>
+    <string name="sunset_icon" translatable="false">sunset_icon</string>
+    <string name="pressure_icon" translatable="false">pressure_icon</string>
+    <string name="pressure">Pressure</string>
+    <string name="precipitation_icon" translatable="false">precipitation_icon</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="weather">Weather</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="settings_location_title">Use current location</string>
+    <string name="current_location">Current Location</string>
+    <string name="today_notification_title">Today\'s Weather</string>
+    <string name="today_notofication_chanel_name">Today\'s  Forecast</string>
+    <string name="today_notofication_chanel_description" translatable="false">This notification will show today\'s forecast details</string>
+    <string name="error_dialog_icon" translatable="false">Error dialog icon</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="forecast_is_created_based_on_your_device_location_let_apps_find_your_device_s_location">Forecast is created based on your device location. Do you want to let this app find your device’s location?</string>
+    <string name="location_permission_missing">Location permission missing.</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="application_was_not_able_to_retrieve_the_forecast_check_you_internet_connection_or_try_again_later.">Application was not able to retrieve the forecast. Check you internet connection or try again later</string>
+    <string name="ok">OK</string>
+    <string name="dialog_error_message">Application was not able to retrieve the forecast. Check you internet connection and try again later</string>
+    <string name="default_notification_channel_id">chanel_id</string>
+    <string-array name="days_array">
+        <item>14</item>
+        <item>7</item>
+    </string-array>
+</resources>

@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.kryvovyaz.a96_weatherapplication.MainActivity
 import com.kryvovyaz.a96_weatherapplication.R
-import com.kryvovyaz.a96_weatherapplication.model.Forecast
+import com.kryvovyaz.a96_weatherapplication.data.model.Forecast
 
 object NotificationUtil {
     private const val TODAY_FORCAST_NOTIFICATION_ID = 1000

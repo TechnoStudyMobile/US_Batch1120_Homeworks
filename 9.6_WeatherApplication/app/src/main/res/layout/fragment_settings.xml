@@ -1,28 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".screen.settings.SettingsFragment">
+    android:layout_height="wrap_content"
+    android:id="@+id/fragmentSettings">
 
-    <include
-
-        layout="@layout/layout_settings_notification"
-        android:id="@+id/settings_notifications"/>
-
-    <include
-
-        layout="@layout/layout_settings_unit"
-        android:id="@+id/settings_units"/>
-
-    <include
-
-        layout="@layout/layout_settings_days"
-        android:id="@+id/setting_days"/>
-
-    <include layout="@layout/layout_settings_location"
-        android:id="@+id/settings_location"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-</LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_titles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".screen.settings.SettingsFragment">
+
+            <include
+
+                android:id="@+id/settings_notifications"
+                layout="@layout/layout_settings_notification" />
+
+            <include
+
+                android:id="@+id/settings_units"
+                layout="@layout/layout_settings_unit" />
+
+            <include
+
+                android:id="@+id/setting_days"
+                layout="@layout/layout_settings_days" />
+
+            <include
+                android:id="@+id/settings_location"
+                layout="@layout/layout_settings_location" />
+            <include
+                android:id="@+id/settings_map"
+                layout="@layout/content_map"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                />
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

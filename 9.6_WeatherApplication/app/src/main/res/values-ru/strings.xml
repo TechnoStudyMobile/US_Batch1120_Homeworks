@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">9,6_WeatherApplication</string>
+    <string name="app_name">Прогноз Погоды</string>
     <string name="forecastContainer">Прогноз</string>
     <string name="Zero">0</string>
     <string name="_0">0°</string>
@@ -51,4 +51,8 @@
     <string name="yes">Да</string>
     <string name="ok">OK</string>
     <string name="dialog_error_message">Application was not able to retrieve the forecast. Check you internet connection or try again later</string>
+    <string name="default_notification_channel_id">chanel_id</string>
+    <string name="humidity_icon">humidity_icon</string>
+    <string name="button_save_custom_location">Сохранить найденное местоположение</string>
+    <string name="button_save_castom_location">button_save_location</string>
 </resources>

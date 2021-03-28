@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">9,6_WeatherApplication</string>
+    <string name="app_name">Daily Weather</string>
     <string name="day_of_week" translatable="false">Day of Week</string>
     <string name="forecastContainer">Forecast</string>
     <string name="Zero">0</string>
@@ -27,7 +27,7 @@
     <string name="your_location">Your Location</string>
     <string name="label_gragment_settings">Settings</string>
     <string name="label_forecast_details">Forecast Details</string>
-    <string name="humidity_icon" translatable="false">Humidity icon</string>
+    <string name="pre_icon" translatable="false">Humidity icon</string>
     <string name="my_settings_title">My Settings Title</string>
     <string name="wind_icon">wind icon</string>
     <string name="notification_settings_subtitle">My settings subtitle</string>
@@ -54,7 +54,6 @@
     <string name="sunset_icon" translatable="false">sunset_icon</string>
     <string name="pressure_icon" translatable="false">pressure_icon</string>
     <string name="pressure">Pressure</string>
-    <string name="precipitation_icon" translatable="false">precipitation_icon</string>
     <string name="precipitation">Precipitation</string>
     <string name="weather">Weather</string>
     <string name="sunrise">Sunrise</string>
@@ -73,6 +72,12 @@
     <string name="application_was_not_able_to_retrieve_the_forecast_check_you_internet_connection_or_try_again_later.">Application was not able to retrieve the forecast. Check you internet connection or try again later</string>
     <string name="ok">OK</string>
     <string name="dialog_error_message">Application was not able to retrieve the forecast. Check you internet connection and try again later</string>
+    <string name="default_notification_channel_id">chanel_id</string>
+    <string name="precipitation_icon">precipitation_icon</string>
+    <string name="humidity_icon">humidity_icon</string>
+    <string name="location_pin">Location pin</string>
+    <string name="button_save_custom_location">Button save custom location</string>
+    <string name="button_save_castom_location">button_save_location</string>
     <string-array name="days_array">
         <item>14</item>
         <item>7</item>

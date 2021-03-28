@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.databinding.ForecastSingleViewBinding
 import com.kryvovyaz.a96_weatherapplication.databinding.TodayForecastBinding
-import com.kryvovyaz.a96_weatherapplication.model.ForecastContainer
-import com.kryvovyaz.a96_weatherapplication.util.App
+import com.kryvovyaz.a96_weatherapplication.data.model.ForecastContainer
+import com.kryvovyaz.a96_weatherapplication.App
 import com.kryvovyaz.a96_weatherapplication.util.TextUtil.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
@@ -86,7 +86,7 @@ class WeatherAdapter(
                     forecastContainerList.forecastList[position].temp.toInt().toString()
                         .plus(context.getString(R.string.degree_character))
                 binding.humidityToday.text = (forecastContainerList.forecastList[position]
-                    .humidityAverage.toString()
+                    .probability.toString()
                     .plus(context.getString(R.string.percent)))
                 binding.windSpeedToday.text = (forecastContainerList.forecastList[position].wind_spd
                     .toInt().toString()

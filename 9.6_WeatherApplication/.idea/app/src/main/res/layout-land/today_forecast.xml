@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/gradient_bg">
+
+    <ImageView
+        android:id="@+id/image_today"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_margin="4dp"
+        android:contentDescription="@string/icon"
+        android:src="@drawable/a01d"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_icons_vertical"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <TextView
+        android:id="@+id/header_today"
+        style="@style/ForecastTodayDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="@string/today"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image_today" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_icons_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_icons_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <ImageView
+        android:id="@+id/wind_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="6dp"
+        android:contentDescription="@string/wind_icon"
+        android:src="@drawable/windicon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/wind_speed_today" />
+
+    <TextView
+        android:id="@+id/wind_speed_today"
+        style="@style/ForecastTodayDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical" />
+
+    <TextView
+        android:id="@+id/forecast_today"
+        style="@style/ForecastTodayDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_horizontal"
+        android:text="@string/forecastContainer"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/image_today"
+        app:layout_constraintRight_toRightOf="@id/image_today"
+        app:layout_constraintTop_toBottomOf="@id/image_today" />
+
+    <TextView
+        android:id="@+id/tempHigh_today"
+        style="@style/ForecastTodayTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/h"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@id/header_today" />
+
+    <TextView
+        android:id="@+id/tempLow_today"
+        style="@style/ForecastTodayTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/l"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@id/header_today" />
+
+    <ImageView
+        android:id="@+id/humidity_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="6dp"
+        android:contentDescription="@string/humidity_icon"
+        android:src="@drawable/humidity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical" />
+
+    <TextView
+        android:id="@+id/humidity_today"
+        style="@style/ForecastTodayDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/humidity_icon" />
+
+    <TextView
+        android:id="@+id/curent_temp_today"
+        style="@style/ForecastTodayDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="6dp"
+        android:textSize="24sp"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="3dp"
+        android:contentDescription="@string/today_temp_icon"
+        android:src="@drawable/termometer"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,9 +12,8 @@ import com.kryvovyaz.a96_weatherapplication.R
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModel
 import com.kryvovyaz.a96_weatherapplication.ForecastViewModelFactory
 import com.kryvovyaz.a96_weatherapplication.databinding.FragmentForecastDetailsBinding
-import com.kryvovyaz.a96_weatherapplication.databinding.FragmentForecastListBinding
-import com.kryvovyaz.a96_weatherapplication.repository.ForecastContainerResult
-import com.kryvovyaz.a96_weatherapplication.util.App
+import com.kryvovyaz.a96_weatherapplication.data.repository.ForecastContainerResult
+import com.kryvovyaz.a96_weatherapplication.App
 import com.kryvovyaz.a96_weatherapplication.util.TextUtil.capitalizeWords
 import com.kryvovyaz.a96_weatherapplication.util.DateUtil.formatDate
 import com.kryvovyaz.a96_weatherapplication.util.DrawableUtil.getImageId
@@ -192,7 +191,13 @@ class ForecastDetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        forecastViewModel.fetchForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days)
+        App.prefs!!.lattitude?.let {
+            App.prefs!!.longtitude?.let { it1 ->
+                forecastViewModel.fetchForecastContainer(App.prefs!!.icCelsius, App.prefs!!.days,
+                    it, it1
+                )
+            }
+        }
         getForecastDetails()
     }
 }

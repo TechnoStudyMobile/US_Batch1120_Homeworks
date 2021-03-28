@@ -2,9 +2,10 @@ package com.kryvovyaz.a96_weatherapplication
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.kryvovyaz.a96_weatherapplication.database.WeatherDatabase
-import com.kryvovyaz.a96_weatherapplication.repository.ForecastContainerRepository
-import com.kryvovyaz.a96_weatherapplication.repository.ForecastContainerResult
+import com.kryvovyaz.a96_weatherapplication.data.database.ForecastLocalDataSource
+import com.kryvovyaz.a96_weatherapplication.data.database.WeatherDatabase
+import com.kryvovyaz.a96_weatherapplication.data.repository.ForecastContainerRepository
+import com.kryvovyaz.a96_weatherapplication.data.repository.ForecastContainerResult
 import kotlinx.coroutines.launch
 
 class ForecastViewModel(private val forecastContainerRepository: ForecastContainerRepository) :
@@ -20,11 +21,12 @@ class ForecastViewModel(private val forecastContainerRepository: ForecastContain
             forecastContainerRepository.getSavedForecastContainer()
         }
     }
-
-    fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
+//TODO:remove parameters from fun
+    fun fetchForecastContainer(isCelsius: Boolean, days: Int,lat:String,long:String) {
         _forecastContainerResultLiveData.value = ForecastContainerResult.IsLoading
         viewModelScope.launch {
-            forecastContainerRepository.fetchForecastContainer(isCelsius, days)
+            forecastContainerRepository.fetchForecastContainer(isCelsius, days,lat,long)
+           // forecastContainerRepository.localDataSource
         }
     }
 }
@@ -33,7 +35,8 @@ class ForecastViewModelFactory(private val application: Application) : ViewModel
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ForecastViewModel::class.java)) {
             val dao = WeatherDatabase.getDatabase(application).getForecastContainerDao()
-            val repository = ForecastContainerRepository(dao)
+            val localDataSource = ForecastLocalDataSource(dao)
+            val repository = ForecastContainerRepository(localDataSource)
             @Suppress("UNCHECKED_CAST")
             return ForecastViewModel(repository) as T
         }
