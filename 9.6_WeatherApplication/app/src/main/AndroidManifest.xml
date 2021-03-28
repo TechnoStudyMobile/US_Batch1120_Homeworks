@@ -22,7 +22,7 @@
         tools:ignore="AllowBackup">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="Your GOOGLE KEY" />
+            android:value="your key" />
         <activity
             android:name="com.kryvovyaz.a96_weatherapplication.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout"
