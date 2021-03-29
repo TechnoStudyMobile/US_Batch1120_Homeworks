@@ -1,6 +1,6 @@
-package com.crnkic.weatherapp.network
+package com.crnkic.weatherapp.data.network
 
-import com.crnkic.weatherapp.model.ForecastContainer
+import com.crnkic.weatherapp.data.model.ForecastContainer
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -10,7 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.crnkic.weatherapp.MainActivity
 import com.crnkic.weatherapp.R
-import com.crnkic.weatherapp.model.Forecast
+import com.crnkic.weatherapp.data.model.Forecast
 
 object NotificationUtil {
     private const val TODAY_FORECAST_CHANNEL_ID = "today_forecast_channel_id"

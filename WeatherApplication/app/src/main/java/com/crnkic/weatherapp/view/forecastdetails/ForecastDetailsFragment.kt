@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.crnkic.weatherapp.R
-import com.crnkic.weatherapp.model.Forecast
-import com.crnkic.weatherapp.model.ForecastContainerResult
+import com.crnkic.weatherapp.data.model.ForecastContainerResult
 import com.crnkic.weatherapp.util.DrawableUtil.getImageId
 import com.crnkic.weatherapp.view.forecastlist.ForecastViewModel
 import com.crnkic.weatherapp.view.forecastlist.ForecastViewModelFactory

@@ -1,8 +1,7 @@
-package com.crnkic.weatherapp.database
+package com.crnkic.weatherapp.data.database
 
 import androidx.room.TypeConverter
-import com.crnkic.weatherapp.model.Forecast
-import com.crnkic.weatherapp.model.Weather
+import com.crnkic.weatherapp.data.model.Forecast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

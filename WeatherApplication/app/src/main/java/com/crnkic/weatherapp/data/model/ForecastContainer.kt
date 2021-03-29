@@ -1,4 +1,4 @@
-package com.crnkic.weatherapp.model
+package com.crnkic.weatherapp.data.model
 
 import android.os.Parcelable
 import androidx.room.Entity

@@ -1,4 +1,4 @@
-package com.crnkic.weatherapp.database
+package com.crnkic.weatherapp.data.database
 
 import android.app.Application
 import androidx.room.Database
@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.WEATHER_ROOM_DATABASE_NAME
-import com.crnkic.weatherapp.model.ForecastContainer
+import com.crnkic.weatherapp.data.model.ForecastContainer
 
 
 @Database(entities = [ForecastContainer::class], version = 1)

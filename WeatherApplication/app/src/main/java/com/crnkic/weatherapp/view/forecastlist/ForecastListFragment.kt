@@ -9,11 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.crnkic.weatherapp.R
-import com.crnkic.weatherapp.databinding.FragmentForecastListBinding
-import com.crnkic.weatherapp.model.ForecastContainer
-import com.crnkic.weatherapp.model.ForecastContainerResult
+import com.crnkic.weatherapp.data.model.ForecastContainer
+import com.crnkic.weatherapp.data.model.ForecastContainerResult
 import com.crnkic.weatherapp.util.NotificationUtil
 import com.crnkic.weatherapp.util.PermissionUtil
 import com.crnkic.weatherapp.util.Prefs
