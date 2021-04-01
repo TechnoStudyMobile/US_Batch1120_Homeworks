@@ -11,9 +11,9 @@ interface GetDataService {
     fun getForecast(
         @Query("lang") lang: String,
         @Query("units") units: String,
-//        @Query("lat") lat: String,
-//        @Query("lon") lon: String,
-        @Query("postal_code") postalCode: Int,
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+//        @Query("postal_code") postalCode: Int,
         @Query("key") key: String
     ): Call<ForecastContainer>
 }

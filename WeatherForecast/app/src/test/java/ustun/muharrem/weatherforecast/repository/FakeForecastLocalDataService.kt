@@ -12,7 +12,7 @@ class FakeForecastLocalDataService(val forecastContainerList: MutableList<Foreca
     ForecastLocalDataServiceImp {
 
     override suspend fun getSavedForecastContainer(): ForecastContainerResult =
-        withContext(Dispatchers.IO) {
+        withContext(Dispatchers.Unconfined) {
             val forecastContainer = forecastContainerList.getOrNull(0)
             return@withContext forecastContainer?.let {
                 ForecastContainerResult.Success(it)
@@ -22,8 +22,8 @@ class FakeForecastLocalDataService(val forecastContainerList: MutableList<Foreca
         }
 
     override suspend fun insert(forecastContainer: ForecastContainer) {
-        withContext(Dispatchers.IO) {
-            // List must be cleared to mimic "onConflict = OnConflictStrategy.REPLACE" action
+        withContext(Dispatchers.Unconfined) {
+            // List must be cleared in order to mimic "onConflict = OnConflictStrategy.REPLACE" behavior
             forecastContainerList.clear()
             forecastContainerList.add(forecastContainer)
         }

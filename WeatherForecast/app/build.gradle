@@ -45,6 +45,7 @@ dependencies {
     def room_version = "2.2.6"
     def activity_version = "1.2.1"
     def fragment_version = "1.3.2"
+    def coroutines = "1.4.1"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
@@ -55,6 +56,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'               // Testing
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'  // Testing
 
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"  //AndroidX test libs
+    testImplementation 'org.hamcrest:hamcrest-all:1.3'                  // Hamcrest matchers
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'        // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'              // Retrofit
     implementation 'com.google.code.gson:gson:2.8.6'                    // parsing Json objects
@@ -70,6 +73,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'    // liveData
     implementation "androidx.activity:activity-ktx:$activity_version"   // extension pack
     implementation "androidx.fragment:fragment-ktx:$fragment_version"   // extension pack
+    implementation 'com.google.android.gms:play-services-location:18.0.0'   // Location services
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation platform('com.google.firebase:firebase-bom:26.8.0')  // BoM Firebase platform
     implementation 'com.google.firebase:firebase-crashlytics-ktx'       // Crashlytics libraries

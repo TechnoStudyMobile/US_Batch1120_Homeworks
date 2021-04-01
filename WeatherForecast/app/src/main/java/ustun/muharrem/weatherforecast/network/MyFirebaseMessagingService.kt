@@ -113,7 +113,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
      *
      * @param messageBody FCM message body received.
      */
-   /* private fun sendNotification(messageBody: String) {
+   private fun sendNotification(messageBody: String) {
+        /*
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 *//* Request code *//*, intent,
@@ -140,7 +141,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         }
 
         notificationManager.notify(0 *//* ID of notification *//*, notificationBuilder.build())
-    }*/
+        */
+    }
 
     companion object {
 

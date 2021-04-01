@@ -30,4 +30,20 @@ object SharedPrefs {
     var lastEpochTime: Long
         get() = sharedPref.getLong(LAST_EPOCH_TIME_KEY, 0)
         set(value) = sharedPref.edit().putLong(LAST_EPOCH_TIME_KEY, value).apply()
+
+    var lon: Double
+        get() = sharedPref.getDouble(LONGITUDE_KEY, -1.0)
+        set(value) = sharedPref.edit().putDouble(LONGITUDE_KEY, value).apply()
+
+    var lat: Double
+        get() = sharedPref.getDouble(LATITUDE_KEY, -1.0)
+        set(value) = sharedPref.edit().putDouble(LATITUDE_KEY, value).apply()
+
+    private fun SharedPreferences.Editor.putDouble(key: String, double: Double) =
+        putLong(key, java.lang.Double.doubleToRawLongBits(double))
+
+    private fun SharedPreferences.getDouble(key: String, default: Double) =
+        java.lang.Double.longBitsToDouble(
+            getLong(key, java.lang.Double.doubleToRawLongBits(default))
+        )
 }

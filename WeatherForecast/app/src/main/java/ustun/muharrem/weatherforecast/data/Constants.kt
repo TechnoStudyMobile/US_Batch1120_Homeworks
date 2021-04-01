@@ -14,6 +14,8 @@ const val NUMBER_OF_DAYS_SETTING_KEY = "number of days setting key"
 const val IS_NOTIFICATIONS_ENABLED = "is notifications enabled"
 const val LANG_CODE_SETTINGS_KEY = "language settings key"
 const val LAST_EPOCH_TIME_KEY = "last epoch time key"
+const val LONGITUDE_KEY = "longitude key"
+const val LATITUDE_KEY = "latitude key"
 
 //Room Database related
 const val FORECAST_ROOM_DATABASE_NAME = "forecast database"

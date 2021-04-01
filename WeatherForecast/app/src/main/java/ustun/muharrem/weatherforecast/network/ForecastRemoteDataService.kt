@@ -16,8 +16,10 @@ object ForecastRemoteDataService {
             val langCode = SharedPrefs.langCode
             val units =
                 if (SharedPrefs.isCelsius) METRIC_QUERY_PARAM_VALUE else IMPERIAL_QUERY_PARAM_VALUE
+            val lat = SharedPrefs.lat
+            val lon = SharedPrefs.lon
             val callForecast =
-                getDataService?.getForecast(langCode!!, units, 43026, API_KEY)
+                getDataService?.getForecast(langCode!!, units, lat, lon, API_KEY)
 
             try {
                 val response = callForecast?.execute()
