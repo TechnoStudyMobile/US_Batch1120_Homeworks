@@ -31,6 +31,13 @@ class ForecastViewModel(private val forecastContainerRepository: ForecastContain
         }
     }
 
+
+
+
+
+
+
+
     fun initializeAppLangCode() {
         if (SharedPrefs.langCode == null) {
             SharedPrefs.langCode = when (Locale.getDefault().language) {

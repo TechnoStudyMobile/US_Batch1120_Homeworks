@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         initializeToolbar()
+
+
     }
 
     private fun initializeToolbar() {
