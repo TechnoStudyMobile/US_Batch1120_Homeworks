@@ -36,33 +36,9 @@ class ForecastFragment : Fragment() {
 
     private lateinit var forecastViewModel: ForecastViewModel
 
-    private val sharedPrefListener =
-        SharedPreferences.OnSharedPreferenceChangeListener { sharedPref, key ->
-            when (key) {
-                LONGITUDE_KEY,
-                LATITUDE_KEY,
-                IS_CELSIUS_SETTING_KEY -> forecastViewModel.fetchForecastContainer()
-            }
-        }
-
-//    private val requestPermissionLauncher = registerForActivityResult(
-//        ActivityResultContracts.RequestPermission()
-//    ) { isGranted ->
-//        if (isGranted) {
-//            Log.d("Deneme", "requestLauncher permission granted")
-//            subscribeToLocationUpdates()
-//            binding.recyclerViewForecastFragment.visibility = View.VISIBLE
-//            binding.includedLocPermLayout.layoutLocationPermission.visibility = View.GONE
-//        } else {
-//            Log.d("Deneme", "requestLauncher permission is NOT granted")
-//            binding.recyclerViewForecastFragment.visibility = View.GONE
-//            binding.includedLocPermLayout.layoutLocationPermission.visibility = View.VISIBLE
-//        }
-//    }
-
-    fun locationPermissionGranted(context: Context): Boolean {
+    private fun locationPermissionGranted(): Boolean {
         var isGranted = ContextCompat.checkSelfPermission(
-            context, Manifest.permission.ACCESS_FINE_LOCATION
+            requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
         if (!isGranted) {
@@ -74,57 +50,52 @@ class ForecastFragment : Fragment() {
         return isGranted
     }
 
-//    private fun askForLocationPermission() {
-//        Log.d("Deneme", "in askForLocationPermission")
-//        when {
-//            PermissionUtil.isLocationPermissionGranted(requireContext()) -> {
-//                Log.d("Deneme", "in PermissionUtil.isLocationPermissionGranted")
-//                subscribeToLocationUpdates()
-//            }
-////            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> { }
-//            else -> requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-//        }
-//    }
-
-
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var locationRequest: LocationRequest
-    private lateinit var locationCallback: LocationCallback
-    private var currentLocation: Location? = null
+//    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+//    private lateinit var locationRequest: LocationRequest
+//    private lateinit var locationCallback: LocationCallback
+//    private var currentLocation: Location? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val factory = ForecastViewModelFactory(requireActivity().application)
         forecastViewModel =
             ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
         forecastViewModel.initializeAppLangCode()
 
-        SharedPrefs.sharedPref.registerOnSharedPreferenceChangeListener(sharedPrefListener)
+        SharedPrefs.sharedPref.registerOnSharedPreferenceChangeListener(forecastViewModel.sharedPrefListener)
 
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireContext())
-        locationRequest = LocationRequest.create().apply {
-            interval = TimeUnit.SECONDS.toMillis(0)  // TODO: Change duration to 60 secs
-//            fastestInterval = TimeUnit.SECONDS.toMillis(0)
-//            maxWaitTime = TimeUnit.MINUTES.toMillis(0)
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            smallestDisplacement = FIVE_KM_DISTANCE
-        }
+        forecastViewModel.initializeLocationService(requireContext())
+//        fusedLocationProviderClient =
+//            LocationServices.getFusedLocationProviderClient(requireContext())
+//        locationRequest = LocationRequest.create().apply {
+//            interval = TimeUnit.SECONDS.toMillis(0)
+//            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+//            smallestDisplacement = ONE_KM_DISTANCE
+//        }
 
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                super.onLocationResult(locationResult)
-                currentLocation = locationResult.lastLocation
-                currentLocation?.let {
-                    SharedPrefs.lon = it.longitude
-                    Log.d("WeatherApp", "lon ${SharedPrefs.lon}")
-                    SharedPrefs.lat = it.latitude
-                    Log.d("WeatherApp", "lon ${SharedPrefs.lat}")
-                } ?: Log.d("WeatherApp", "current location is null")
-                // TODO: Handle if current location is null !!!
-            }
-        }
+//        locationCallback = object : LocationCallback() {
+//            override fun onLocationResult(locationResult: LocationResult) {
+//                super.onLocationResult(locationResult)
+//                currentLocation = locationResult.lastLocation
+//                currentLocation?.let {
+//                    /**
+//                     * Each time the activity is (re)created it subscribes for the location updates.
+//                     * Even with small distances (for even a few meters) SharedPref updates.
+//                     * Each time SharedPref changes, it fetches info from API, which increases the
+//                     * number of calls from back-end for nothing. In order to prevent this,
+//                     * SharedPrefs is not updated up to a certain distance change.
+//                     * (0.01 degree change is around 1.11 km or 0.7 miles)
+//                     */
+//                    if (it.longitude - SharedPrefs.lon > 0.01) SharedPrefs.lon = it.longitude
+//                    Log.d("WeatherApp", "longitude ${it.longitude}")
+//                    Log.d("WeatherApp", "SharedPref.lon ${SharedPrefs.lon}")
+//                    if (it.latitude - SharedPrefs.lat > 0.01) SharedPrefs.lat = it.latitude
+//                    Log.d("WeatherApp", "latitude ${it.latitude}")
+//                    Log.d("WeatherApp", "SharedPref.lat ${SharedPrefs.lat}")
+//                } ?: Log.d("WeatherApp", "current location is null")
+//                // TODO: Handle if current location is null !!!
+//            }
+//        }
     }
 
     override fun onCreateView(
@@ -141,7 +112,6 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.swipeToRefresh.setOnRefreshListener {
-//            askForLocationPermission()
             forecastViewModel.getForecastContainer()
             binding.swipeToRefresh.isRefreshing = false
         }
@@ -166,10 +136,10 @@ class ForecastFragment : Fragment() {
             }
         })
 
-        // TODO: What id the permission is not granted? Manage with an alert box or snack-bar!!!
-        if(locationPermissionGranted(requireContext())) {
+        // TODO: What if the permission is not granted? Manage with an alert box or snack-bar!!!
+        if (locationPermissionGranted()) {
             Log.d("WeatherApp", "requestLauncher permission granted")
-            subscribeToLocationUpdates()
+            forecastViewModel.subscribeToLocationUpdates()
             forecastViewModel.getForecastContainer()
             binding.recyclerViewForecastFragment.visibility = View.VISIBLE
             binding.includedLocPermLayout.layoutLocationPermission.visibility = View.GONE
@@ -182,12 +152,14 @@ class ForecastFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        subscribeToLocationUpdates()
+        if (locationPermissionGranted())
+            forecastViewModel.subscribeToLocationUpdates()
     }
 
     override fun onPause() {
         super.onPause()
-        unsubscribeToLocationUpdates()
+        if (locationPermissionGranted())
+        forecastViewModel.unsubscribeToLocationUpdates()
     }
 
     override fun onDestroyView() {
@@ -196,32 +168,33 @@ class ForecastFragment : Fragment() {
     }
 
 
-    fun subscribeToLocationUpdates() {
-        Log.d("WeatherApp", "subscribeToLocationUpdates()")
-        try {
-            fusedLocationProviderClient.requestLocationUpdates(
-                locationRequest, locationCallback, Looper.getMainLooper()
-            )
-        } catch (unlikely: SecurityException) {
-            Log.e("WeatherApp", "Lost location permissions. Couldn't remove updates. $unlikely")
-        }
-    }
-
-    fun unsubscribeToLocationUpdates() {
-        Log.d("WeatherApp", "unsubscribeToLocationUpdates()")
-        try {
-            val removeTask = fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-            removeTask.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d("WeatherApp", "Location Callback removed.")
-                } else {
-                    Log.d("WeatherApp", "Failed to remove Location Callback.")
-                }
-            }
-        } catch (unlikely: SecurityException) {
-            Log.e("WeatherApp", "Lost location permissions. Couldn't remove updates. $unlikely")
-        }
-    }
+//    fun subscribeToLocationUpdates() {
+//        Log.d("WeatherApp", "subscribeToLocationUpdates()")
+//        try {
+//            Log.d("WeatherApp", "fusedLocationProviderClient requests LocationUpdates")
+//            fusedLocationProviderClient.requestLocationUpdates(
+//                locationRequest, locationCallback, Looper.getMainLooper()
+//            )
+//        } catch (unlikely: SecurityException) {
+//            Log.e("WeatherApp", "Lost location permissions. Couldn't remove updates. $unlikely")
+//        }
+//    }
+//
+//    fun unsubscribeToLocationUpdates() {
+//        Log.d("WeatherApp", "unsubscribeToLocationUpdates()")
+//        try {
+//            val removeTask = fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+//            removeTask.addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    Log.d("WeatherApp", "Location Callback removed.")
+//                } else {
+//                    Log.d("WeatherApp", "Failed to remove Location Callback.")
+//                }
+//            }
+//        } catch (unlikely: SecurityException) {
+//            Log.e("WeatherApp", "Lost location permissions. Couldn't remove updates. $unlikely")
+//        }
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

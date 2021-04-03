@@ -21,4 +21,4 @@ const val LATITUDE_KEY = "latitude key"
 const val FORECAST_ROOM_DATABASE_NAME = "forecast database"
 const val THREE_HOUR_EPOCH_TIME: Long = 3 * 60 * 60 * 1000
 const val DB_IS_EMPTY_MESSAGE = "No saved forecast container in the database"
-const val FIVE_KM_DISTANCE: Float = 5000f
+const val ONE_KM_DISTANCE: Float = 1000f

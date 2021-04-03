@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 
+// TODO: This object can entirely be removed!
+
 object PermissionUtil {
 
     fun isLocationPermissionGranted(context: Context): Boolean {
