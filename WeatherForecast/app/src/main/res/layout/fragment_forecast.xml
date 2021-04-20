@@ -14,10 +14,7 @@
             android:id="@+id/recycler_view_forecast_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include
-        android:id="@+id/included_loc_perm_layout"
-        layout="@layout/layout_location_permission"
-        android:visibility="invisible"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>

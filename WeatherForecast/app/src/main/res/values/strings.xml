@@ -35,6 +35,8 @@
     <string name="label_location_permission_textview">Weather Forecast for your area can not be displayed since the location permission is not granted. \n\nPlease go to device settings to allow access to your location and restart Weather Forecast.</string>
     <string name="label_button_loc_perm_grants">Yes, Please</string>
     <string name="label_button_loc_perm_denies">Not now</string>
+    <string name="location_alert_dialog_title">Location Info Required</string>
+    <string name="location_alert_dialog_message">Permission to access your location info required. The info displayed may not be the latest. Please go to your device settings to allow access to your location.</string>
 
     <string-array name="number_of_days">
         <item>7</item>

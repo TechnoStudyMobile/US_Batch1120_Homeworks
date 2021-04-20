@@ -29,11 +29,6 @@ object ForecastRemoteDataService {
                 } ?: run {
                     ForecastContainerResult.Failure(Error(RESPONSE_PARSING_ERROR_MESSAGE))
                 }
-
-// TODO: Handle the following in the repository
-// SharedPrefs.lastEpochTime = System.currentTimeMillis()
-// dao.insert(it)
-
             } catch (ex: Exception) {
                 ex.localizedMessage?.let { Log.d("MyApp", it) }
                 return@withContext ForecastContainerResult.Failure(Error(ex.message))

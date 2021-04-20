@@ -21,16 +21,8 @@ class ForecastContainerRepository(private val forecastLocalDataService : Forecas
         }
     }
 
-    private suspend fun getSavedForecastContainer() {
+    suspend fun getSavedForecastContainer() {
         val forecastContainerResult = forecastLocalDataService.getSavedForecastContainer()
         forecastContainerResultLiveData.postValue(forecastContainerResult)
-    }
-
-    suspend fun getForecastContainer() {
-        if (System.currentTimeMillis() - SharedPrefs.lastEpochTime > THREE_HOUR_EPOCH_TIME) {
-            fetchForecastContainer()
-        } else {
-            getSavedForecastContainer()
-        }
     }
 }

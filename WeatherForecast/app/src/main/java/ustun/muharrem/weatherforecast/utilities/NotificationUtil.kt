@@ -10,6 +10,8 @@ import ustun.muharrem.weatherforecast.R
 import ustun.muharrem.weatherforecast.data.Forecast
 import ustun.muharrem.weatherforecast.utilities.DrawableManager.getImageId
 
+// TODO: If not used, remove this class completely
+
 object NotificationUtil {
 
     private const val TODAY_FORECAST_CHANNEL_ID = "today_forecast_channel_id"

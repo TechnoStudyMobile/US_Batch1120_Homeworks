@@ -10,6 +10,6 @@ class WeatherApp: Application() {
         super.onCreate()
         SharedPrefs.application = this
 
-        NotificationUtil.createNotificationChannel(applicationContext)
+//        NotificationUtil.createNotificationChannel(applicationContext)
     }
 }

@@ -2,6 +2,7 @@ package ustun.muharrem.weatherforecast.utilities
 
 // Backend related
 const val API_KEY = "4851d18a868d4d029f16f37d0962382e"
+// TODO: Remove API Key before uploading the final version to Github!!! And warn in the README file.
 const val METRIC_QUERY_PARAM_VALUE = "M"
 const val IMPERIAL_QUERY_PARAM_VALUE = "I"
 const val RESPONSE_PARSING_ERROR_MESSAGE = "Backend forecast parsing was unsuccessful!"
@@ -21,4 +22,9 @@ const val LATITUDE_KEY = "latitude key"
 const val FORECAST_ROOM_DATABASE_NAME = "forecast database"
 const val THREE_HOUR_EPOCH_TIME: Long = 3 * 60 * 60 * 1000
 const val DB_IS_EMPTY_MESSAGE = "No saved forecast container in the database"
+
+// Location related
 const val ONE_KM_DISTANCE: Float = 1000f
+
+// General
+const val MY_LOG = "WeatherApp"

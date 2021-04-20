@@ -12,10 +12,6 @@ import ustun.muharrem.weatherforecast.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var forecastViewModel: ForecastViewModel
-//    val requestPermissionLauncher = registerForActivityResult(
-//        ActivityResultContracts.RequestPermission()
-//    ) { permissionGiven -> isGranted = permissionGiven }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,23 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         initializeToolbar()
-//        val factory = ForecastViewModelFactory(application)
-//        forecastViewModel =
-//            ViewModelProvider(this, factory).get(ForecastViewModel::class.java)
-//        forecastViewModel.initializeAppLangCode()
-//        forecastViewModel.initializeLocationService(applicationContext)
-
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        forecastViewModel.subscribeToLocationUpdates()
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        forecastViewModel.unsubscribeToLocationUpdates()
-//    }
 
     private fun initializeToolbar() {
         val host =
