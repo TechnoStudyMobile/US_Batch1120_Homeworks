@@ -27,6 +27,5 @@
     <string name="visibility_label">Görüş</string>
     <string name="max_uv_index_label">UV İndeksi</string>
     <string name="details_fragment_label">Gün Değerleri</string>
-    <string name="location_alert_dialog_title">Location Info Required</string>
-    <string name="location_alert_dialog_message">Permission to access your location info required. The info displayed may not be the latest. Please go to your device settings to allow access to your location.</string>
+
 </resources>

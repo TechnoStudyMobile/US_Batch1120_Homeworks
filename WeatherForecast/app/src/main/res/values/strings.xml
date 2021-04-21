@@ -37,6 +37,9 @@
     <string name="label_button_loc_perm_denies">Not now</string>
     <string name="location_alert_dialog_title">Location Info Required</string>
     <string name="location_alert_dialog_message">Permission to access your location info required. The info displayed may not be the latest. Please go to your device settings to allow access to your location.</string>
+    <string name="forecast_container_failure_alert_dialog_title">No Access to Weather Info</string>
+    <string name="forecast_container_failure_alert_dialog_message">Weather info cannot be accessed. Please make sure your device is connected to the internet.</string>
+    <string name="label_no_access_textview">An error occurred while trying to reach weather info. \n\nPlease make sure your device has an internet connection. To try again, simply swipe the screen down once.</string>
 
     <string-array name="number_of_days">
         <item>7</item>

@@ -1,7 +1,6 @@
 package ustun.muharrem.weatherforecast.screens.forecastfragment
 
 import android.Manifest
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,6 +27,7 @@ class ForecastFragment : Fragment() {
         get() = _binding!!
 
     private lateinit var forecastViewModel: ForecastViewModel
+    private var requestLocationPermissionDismissed: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,15 @@ class ForecastFragment : Fragment() {
         SharedPrefs.sharedPref.registerOnSharedPreferenceChangeListener(forecastViewModel.sharedPrefListener)
 
         LocationUtil.initializeLocationService(requireContext())
-        if (!LocationUtil.isPermissionGranted(requireContext())) requestLocationPermission()
+
+        if (!LocationUtil.isPermissionGranted(requireContext())) {
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { requestLocationPermissionDismissed = true
+//                Log.d(MY_LOG, "request permission inside")
+            }.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+//            Log.d(MY_LOG, "request permission outside")
+        }
     }
 
     override fun onCreateView(
@@ -57,9 +65,18 @@ class ForecastFragment : Fragment() {
 
         binding.swipeToRefresh.setOnRefreshListener {
             if (LocationUtil.isPermissionGranted(requireContext())) {
+                binding.textviewLocationPermission.visibility = View.GONE
                 forecastViewModel.getForecastContainer()
             } else {
-                showLocationAlertDialog()
+                forecastViewModel.locationAlertDialog(requireContext()).show()
+                binding.textviewLocationPermission.visibility = View.VISIBLE
+//                Log.d(MY_LOG, "on swipe to refresh permission is granted")
+            }
+            if(forecastViewModel.forecastContainerResultLiveData.value is ForecastContainerResult.Failure){
+                binding.textviewNoAccess.visibility = View.VISIBLE
+                binding.recyclerViewForecastFragment.visibility = View.GONE
+                forecastViewModel.forecastContainerFailureAlertDialog(requireContext())
+                    .show()
             }
             binding.swipeToRefresh.isRefreshing = false
         }
@@ -68,22 +85,26 @@ class ForecastFragment : Fragment() {
             it?.let { forecastContainerResult ->
                 when (forecastContainerResult) {
                     is ForecastContainerResult.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.textviewNoAccess.visibility = View.GONE
+                        binding.recyclerViewForecastFragment.visibility = View.VISIBLE
                         createRecyclerView(forecastContainerResult.forecastContainer)
 //                        forecastContainerResult.forecastContainer.data.firstOrNull()
 //                            ?.let { forecast ->
 //                                NotificationUtil.fireTodayNotification(requireContext(), forecast)
 //                            }
+
                     }
                     ForecastContainerResult.IsLoading -> {
+                        binding.progressBar.visibility = View.VISIBLE
                         //TODO Show loading animation
                     }
                     is ForecastContainerResult.Failure -> {
-                        // TODO Show error dialog (Could not fetch from internet)
-                        when (forecastContainerResult.error.message) {
-                            DB_IS_EMPTY_MESSAGE -> {
-
-                            }
-                        }
+//                        binding.progressBar.visibility = View.VISIBLE
+                        binding.textviewNoAccess.visibility = View.VISIBLE
+                        binding.recyclerViewForecastFragment.visibility = View.GONE
+                        forecastViewModel.forecastContainerFailureAlertDialog(requireContext())
+                            .show()
                     }
                 }
             }
@@ -94,12 +115,15 @@ class ForecastFragment : Fragment() {
         super.onResume()
         if (LocationUtil.isPermissionGranted(requireContext())) {
             CoroutineScope(Main).launch {
+                binding.textviewLocationPermission.visibility = View.GONE
                 LocationUtil.subscribeToLocationUpdates()
                 forecastViewModel.getForecastContainer()
+//                Log.d(MY_LOG, "onResume permission is granted")
             }
-        }
-        else {
-            showLocationAlertDialog()
+        } else if (requestLocationPermissionDismissed){
+            forecastViewModel.locationAlertDialog(requireContext()).show()
+            binding.textviewLocationPermission.visibility = View.VISIBLE
+//            Log.d(MY_LOG, "onResume permission is NOT granted")
         }
     }
 
@@ -111,27 +135,6 @@ class ForecastFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun requestLocationPermission() {
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) {}.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-    }
-
-    private fun showLocationAlertDialog() {
-        // TODO: create a custom alert dialog layout (optional)
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(getString(R.string.location_alert_dialog_title))
-        // TODO: Write a better message text
-        builder.setMessage(getString(R.string.location_alert_dialog_message))
-        // TODO: change the alert dialog box icon
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-        // TODO: extract button names as string
-        builder.setNeutralButton("OK") { _, _ -> }
-        val alertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
