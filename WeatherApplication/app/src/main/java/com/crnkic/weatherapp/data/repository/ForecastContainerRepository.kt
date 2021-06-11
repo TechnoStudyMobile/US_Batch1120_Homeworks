@@ -19,23 +19,22 @@ import java.lang.Exception
 
 class ForecastContainerRepository(private val localDataSource: ForecastLocalDataSourceImp) {
 
-    val forecastContainerResultLiveData = MutableLiveData<ForecastContainerResult>()
+//    val forecastContainerResultLiveData = MutableLiveData<ForecastContainerResult>()
 //    private val localDataSource = ForecastLocalDataSource(dao)
 
 //    val forecastListLiveData: LiveData<ForecastContainer> = dao.getForecastContainer()
 
-    suspend fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
+    suspend fun fetchForecastContainer(isCelsius: Boolean, days: Int) : ForecastContainerResult{
         val forecastContainerResult =
             ForecastRemoteDataSource.fetchForecastContainer(isCelsius, days)
-        forecastContainerResultLiveData.postValue(forecastContainerResult)
         if (forecastContainerResult is ForecastContainerResult.Success) {
             insertToDatabase(forecastContainerResult.forecastContainer)
         }
+        return forecastContainerResult
     }
 
-    suspend fun getSavedForecastContainer() {
-        val forecastContainerResult = localDataSource.getSavedForecastContainer()
-        forecastContainerResultLiveData.postValue(forecastContainerResult)
+    suspend fun getSavedForecastContainer() : ForecastContainerResult {
+        return localDataSource.getSavedForecastContainer()
     }
 
     private suspend fun insertToDatabase(forecastContainer: ForecastContainer) {

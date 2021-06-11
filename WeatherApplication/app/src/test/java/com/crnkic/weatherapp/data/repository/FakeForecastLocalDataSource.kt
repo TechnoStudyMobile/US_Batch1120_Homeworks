@@ -8,11 +8,12 @@ import com.crnkic.weatherapp.data.model.ForecastContainerResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class FakeForecastLocalDataSource(private val forecastContainerList: MutableList<ForecastContainer> = mutableListOf()) : ForecastLocalDataSourceImp {
+class FakeForecastLocalDataSource(private val forecastContainerList: MutableList<ForecastContainer> = mutableListOf())
+    : ForecastLocalDataSourceImp {
 
 
     override suspend fun getSavedForecastContainer(): ForecastContainerResult =
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Unconfined) {
                 val forecastContainer = forecastContainerList.getOrNull(0)
                 forecastContainer?.let {
                     return@withContext ForecastContainerResult.Success(forecastContainer)
@@ -22,12 +23,12 @@ class FakeForecastLocalDataSource(private val forecastContainerList: MutableList
             }
 
     override suspend fun insert(forecastContainer: ForecastContainer) {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Unconfined) {
                 forecastContainerList.add(forecastContainer)
             }
     }
 
-    override suspend fun deleteAll() = withContext(Dispatchers.IO) {
+    override suspend fun deleteAll() = withContext(Dispatchers.Unconfined) {
         forecastContainerList.clear()
     }
 

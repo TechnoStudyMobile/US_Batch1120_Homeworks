@@ -13,7 +13,8 @@ data class ForecastContainer(
         @Expose(deserialize = false, serialize = false)
         @PrimaryKey(autoGenerate = false)
         val id: Int =0,
-        @SerializedName("data") val forecastList: List<Forecast>,
+        @SerializedName("data")
+        val forecastList: List<Forecast>,
         val city_name: String,
         val lon: Double,
         val timezone: String,

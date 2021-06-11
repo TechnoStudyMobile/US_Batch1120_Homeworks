@@ -12,14 +12,25 @@ import kotlinx.coroutines.launch
 class ForecastViewModel(private val forecastContainerRepository: ForecastContainerRepository) :
     ViewModel() {
 
-    private val _forecastContainerResultLiveData = forecastContainerRepository.forecastContainerResultLiveData
-
+    //TODO: Maybe have a separate liveData for DB forecastContainer only
+    private val _forecastContainerResultLiveData = MutableLiveData<ForecastContainerResult>()
     val forecastContainerResultLiveData: LiveData<ForecastContainerResult>
         get() = _forecastContainerResultLiveData
 
+    init {
+        getSavedForecastContainer()
+    }
+
+    fun getForecastContainer(shouldFetch : Boolean) {
+        // will get from db first and post to liveData
+
+        //it will try fetch
+    }
+
     fun getSavedForecastContainer() {
         viewModelScope.launch {
-            forecastContainerRepository.getSavedForecastContainer()
+            val forecastContainerResult = forecastContainerRepository.getSavedForecastContainer()
+            _forecastContainerResultLiveData.value = forecastContainerResult
         }
 
     }
@@ -27,7 +38,7 @@ class ForecastViewModel(private val forecastContainerRepository: ForecastContain
     fun fetchForecastContainer(isCelsius: Boolean, days: Int) {
         _forecastContainerResultLiveData.value = ForecastContainerResult.IsLoading
         viewModelScope.launch {
-            forecastContainerRepository.fetchForecastContainer(isCelsius, days)
+            _forecastContainerResultLiveData.value = forecastContainerRepository.fetchForecastContainer(isCelsius, days)
         }
     }
 }

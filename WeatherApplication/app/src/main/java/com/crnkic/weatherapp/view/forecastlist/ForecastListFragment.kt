@@ -27,7 +27,7 @@ class ForecastListFragment : Fragment() {
         if (isGranted) {
             getLocationDetails()
         } else {
-
+            //show error snackBar
         }
     }
 
@@ -36,8 +36,13 @@ class ForecastListFragment : Fragment() {
 
         val factory = ForecastViewModelFactory(requireActivity().application)
         forecastViewModel = ViewModelProvider(requireActivity(), factory).get(ForecastViewModel::class.java)
+    }
 
-        forecastViewModel.getSavedForecastContainer()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        setHasOptionsMenu(true)
+        return inflater.inflate(R.layout.fragment_forecast_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,13 +72,6 @@ class ForecastListFragment : Fragment() {
 
         //ask user for permission
         askForLocationPermission()
-    }
-
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_forecast_list, container, false)
     }
 
     ////////////////////////////////////////////////////////////////////

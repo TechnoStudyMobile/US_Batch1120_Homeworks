@@ -47,7 +47,8 @@ dependencies {
 
     def room_version = "2.2.6"
     def activity_version = "1.2.1"
-    def fragment_version = "1.3.1"
+    def fragment_version = "1.3.2"
+    def coroutines = "1.4.1"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
@@ -63,7 +64,6 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
     // Coroutines
-    def coroutines = "1.4.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
@@ -81,8 +81,8 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     // Fragment and Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
@@ -101,5 +101,11 @@ dependencies {
 
     //mock
     testImplementation 'io.mockk:mockk:1.10.6'
+
+    //Hamcrest
+    testImplementation 'org.hamcrest:hamcrest-all:1.3'
+
+    //AndroidX test libs
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
 }
 
